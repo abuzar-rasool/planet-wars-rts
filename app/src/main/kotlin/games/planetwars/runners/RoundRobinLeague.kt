@@ -6,6 +6,7 @@ import games.planetwars.agents.evo.SimpleEvoAgent
 import games.planetwars.agents.random.BetterRandomAgent
 import games.planetwars.agents.random.CarefulRandomAgent
 import games.planetwars.agents.random.PureRandomAgent
+import games.planetwars.agents.strategic.StrategicHeuristicAgent
 import games.planetwars.core.GameParams
 import games.planetwars.core.Player
 
@@ -51,6 +52,7 @@ class SamplePlayerLists {
                 opponentModel = DoNothingAgent(),
                 probMutation = 0.8,
             ),
+            StrategicHeuristicAgent()
         )
     }
 }
