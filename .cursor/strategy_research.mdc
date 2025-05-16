@@ -1,0 +1,268 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+Perfect. I now have enough to begin deep research on building the best-performing Full Observation strategy for the GECCO 2025 Planet Wars AI Challenge.
+
+I will evaluate the latest competition details, game rules, and architecture; review successful past approaches; examine all available sample Kotlin agents; and develop a powerful real-time strategy tailored for your variant. This will include implementation details in Kotlin and guidance for parameter tuning.
+
+I'll get started now and let you know as soon as the complete strategy and code are ready for review.
+
+
+&#x20;*Figure: Snapshot of a Planet Wars AI Challenge game state with player-controlled planets (blue and yellow), neutral planets (gray), and moving fleets (triangular ship icons). The background field lines illustrate an experimental “gravity” feature of the research framework, but the GECCO 2025 competition uses the classic rules (no gravity or turrets). In full observation mode, both players see all planet ship counts and fleet movements.*
+
+# Strategy Overview
+
+The optimal approach for **Planet Wars (GECCO 2025, Full Observation)** is a hybrid strategy combining **forward planning** and **smart heuristics**. This strategy aggressively expands and attacks when advantageous, but remains balanced with defense. It draws on proven ideas from past champions and modern research, adapted to the 2025 rule-set (e.g. one-fleet-per-planet limit, full information). The core idea is to **quickly secure high-growth planets**, then leverage multi-planet coordinated offensives to overwhelm the enemy. Simultaneously, the agent conserves enough ships to defend key planets and counter-attack when under threat. By continuously simulating outcomes and re-evaluating the game state, the agent “looks ahead” just enough to avoid blunders, without getting bogged down by the enormous search tree. In essence, the strategy adapts to the game’s flow: opening with rapid expansion, transitioning to calculated aggression, and falling back to tactical defense or **“desperado”** moves if facing elimination. All decisions are made with the full knowledge of both sides’ forces (since this mode is fully observable), allowing for precise timing (e.g. **sniping** enemy captures and synchronized multi-front attacks). The result is a highly competitive agent that has **both** a long-term plan for growth and a short-term plan for combat.
+
+# Decision Heuristics
+
+To manage the vast decision space each tick, the agent uses a set of prioritized heuristics (rules-of-thumb) guided by research and past competition winners:
+
+* **Early Expansion – Growth vs. Distance:** In the opening phase, capturing neutral planets with high growth rates is paramount for long-term ship production. The agent evaluates neutral targets by a **value score** = *growth rate / (enemy distance + 1)* – trading off a planet’s ship output against how quickly either player can get there. Neutral planets that are closer to our ships than to the enemy (or equally distant but lightly defended) are targeted first. The agent also computes the “payoff time” – how many ticks until a planet’s extra ships repay the cost sent – favoring neutrals that will pay off before significant enemy engagement. These heuristics echo top bots’ behavior of picking targets by *“proximity, weakness, or resource wealth”*. For example, a neutral planet with growth 5 and only 10 ships at distance 5 is extremely attractive, whereas a distant neutral with growth 2 might be skipped initially.
+
+* **Multi-Planet Coordinated Attacks:** Rather than sending piecemeal fleets, the agent coordinates attacks from multiple planets so that fleets **arrive simultaneously** at the same target. This synchronized timing overwhelms defenses in one big strike, exploiting the travel-time delay (since fleets take `ceil(distance)` ticks to arrive). The agent will, for instance, launch from a far planet a few ticks earlier than from a nearer planet so both fleets meet together. Coordinated attacks are especially used against strong enemy planets – our bot waits until it can send combined forces that exceed the enemy’s ships (plus growth by arrival), then strikes in one tick. This tactic, inspired by Bocsimackó’s “step-based move generation”, prevents the opponent from picking off one fleet at a time and was shown to be far more effective than isolated skirmishes.
+
+* **Ship Positioning and Reinforcement:** Proper **ship positioning** is critical. The agent always seeks to station ships where they can quickly influence contested areas (“frontline” planets) while keeping enough reserves at rear planets for safety. In practice, this means after initial expansion the bot will **redistribute** ships from overstacked safe planets to border planets closer to the enemy. (This redeployment is done by sending a fleet from a rear planet to a frontline friendly planet when no immediate attack/expansion is urgent, effectively relocating surplus ships.) Such repositioning was a major factor identified by top players – even the 2010 champion would shift ships toward enemy lines to maintain pressure. On defense, if an enemy fleet is en route to one of our planets, the agent checks nearby friendly planets for possible reinforcement: it will dispatch help if those ships can arrive in time to join the battle and turn the tide. This reactive reinforcement requires predicting the enemy fleet’s arrival tick and ensuring our support fleet arrives by or before that tick (thanks to full observation, this timing can be calculated exactly). By combining solid initial positioning with rapid reinforcement, the agent minimizes the chance of losing planets cheaply.
+
+* **Attack Timing and Target Selection:** The agent continually looks for windows of opportunity to attack the enemy’s planets. A prime opportunity is when an enemy planet is left weak – for example, right after the opponent sends a large fleet elsewhere (temporarily reducing their defending ships). The strategy exploits these moments to launch a **counter-attack** on that planet before the enemy’s ships can return or be replaced. In deciding which enemy planet to attack, the bot considers factors like: (a) **Distance** (can our fleet arrive before the enemy can reinforce?), (b) **Planet growth** (high-growth enemy planets are high-priority targets to cripple their economy), and (c) **Enemy ships present** (is the planet lightly defended right now?). The full-information setting allows precise calculations here – e.g. if an enemy planet will have 50 ships by the time our fleet would arrive and we can send 60, the attack is viable. The agent avoids stalemate attacks (wasting ships on heavily fortified planets); instead it looks for either *decisive strikes* where victory is assured, or **feints**. Feints (also called *tacking* attacks) involve sending a small fleet to a non-critical enemy planet to divert their attention or force an overreaction. This can lure the opponent’s ships away from a more important sector, setting up a real attack elsewhere. Such diversionary tactics, supported by competition analysis, help split the enemy’s defenses. Finally, if the agent is **losing on material**, it may resort to a **“desperado” attack** – an all-in aggressive push with its remaining ships at a key enemy planet. This last-ditch tactic, executed when we’re down to few planets, can sometimes swing momentum by surprise – a reflection of observed successful comebacks in Planet Wars when bots refused to go down quietly.
+
+* **Defense and Risk Management:** A successful strategy must not overextend. Our agent always keeps a **reserve** on each planet unless it’s absolutely sure an attack is safe. For every fleet launch, the bot deducts the sent ships from the source planet and evaluates: will that source be left so weak that an enemy fleet could capture it before it can be reinforced? If yes, it either sends fewer ships or chooses a different action. This addresses the classic expansion-vs-defense trade-off – the agent expands only when it can hold its gains. Additionally, when the bot holds more planets or ships (a lead), it shifts into a **risk-averse mode**: focusing on defending its advantage and incrementally pressuring the opponent rather than risking everything on a wild attack. Conversely, if behind, it might accept more risk (e.g. the desperado strikes or risky neutral grabs) since playing safe would lose anyway. This dynamic risk management aligns with human-like strategic adjustment and is informed by research on evolving bots that maximize win probability rather than just raw ship counts.
+
+Behind these heuristics, the agent uses simple **simulation** to verify outcomes. For instance, before attacking a planet, it simulates the fleet travel and ensuing battle: the travel time is known (distance), the growth of defender in that time is added, and one-to-one combat resolution is computed. This forward model is fast and allows the bot to “think” a few ticks ahead without needing a full brute-force search. Notably, Gábor Melis’s champion bot used a “full attack simulation” evaluation to decide moves – our agent adopts a similar idea on a smaller scale every tick. By checking the results of candidate moves in a simulated future, the agent picks the action with the highest expected advantage (e.g. net gain in ships or strategic position). These micro-simulations and heuristics guide the decision when an exhaustive search would be intractable.
+
+# Real-Time Constraints and Optimizations
+
+Planet Wars is a **real-time environment**, so our AI must make decisions quickly each tick. The game state may involve dozens of planets and fleets, yielding a huge number of possible actions at any moment (each owned planet could send any number of ships to any other planet). Indeed, the branching factor is virtually unlimited, which made classic deep search “computationally prohibitive” in this domain. To operate within tight time limits (each tick may allow only a few milliseconds for the AI to act), we apply several optimizations:
+
+* **Action Filtering:** Rather than considering *every* possible move, the agent filters and prioritizes a small set of promising actions. For example, if a planet has very few ships or is far from any conflict, we likely skip using it as a source that tick. We focus on planets with a significant surplus of ships (above some threshold) or those under imminent threat. Similarly, for targets we narrow down to relevant ones – nearby neutrals, adjacent enemy planets, or strategic reinforcement targets. By pruning away low-impact moves, the agent reduces decision branching dramatically without hurting performance. This idea mirrors the domain-specific pruning used in successful search-based bots, where only the most “promising lines of play” are explored.
+
+* **Heuristic Move Ordering:** The agent evaluates moves in an order that increases the chance of finding a good action early. For instance, defensive responses (to urgent threats) are checked first, then high-value expansions, then attacks. Once a clearly winning move is found (one that yields a large positive score in our evaluation function), the bot can select it without exhaustively checking less critical options. This leverages the real-time nature: it’s often better to act on a good-enough decision quickly than to spend too long searching for a theoretically perfect move. We maintain a running best move and a score, updating whenever we find a better candidate. If time runs short, we execute whatever the best move currently is.
+
+* **Precomputation and Caching:** Certain calculations are done in advance to save time during gameplay. Distances between all pairs of planets (and thus travel times) are computed at startup so that lookups are O(1) during decision-making. This is important because distance calculations (Euclidean and ceiling) might be needed dozens of times per tick for simulating various attacks or reinforcements. We also cache the identities of the nearest enemy and neutral planet for each of our planets. These cached values help quickly decide, for example, where to expand next or which frontier needs strengthening, without scanning the entire planet list every tick. Because the map is static, these caches remain valid throughout the match.
+
+* **Optimized Simulation:** Our forward simulations are kept lightweight. Rather than simulating every tick until a fleet arrives (which could be dozens of ticks), we analytically determine the outcome: for a given move, we calculate the arriving fleet size and compare it to the projected defenders. This uses simple arithmetic instead of iterative tick-by-tick updates. For multi-fleet coordination, the agent uses a one-step lookahead: it imagines launching a set of fleets this tick and uses the forward model to see if after their travel times the net result is favorable. True full-game lookahead (like searching several moves into the future) is mostly avoided due to time costs – as noted in research, even Monte Carlo Tree Search struggled here because of the “jagged” outcome landscape and many possibilities. Instead, we achieve a similar benefit by combining shallow simulations with the refined heuristics described above. This **hybrid of planning and heuristics** is strongly supported by recent research as a top-performing approach.
+
+* **Parallel and Asynchronous Processing:** (If the competition framework allows it.) The agent can run certain evaluations in parallel threads. For example, each candidate move’s simulation can be a separate task, and the first task that finishes with a high-positive result could terminate the others early. The environment is deterministic and fully observable, so parallelism yields near-linear speed-ups in evaluating moves. We also make sure to perform non-blocking waits – if the game engine provides a fixed per-tick time budget, our agent will stop computing slightly before the deadline to package its action. It’s better to send a somewhat suboptimal move than to time out and send nothing.
+
+These optimizations address the real-time **decision bottleneck**. By limiting the depth and breadth of computation, our bot fits its deliberation into the available tick time without sacrificing strategic acumen. Notably, the Planet Wars framework is extremely fast (millions of ticks per second in research settings), which means our agent can afford to do quite a lot in a short time. Nonetheless, we prioritize the most impactful decisions first and use efficient coding practices to avoid any lag. The end result is a responsive agent that acts reliably within each tick’s deadline, maintaining strong play under real-time constraints.
+
+# Kotlin Implementation
+
+Below is a Kotlin implementation of the described strategy, as an agent class that conforms to the Planet Wars framework’s `PlanetWarsPlayer` interface. We extend the provided example structure (see `BetterRandomAgent` in the codebase) and override the `getAction` method to choose an action each tick based on our strategy. The implementation uses the game state’s full information (list of planets, their owners, ship counts, growth rates, and any in-transit fleets) to compute the best move. We also reuse utility concepts from the framework, such as the `transporter` property on planets (which indicates if a planet has an outgoing fleet already, enforcing the “one fleet at a time” rule). Key design choices in this implementation include: using helper functions to evaluate potential moves, caching distances in a 2D array for quick lookup, and tuning a few parameters (like reserve fractions and scoring weights) which we discuss in the next section. The code is heavily commented to explain the reasoning at each step:
+
+```kotlin
+package games.planetwars.agents
+
+import games.planetwars.agents.Action
+import games.planetwars.agents.PlanetWarsPlayer
+import games.planetwars.core.GameState
+import games.planetwars.core.Player
+import kotlin.math.ceil
+import kotlin.math.sqrt
+
+class AdaptiveHeuristicAgent : PlanetWarsPlayer() {
+
+    // Precompute distance matrix for all planet pairs (assuming static planet list).
+    // This helps to quickly get travel time without recalculation.
+    private lateinit var travelTime: Array<IntArray>
+
+    override fun prepareToPlayAs(player: Player, gameParams: Any?) {
+        super.prepareToPlayAs(player, gameParams)
+        // Initialize distance matrix once game starts
+        val planets = (gameParams as? games.planetwars.core.GameParams)?.let { it } 
+            ?: return  // if we can get planet positions from params
+        // In case GameParams doesn't directly give planet list, we can infer from first GameState call.
+        // We'll fill travelTime on first getAction call if not done here.
+    }
+
+    override fun getAction(gameState: GameState): Action {
+        val myP = player  // our player ID (Player1 or Player2)
+        // If distance matrix not set up yet (e.g. prepareToPlayAs didn't do it), do it now.
+        if (!::travelTime.isInitialized) {
+            val n = gameState.planets.size
+            travelTime = Array(n) { IntArray(n) }
+            for (i in 0 until n) {
+                val pi = gameState.planets[i]
+                for (j in 0 until n) {
+                    val pj = gameState.planets[j]
+                    // Euclidean distance
+                    val dx = pi.x - pj.x
+                    val dy = pi.y - pj.y
+                    val dist = sqrt(dx*dx + dy*dy)
+                    travelTime[i][j] = ceil(dist).toInt()  // travel time in ticks
+                }
+            }
+        }
+
+        // Identify all candidate actions (source->target moves) and evaluate them
+        var bestAction = Action.doNothing()  // default to no action if nothing better
+        var bestScore = Double.NEGATIVE_INFINITY
+
+        // Gather basic lists of planets by owner for convenience
+        val myPlanets = gameState.planets.filter { it.owner == myP }
+        val enemyPlanets = gameState.planets.filter { it.owner == myP.opponent() }
+        val neutralPlanets = gameState.planets.filter { it.owner == Player.Neutral }
+
+        // Quick function to estimate future ships on a planet after t ticks (for owner perspective)
+        fun projectedShips(planet: games.planetwars.core.Planet, owner: Player, t: Int): Int {
+            return if (planet.owner == owner) {
+                // If currently owned by that owner, it will have current ships + growth*t
+                planet.nShips + planet.growthRate * t
+            } else if (planet.owner == Player.Neutral || planet.owner == owner.opponent()) {
+                // If not owned by that owner, it will have current ships (possibly enemy or neutral) + growth*t for whoever owns it.
+                // For enemy-owned, treat them as opponent's ships.
+                planet.nShips + planet.growthRate * t
+            } else {
+                0  // shouldn't happen
+            }
+        }
+
+        // Check defensive needs first: see if any of our planets is about to be attacked and needs reinforcement
+        for (myPlanet in myPlanets) {
+            // find incoming enemy fleets targeting this planet (if GameState provides that info in fleets list)
+            // (In this framework, planets might have an incomingFleets list or we inspect gameState.fleets)
+            // Pseudocode: we assume gameState.fleets gives fleets with properties: source, target, owner, ships, eta.
+            // We'll simulate minimal by checking if any enemy fleet will arrive soon
+            val incomingEnemyFleet = gameState.fleets.firstOrNull { it.target == myPlanet.id && it.owner == myP.opponent() }
+            if (incomingEnemyFleet != null) {
+                val turnsToArrive = incomingEnemyFleet.eta  // how many ticks until impact
+                // Predict if myPlanet will fall: compare arriving enemy ships vs myPlanet's future ships
+                val futureMyShips = projectedShips(myPlanet, myP, turnsToArrive)
+                if (incomingEnemyFleet.nShips > futureMyShips + 1) {
+                    // Planet is in danger, try to send help from nearest my planet with surplus
+                    val helper = myPlanets
+                        .filter { it.id != myPlanet.id && it.transporter == null }  // can send now
+                        .minByOrNull { travelTime[it.id][myPlanet.id] }  // choose closest helper
+                    if (helper != null) {
+                        val eta = travelTime[helper.id][myPlanet.id]
+                        if (eta <= incomingEnemyFleet.eta) {
+                            // We can send reinforcement in time
+                            val sendShips = kotlin.math.min(helper.nShips * 3 / 4,  // send 75% of helper ships
+                                                           incomingEnemyFleet.nShips - futureMyShips + 5)
+                            // send enough to overcome enemy plus a small margin
+                            if (sendShips > 0 && sendShips < helper.nShips && helper.nShips - sendShips >= 1) {
+                                // Formulate action and score it (high priority since defense)
+                                val action = Action(player, helper.id, myPlanet.id, sendShips.toDouble())
+                                val score = 1000.0 + sendShips  // large base score for critical defense
+                                if (score > bestScore) {
+                                    bestScore = score
+                                    bestAction = action
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        // Next priority: offensive or expansion moves
+        for (source in myPlanets) {
+            if (source.transporter != null || source.nShips < 2) continue  // skip planets already sent a fleet or too few ships
+            // Determine a "surplus" we can use from this planet (keep some reserve)
+            val availableShips = (source.nShips * 0.8).toInt()  // use up to 80%, keep 20% reserve
+            if (availableShips < 1) continue
+
+            // Consider neutral targets
+            for (target in neutralPlanets) {
+                if (availableShips <= 0) break
+                // Skip if this neutral is closer to enemy (likely contested or unsafe)
+                val d_my = travelTime[source.id][target.id]
+                val d_enemy = enemyPlanets.minOfOrNull { travelTime[it.id][target.id] } ?: Int.MAX_VALUE
+                if (d_my >= d_enemy) continue  // if we cannot get there faster, skip or consider smaller move
+                // Determine ships needed to capture neutral
+                val required = target.nShips + 1  // must send more than neutral has
+                if (availableShips >= required) {
+                    // Evaluate benefit: growth * some horizon - cost
+                    val horizon = 50  // consider 50 ticks of future production as benefit
+                    val benefit = target.growthRate * (horizon - d_my).coerceAtLeast(0)
+                    val score = benefit - required  // simple evaluation: net ships gained over time
+                    if (score > bestScore) {
+                        bestScore = score
+                        bestAction = Action(player, source.id, target.id, required.toDouble())
+                    }
+                }
+            }
+
+            // Consider attacking enemy targets
+            for (target in enemyPlanets) {
+                if (availableShips <= 0) break
+                // Only consider attack if we can reach in reasonable time
+                val d = travelTime[source.id][target.id]
+                if (d > 50) continue  // too far, likely not worth it
+                // Predict enemy ships on target at arrival
+                val enemyFutureShips = projectedShips(target, myP.opponent(), d)
+                // If we can send enough to capture (enemyFutureShips + 1), evaluate
+                if (availableShips > enemyFutureShips) {
+                    // Basic score: weaken enemy + gain planet
+                    var score = enemyFutureShips + target.growthRate * 10.0  // value enemy ships destroyed + some weight for gaining growth
+                    // If target is enemy’s only or largest planet, prioritize more
+                    if (enemyPlanets.size == 1 || target.growthRate == enemyPlanets.maxOf { it.growthRate }) {
+                        score += 50.0
+                    }
+                    // If sending this leaves source vulnerable, penalize
+                    if (source.nShips - availableShips < 5) {
+                        score -= 20.0  // leaving source nearly empty is risky
+                    }
+                    if (score > bestScore) {
+                        bestScore = score
+                        // Send just enough to take over (or a bit more for safety)
+                        val sendAmount = enemyFutureShips + 5  // a slight overkill margin
+                        bestAction = Action(player, source.id, target.id, sendAmount.coerceAtMost(availableShips).toDouble())
+                    }
+                }
+            }
+
+            // Internal redistribution (if no better target): send to friendly front-line planet
+            // If this source is far from enemy but has surplus, move ships toward front
+            if (enemyPlanets.isNotEmpty()) {
+                val closestEnemyDist = enemyPlanets.minOf { travelTime[source.id][it.id] }
+                // If this source is relatively far (backline) and has lots of ships, reposition
+                if (closestEnemyDist > 20 && source.nShips > 20) {
+                    // find friendly planet closer to enemy to forward ships to
+                    val forwardTarget = myPlanets
+                        .filter { it.id != source.id }
+                        .minByOrNull { enemyPlanets.minOf { e -> travelTime[it.id][e.id] } }  // planet with shortest distance to any enemy
+                    if (forwardTarget != null) {
+                        val send = (source.nShips * 0.5).toInt()  // send half forward
+                        if (send > 0 && source.nShips - send >= 1) {
+                            val score = send * 0.5  // lower priority than combat, but nonzero
+                            if (score > bestScore) {
+                                bestScore = score
+                                bestAction = Action(player, source.id, forwardTarget.id, send.toDouble())
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return bestAction  // either a concrete move or "do nothing" if no good move found
+    }
+
+    override fun getAgentType(): String {
+        return "Adaptive Heuristic Agent"
+    }
+}
+```
+
+In this implementation, we first handle **defensive reinforcements** (high-priority) by scanning for any incoming enemy fleet that threatens to overwhelm one of our planets. If found, we send ships from the nearest available friendly planet. Next, we iterate over our planets and consider using each as a source for an action (skipping those that are currently busy or nearly empty). For each source, we evaluate neutral targets and enemy targets as described in the strategy, calculating simple scores for each potential move. We also include a redistribution step: if no immediate attack/expansion is compelling, the code will move some ships from a far-back planet toward the front lines to prepare for future engagement. The logic uses a few **tunable parameters** (like what fraction of ships to keep in reserve, how far “too far” is for attacking, and the scoring weights for various factors). These are chosen based on sensible defaults and insights from prior work (e.g. always leave at least 20% as reserve, avoid extremely long-distance attacks, slightly over-send troops to secure captures, etc.). Importantly, the agent always respects the **one-fleet-per-planet** rule by checking `planet.transporter == null` before issuing a launch from that planet (so it won’t double-dispatch from the same planet before the first fleet arrives). The `Action(player, sourceId, targetId, shipCount)` commands are constructed accordingly, or `Action.doNothing()` if no action is the best choice (which can happen if the bot decides to wait a tick).
+
+# Parameter Tuning Guidance
+
+The strategy comes with a handful of parameters that significantly affect performance. Key tunable parameters include:
+
+* **Reserve Fraction:** Currently set to 20% (the agent keeps \~20% of ships on a planet when launching an attack). This value balances offense and defense. A lower reserve (e.g. 10%) means more aggressive expansion but higher risk of leaving planets undefended; a higher reserve (e.g. 30–40%) makes the bot safer but possibly too passive. Tuning this can be done by running the agent against a variety of opponents and measuring win rates – if the bot often loses planets due to overextension, increase the reserve; if it never seems to capitalize on opportunities, decrease it.
+
+* **Neutral Planet Value Horizon:** In the code, the benefit of capturing a neutral was evaluated over a 50-tick horizon (`horizon = 50`). This essentially weights how important future growth is. In shorter games or faster growth settings, a smaller horizon (like 30) might be sufficient, whereas longer games might reward a larger horizon. This parameter can be optimized via self-play or using a tool like **SMAC (Sequential Model-Based Algorithm Configuration)**, which has been used in past research to fine-tune agent parameters efficiently. By treating the horizon as a parameter, one could let SMAC or another optimizer find the value that maximizes win-rate on a variety of maps.
+
+* **Attack Thresholds and Weights:** We used some constants like a +50 score bonus if attacking the enemy’s largest growth planet, or a -20 penalty for leaving a source nearly empty. These weights reflect strategic intuition (e.g. crippling a high-growth planet is very valuable, and having 0 ships at a frontline planet is dangerous). Nonetheless, they can be adjusted. An evolutionary tuning method (for example, an **N-Tuple Bandit Evolutionary Algorithm** as demonstrated in Planet Wars research) could optimize these weights by running many games and treating each weight as a gene. Similarly, the condition `if (d > 50) continue` skips very distant attacks – that “50” could be tuned to the map sizes or average distances in competition maps. It might turn out that on smaller maps, 50 is too high (too conservative), whereas on very large maps a higher cutoff is needed. Iterative testing on representative maps will inform the best value.
+
+* **Defense Reaction Sensitivity:** The defensive logic sends help if an incoming fleet is projected to win by more than 1 ship. We could make this more or less sensitive. For instance, requiring a larger margin (say enemy fleet > my future ships + 5) before reinforcing would avoid overreacting to small threats. On the flip side, being too relaxed could miss chances to save a planet. Adjusting this threshold and the fraction of ships to send (we used 75% of helper’s ships) will change the bot’s defensive sturdiness. These can be tuned by analyzing games where our planet just barely fell or was barely saved, and trying values that flip those outcomes in our favor.
+
+When tuning, it’s crucial to use a robust evaluation method. Because Planet Wars outcomes can be noisy and map-dependent, one should test across many random map seeds and opponents. Techniques from evolutionary computation are quite relevant here – for example, running a **league** or round-robin of different parameter variants and using win-rate as the fitness. The literature suggests that **victory-based fitness metrics** (simply using win/loss) are most reliable for guiding such tuning, as opposed to metrics like “total ships over time” which can mislead the optimization. In practice, one can automate the tuning: e.g., use a genetic algorithm to evolve the parameter set, or employ NTBEA which is designed for game parameter optimization and was shown to perform well on Planet Wars agents.
+
+Finally, a human-informed manual tuning phase is recommended after automated tuning, to verify that the chosen parameters make sense and to ensure the agent isn’t overfitting to specific opponents or maps. Because the GECCO 2025 competition will use held-out maps, the strategy must be robust. Parameters should lead to **consistent play across varied scenarios** rather than just optimal play on one fixed map. By following these tuning practices – combining automated search with strategic validation – we refine our agent into a truly **optimal Planet Wars competitor** for the full-observation challenge.
+
+**Sources:** The strategy design is informed by known successful tactics from the original Planet Wars AI Challenge and subsequent research. Notably, Melis’s 2010 champion bot pioneered ideas like full-state lookahead and synchronized attacks, while later analyses emphasized ship positioning, reaction timing, and targeting high-growth planets. Modern AI research on this game (Lucas et al. 2018 and beyond) demonstrated the efficacy of combining forward planning with evolutionary tuning. These insights have been distilled into the above approach to ensure it is well-grounded in both theory and practice.

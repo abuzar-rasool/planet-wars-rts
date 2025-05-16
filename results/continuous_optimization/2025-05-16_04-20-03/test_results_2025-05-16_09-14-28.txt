@@ -1,0 +1,38 @@
+Test Results
+=============
+vs Better Random Agent:
+  As P1: 50/50 (100%)
+  As P2: 50/50 (100%)
+  Overall: 100/100 (100%)
+vs Careful Random Agent:
+  As P1: 44/50 (88%)
+  As P2: 42/50 (84%)
+  Overall: 86/100 (86%)
+vs Adaptive Heuristic Agent:
+  As P1: 37/50 (74%)
+  As P2: 38/50 (76%)
+  Overall: 75/100 (75%)
+vs Hybrid Strategic Evo Agent Cheeni:
+  As P1: 50/50 (100%)
+  As P2: 50/50 (100%)
+  Overall: 100/100 (100%)
+vs Strategic Heuristic Agent Ammar:
+  As P1: 24/50 (48%)
+  As P2: 23/50 (46%)
+  Overall: 47/100 (47%)
+vs Self-Tuning Heuristic Agent:
+  As P1: 19/50 (38%)
+  As P2: 34/50 (68%)
+  Overall: 53/100 (53%)
+vs EvoAgent-400-30-0.8-true:
+  As P1: 27/50 (54%)
+  As P2: 29/50 (58%)
+  Overall: 56/100 (56%)
+
+vs Base AdaptiveHeuristicAgent:
+  As P1: 36/50 (72%)
+
+vs Alternative Agent (HeavyRandomAgent):
+  As P1: 50/50 (100%)
+
+Overall Results: 603/800 (75%)

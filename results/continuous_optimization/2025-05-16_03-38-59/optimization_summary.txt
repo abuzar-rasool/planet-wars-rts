@@ -1,0 +1,2511 @@
+Continuous Optimization started at 2025-05-16_03-38-59
+
+[2025-05-16_03-38-59] Starting optimization cycle 1
+[2025-05-16_03-38-59] Phase: EXPLORATION
+[2025-05-16_03-38-59] Opponent: Better Random Agent
+[2025-05-16_03-38-59] Evaluation games: 20
+[2025-05-16_03-38-59] Population size: 10
+[2025-05-16_03-38-59] Generations: 5
+[2025-05-16_03-38-59] Mutation rate: 0.3
+[2025-05-16_03-38-59] Mutation strength: 0.3
+[2025-05-16_03-39-03] Saved new best parameters with win rate: 100,00%
+[2025-05-16_03-40-07] Test Results
+=============
+vs Better Random Agent:
+  As P1: 49/50 (98%)
+  As P2: 49/50 (98%)
+  Overall: 98/100 (98%)
+vs Careful Random Agent:
+  As P1: 36/50 (72%)
+  As P2: 41/50 (82%)
+  Overall: 77/100 (77%)
+vs Adaptive Heuristic Agent:
+  As P1: 28/50 (56%)
+  As P2: 31/50 (62%)
+  Overall: 59/100 (59%)
+vs Hybrid Strategic Evo Agent Cheeni:
+  As P1: 49/50 (98%)
+  As P2: 50/50 (100%)
+  Overall: 99/100 (99%)
+vs Strategic Heuristic Agent Ammar:
+  As P1: 16/50 (32%)
+  As P2: 17/50 (34%)
+  Overall: 33/100 (33%)
+vs Self-Tuning Heuristic Agent:
+  As P1: 26/50 (52%)
+  As P2: 18/50 (36%)
+  Overall: 44/100 (44%)
+vs EvoAgent-400-30-0.8-true:
+  As P1: 23/50 (46%)
+  As P2: 24/50 (48%)
+  Overall: 47/100 (47%)
+
+vs Base AdaptiveHeuristicAgent:
+  As P1: 32/50 (64%)
+
+vs Self-Tuning Agent:
+  As P1: 13/50 (26%)
+
+Overall Results: 502/800 (62%)
+
+[2025-05-16_03-40-07] Starting optimization cycle 2
+[2025-05-16_03-40-07] Phase: EXPLORATION
+[2025-05-16_03-40-07] Opponent: Careful Random Agent
+[2025-05-16_03-40-07] Evaluation games: 20
+[2025-05-16_03-40-07] Population size: 10
+[2025-05-16_03-40-07] Generations: 5
+[2025-05-16_03-40-07] Mutation rate: 0.3
+[2025-05-16_03-40-07] Mutation strength: 0.3
+[2025-05-16_03-40-10] Starting optimization cycle 3
+[2025-05-16_03-40-10] Phase: EXPLORATION
+[2025-05-16_03-40-10] Opponent: Adaptive Heuristic Agent
+[2025-05-16_03-40-10] Evaluation games: 20
+[2025-05-16_03-40-10] Population size: 10
+[2025-05-16_03-40-10] Generations: 5
+[2025-05-16_03-40-10] Mutation rate: 0.3
+[2025-05-16_03-40-10] Mutation strength: 0.3
+[2025-05-16_03-40-12] Advanced to phase: EXPLOITATION
+[2025-05-16_03-40-12] Starting optimization cycle 1
+[2025-05-16_03-40-12] Phase: EXPLOITATION
+[2025-05-16_03-40-12] Opponent: Better Random Agent
+[2025-05-16_03-40-12] Evaluation games: 40
+[2025-05-16_03-40-12] Population size: 15
+[2025-05-16_03-40-12] Generations: 8
+[2025-05-16_03-40-12] Mutation rate: 0.2
+[2025-05-16_03-40-12] Mutation strength: 0.15
+[2025-05-16_03-40-18] Starting optimization cycle 2
+[2025-05-16_03-40-18] Phase: EXPLOITATION
+[2025-05-16_03-40-18] Opponent: Careful Random Agent
+[2025-05-16_03-40-18] Evaluation games: 40
+[2025-05-16_03-40-18] Population size: 15
+[2025-05-16_03-40-18] Generations: 8
+[2025-05-16_03-40-18] Mutation rate: 0.2
+[2025-05-16_03-40-18] Mutation strength: 0.15
+[2025-05-16_03-40-24] Starting optimization cycle 3
+[2025-05-16_03-40-24] Phase: EXPLOITATION
+[2025-05-16_03-40-24] Opponent: Adaptive Heuristic Agent
+[2025-05-16_03-40-24] Evaluation games: 40
+[2025-05-16_03-40-24] Population size: 15
+[2025-05-16_03-40-24] Generations: 8
+[2025-05-16_03-40-24] Mutation rate: 0.2
+[2025-05-16_03-40-24] Mutation strength: 0.15
+[2025-05-16_03-41-38] Test Results
+=============
+vs Better Random Agent:
+  As P1: 50/50 (100%)
+  As P2: 49/50 (98%)
+  Overall: 99/100 (99%)
+vs Careful Random Agent:
+  As P1: 43/50 (86%)
+  As P2: 41/50 (82%)
+  Overall: 84/100 (84%)
+vs Adaptive Heuristic Agent:
+  As P1: 37/50 (74%)
+  As P2: 40/50 (80%)
+  Overall: 77/100 (77%)
+vs Hybrid Strategic Evo Agent Cheeni:
+  As P1: 50/50 (100%)
+  As P2: 50/50 (100%)
+  Overall: 100/100 (100%)
+vs Strategic Heuristic Agent Ammar:
+  As P1: 25/50 (50%)
+  As P2: 18/50 (36%)
+  Overall: 43/100 (43%)
+vs Self-Tuning Heuristic Agent:
+  As P1: 23/50 (46%)
+  As P2: 24/50 (48%)
+  Overall: 47/100 (47%)
+vs EvoAgent-400-30-0.8-true:
+  As P1: 33/50 (66%)
+  As P2: 32/50 (64%)
+  Overall: 65/100 (65%)
+
+vs Base AdaptiveHeuristicAgent:
+  As P1: 39/50 (78%)
+
+vs Self-Tuning Agent:
+  As P1: 23/50 (46%)
+
+Overall Results: 577/800 (72%)
+
+[2025-05-16_03-41-38] Advanced to phase: REFINEMENT
+[2025-05-16_03-41-38] Starting optimization cycle 1
+[2025-05-16_03-41-38] Phase: REFINEMENT
+[2025-05-16_03-41-38] Opponent: Better Random Agent
+[2025-05-16_03-41-38] Evaluation games: 60
+[2025-05-16_03-41-38] Population size: 20
+[2025-05-16_03-41-38] Generations: 10
+[2025-05-16_03-41-38] Mutation rate: 0.1
+[2025-05-16_03-41-38] Mutation strength: 0.05
+[2025-05-16_03-41-54] Starting optimization cycle 2
+[2025-05-16_03-41-54] Phase: REFINEMENT
+[2025-05-16_03-41-54] Opponent: Careful Random Agent
+[2025-05-16_03-41-54] Evaluation games: 60
+[2025-05-16_03-41-54] Population size: 20
+[2025-05-16_03-41-54] Generations: 10
+[2025-05-16_03-41-54] Mutation rate: 0.1
+[2025-05-16_03-41-54] Mutation strength: 0.05
+[2025-05-16_03-42-09] Starting optimization cycle 3
+[2025-05-16_03-42-09] Phase: REFINEMENT
+[2025-05-16_03-42-09] Opponent: Adaptive Heuristic Agent
+[2025-05-16_03-42-09] Evaluation games: 60
+[2025-05-16_03-42-09] Population size: 20
+[2025-05-16_03-42-09] Generations: 10
+[2025-05-16_03-42-09] Mutation rate: 0.1
+[2025-05-16_03-42-09] Mutation strength: 0.05
+[2025-05-16_03-42-32] Advanced to phase: VERIFICATION
+[2025-05-16_03-42-32] Starting optimization cycle 1
+[2025-05-16_03-42-32] Phase: VERIFICATION
+[2025-05-16_03-42-32] Opponent: Better Random Agent
+[2025-05-16_03-42-32] Evaluation games: 100
+[2025-05-16_03-42-32] Population size: 10
+[2025-05-16_03-42-32] Generations: 3
+[2025-05-16_03-42-32] Mutation rate: 0.05
+[2025-05-16_03-42-32] Mutation strength: 0.02
+[2025-05-16_03-42-36] Starting optimization cycle 2
+[2025-05-16_03-42-36] Phase: VERIFICATION
+[2025-05-16_03-42-36] Opponent: Careful Random Agent
+[2025-05-16_03-42-36] Evaluation games: 100
+[2025-05-16_03-42-36] Population size: 10
+[2025-05-16_03-42-36] Generations: 3
+[2025-05-16_03-42-36] Mutation rate: 0.05
+[2025-05-16_03-42-36] Mutation strength: 0.02
+[2025-05-16_03-43-45] Test Results
+=============
+vs Better Random Agent:
+  As P1: 48/50 (96%)
+  As P2: 50/50 (100%)
+  Overall: 98/100 (98%)
+vs Careful Random Agent:
+  As P1: 33/50 (66%)
+  As P2: 38/50 (76%)
+  Overall: 71/100 (71%)
+vs Adaptive Heuristic Agent:
+  As P1: 26/50 (52%)
+  As P2: 31/50 (62%)
+  Overall: 57/100 (57%)
+vs Hybrid Strategic Evo Agent Cheeni:
+  As P1: 49/50 (98%)
+  As P2: 50/50 (100%)
+  Overall: 99/100 (99%)
+vs Strategic Heuristic Agent Ammar:
+  As P1: 17/50 (34%)
+  As P2: 15/50 (30%)
+  Overall: 32/100 (32%)
+vs Self-Tuning Heuristic Agent:
+  As P1: 22/50 (44%)
+  As P2: 19/50 (38%)
+  Overall: 41/100 (41%)
+vs EvoAgent-400-30-0.8-true:
+  As P1: 24/50 (48%)
+  As P2: 25/50 (50%)
+  Overall: 49/100 (49%)
+
+vs Base AdaptiveHeuristicAgent:
+  As P1: 29/50 (58%)
+
+vs Self-Tuning Agent:
+  As P1: 26/50 (52%)
+
+Overall Results: 502/800 (62%)
+
+[2025-05-16_03-43-45] Starting optimization cycle 3
+[2025-05-16_03-43-45] Phase: VERIFICATION
+[2025-05-16_03-43-45] Opponent: Adaptive Heuristic Agent
+[2025-05-16_03-43-45] Evaluation games: 100
+[2025-05-16_03-43-45] Population size: 10
+[2025-05-16_03-43-45] Generations: 3
+[2025-05-16_03-43-45] Mutation rate: 0.05
+[2025-05-16_03-43-45] Mutation strength: 0.02
+[2025-05-16_03-43-51] Advanced to phase: EXPLORATION
+[2025-05-16_03-43-51] Starting optimization cycle 1
+[2025-05-16_03-43-51] Phase: EXPLORATION
+[2025-05-16_03-43-51] Opponent: Better Random Agent
+[2025-05-16_03-43-51] Evaluation games: 20
+[2025-05-16_03-43-51] Population size: 10
+[2025-05-16_03-43-51] Generations: 5
+[2025-05-16_03-43-51] Mutation rate: 0.3
+[2025-05-16_03-43-51] Mutation strength: 0.3
+[2025-05-16_03-43-52] Starting optimization cycle 2
+[2025-05-16_03-43-52] Phase: EXPLORATION
+[2025-05-16_03-43-52] Opponent: Careful Random Agent
+[2025-05-16_03-43-52] Evaluation games: 20
+[2025-05-16_03-43-52] Population size: 10
+[2025-05-16_03-43-52] Generations: 5
+[2025-05-16_03-43-52] Mutation rate: 0.3
+[2025-05-16_03-43-52] Mutation strength: 0.3
+[2025-05-16_03-43-53] Starting optimization cycle 3
+[2025-05-16_03-43-53] Phase: EXPLORATION
+[2025-05-16_03-43-53] Opponent: Adaptive Heuristic Agent
+[2025-05-16_03-43-53] Evaluation games: 20
+[2025-05-16_03-43-53] Population size: 10
+[2025-05-16_03-43-53] Generations: 5
+[2025-05-16_03-43-53] Mutation rate: 0.3
+[2025-05-16_03-43-53] Mutation strength: 0.3
+[2025-05-16_03-43-55] Advanced to phase: EXPLOITATION
+[2025-05-16_03-43-55] Starting optimization cycle 1
+[2025-05-16_03-43-55] Phase: EXPLOITATION
+[2025-05-16_03-43-55] Opponent: Better Random Agent
+[2025-05-16_03-43-55] Evaluation games: 40
+[2025-05-16_03-43-55] Population size: 15
+[2025-05-16_03-43-55] Generations: 8
+[2025-05-16_03-43-55] Mutation rate: 0.2
+[2025-05-16_03-43-55] Mutation strength: 0.15
+[2025-05-16_03-45-08] Test Results
+=============
+vs Better Random Agent:
+  As P1: 49/50 (98%)
+  As P2: 49/50 (98%)
+  Overall: 98/100 (98%)
+vs Careful Random Agent:
+  As P1: 37/50 (74%)
+  As P2: 34/50 (68%)
+  Overall: 71/100 (71%)
+vs Adaptive Heuristic Agent:
+  As P1: 34/50 (68%)
+  As P2: 34/50 (68%)
+  Overall: 68/100 (68%)
+vs Hybrid Strategic Evo Agent Cheeni:
+  As P1: 50/50 (100%)
+  As P2: 50/50 (100%)
+  Overall: 100/100 (100%)
+vs Strategic Heuristic Agent Ammar:
+  As P1: 17/50 (34%)
+  As P2: 17/50 (34%)
+  Overall: 34/100 (34%)
+vs Self-Tuning Heuristic Agent:
+  As P1: 22/50 (44%)
+  As P2: 21/50 (42%)
+  Overall: 43/100 (43%)
+vs EvoAgent-400-30-0.8-true:
+  As P1: 28/50 (56%)
+  As P2: 26/50 (52%)
+  Overall: 54/100 (54%)
+
+vs Base AdaptiveHeuristicAgent:
+  As P1: 34/50 (68%)
+
+vs Self-Tuning Agent:
+  As P1: 23/50 (46%)
+
+Overall Results: 525/800 (65%)
+
+[2025-05-16_03-45-08] Starting optimization cycle 2
+[2025-05-16_03-45-08] Phase: EXPLOITATION
+[2025-05-16_03-45-08] Opponent: Careful Random Agent
+[2025-05-16_03-45-08] Evaluation games: 40
+[2025-05-16_03-45-08] Population size: 15
+[2025-05-16_03-45-08] Generations: 8
+[2025-05-16_03-45-08] Mutation rate: 0.2
+[2025-05-16_03-45-08] Mutation strength: 0.15
+[2025-05-16_03-45-14] Starting optimization cycle 3
+[2025-05-16_03-45-14] Phase: EXPLOITATION
+[2025-05-16_03-45-14] Opponent: Adaptive Heuristic Agent
+[2025-05-16_03-45-14] Evaluation games: 40
+[2025-05-16_03-45-14] Population size: 15
+[2025-05-16_03-45-14] Generations: 8
+[2025-05-16_03-45-14] Mutation rate: 0.2
+[2025-05-16_03-45-14] Mutation strength: 0.15
+[2025-05-16_03-45-22] Advanced to phase: REFINEMENT
+[2025-05-16_03-45-22] Starting optimization cycle 1
+[2025-05-16_03-45-22] Phase: REFINEMENT
+[2025-05-16_03-45-22] Opponent: Better Random Agent
+[2025-05-16_03-45-22] Evaluation games: 60
+[2025-05-16_03-45-22] Population size: 20
+[2025-05-16_03-45-22] Generations: 10
+[2025-05-16_03-45-22] Mutation rate: 0.1
+[2025-05-16_03-45-22] Mutation strength: 0.05
+[2025-05-16_03-45-38] Starting optimization cycle 2
+[2025-05-16_03-45-38] Phase: REFINEMENT
+[2025-05-16_03-45-38] Opponent: Careful Random Agent
+[2025-05-16_03-45-38] Evaluation games: 60
+[2025-05-16_03-45-38] Population size: 20
+[2025-05-16_03-45-38] Generations: 10
+[2025-05-16_03-45-38] Mutation rate: 0.1
+[2025-05-16_03-45-38] Mutation strength: 0.05
+[2025-05-16_03-45-54] Starting optimization cycle 3
+[2025-05-16_03-45-54] Phase: REFINEMENT
+[2025-05-16_03-45-54] Opponent: Adaptive Heuristic Agent
+[2025-05-16_03-45-54] Evaluation games: 60
+[2025-05-16_03-45-54] Population size: 20
+[2025-05-16_03-45-54] Generations: 10
+[2025-05-16_03-45-54] Mutation rate: 0.1
+[2025-05-16_03-45-54] Mutation strength: 0.05
+[2025-05-16_03-47-24] Test Results
+=============
+vs Better Random Agent:
+  As P1: 48/50 (96%)
+  As P2: 48/50 (96%)
+  Overall: 96/100 (96%)
+vs Careful Random Agent:
+  As P1: 37/50 (74%)
+  As P2: 33/50 (66%)
+  Overall: 70/100 (70%)
+vs Adaptive Heuristic Agent:
+  As P1: 32/50 (64%)
+  As P2: 30/50 (60%)
+  Overall: 62/100 (62%)
+vs Hybrid Strategic Evo Agent Cheeni:
+  As P1: 50/50 (100%)
+  As P2: 50/50 (100%)
+  Overall: 100/100 (100%)
+vs Strategic Heuristic Agent Ammar:
+  As P1: 17/50 (34%)
+  As P2: 23/50 (46%)
+  Overall: 40/100 (40%)
+vs Self-Tuning Heuristic Agent:
+  As P1: 24/50 (48%)
+  As P2: 20/50 (40%)
+  Overall: 44/100 (44%)
+vs EvoAgent-400-30-0.8-true:
+  As P1: 19/50 (38%)
+  As P2: 23/50 (46%)
+  Overall: 42/100 (42%)
+
+vs Base AdaptiveHeuristicAgent:
+  As P1: 35/50 (70%)
+
+vs Self-Tuning Agent:
+  As P1: 23/50 (46%)
+
+Overall Results: 512/800 (64%)
+
+[2025-05-16_03-47-24] Advanced to phase: VERIFICATION
+[2025-05-16_03-47-24] Starting optimization cycle 1
+[2025-05-16_03-47-24] Phase: VERIFICATION
+[2025-05-16_03-47-24] Opponent: Better Random Agent
+[2025-05-16_03-47-24] Evaluation games: 100
+[2025-05-16_03-47-24] Population size: 10
+[2025-05-16_03-47-24] Generations: 3
+[2025-05-16_03-47-24] Mutation rate: 0.05
+[2025-05-16_03-47-24] Mutation strength: 0.02
+[2025-05-16_03-47-27] Starting optimization cycle 2
+[2025-05-16_03-47-27] Phase: VERIFICATION
+[2025-05-16_03-47-27] Opponent: Careful Random Agent
+[2025-05-16_03-47-27] Evaluation games: 100
+[2025-05-16_03-47-27] Population size: 10
+[2025-05-16_03-47-27] Generations: 3
+[2025-05-16_03-47-27] Mutation rate: 0.05
+[2025-05-16_03-47-27] Mutation strength: 0.02
+[2025-05-16_03-47-31] Starting optimization cycle 3
+[2025-05-16_03-47-31] Phase: VERIFICATION
+[2025-05-16_03-47-31] Opponent: Adaptive Heuristic Agent
+[2025-05-16_03-47-31] Evaluation games: 100
+[2025-05-16_03-47-31] Population size: 10
+[2025-05-16_03-47-31] Generations: 3
+[2025-05-16_03-47-31] Mutation rate: 0.05
+[2025-05-16_03-47-31] Mutation strength: 0.02
+[2025-05-16_03-47-37] Advanced to phase: EXPLORATION
+[2025-05-16_03-47-37] Starting optimization cycle 1
+[2025-05-16_03-47-37] Phase: EXPLORATION
+[2025-05-16_03-47-37] Opponent: Better Random Agent
+[2025-05-16_03-47-37] Evaluation games: 20
+[2025-05-16_03-47-37] Population size: 10
+[2025-05-16_03-47-37] Generations: 5
+[2025-05-16_03-47-37] Mutation rate: 0.3
+[2025-05-16_03-47-37] Mutation strength: 0.3
+[2025-05-16_03-47-38] Starting optimization cycle 2
+[2025-05-16_03-47-38] Phase: EXPLORATION
+[2025-05-16_03-47-38] Opponent: Careful Random Agent
+[2025-05-16_03-47-38] Evaluation games: 20
+[2025-05-16_03-47-38] Population size: 10
+[2025-05-16_03-47-38] Generations: 5
+[2025-05-16_03-47-38] Mutation rate: 0.3
+[2025-05-16_03-47-38] Mutation strength: 0.3
+[2025-05-16_03-48-46] Test Results
+=============
+vs Better Random Agent:
+  As P1: 50/50 (100%)
+  As P2: 50/50 (100%)
+  Overall: 100/100 (100%)
+vs Careful Random Agent:
+  As P1: 43/50 (86%)
+  As P2: 43/50 (86%)
+  Overall: 86/100 (86%)
+vs Adaptive Heuristic Agent:
+  As P1: 39/50 (78%)
+  As P2: 38/50 (76%)
+  Overall: 77/100 (77%)
+vs Hybrid Strategic Evo Agent Cheeni:
+  As P1: 50/50 (100%)
+  As P2: 50/50 (100%)
+  Overall: 100/100 (100%)
+vs Strategic Heuristic Agent Ammar:
+  As P1: 24/50 (48%)
+  As P2: 34/50 (68%)
+  Overall: 58/100 (58%)
+vs Self-Tuning Heuristic Agent:
+  As P1: 23/50 (46%)
+  As P2: 22/50 (44%)
+  Overall: 45/100 (45%)
+vs EvoAgent-400-30-0.8-true:
+  As P1: 37/50 (74%)
+  As P2: 32/50 (64%)
+  Overall: 69/100 (69%)
+
+vs Base AdaptiveHeuristicAgent:
+  As P1: 35/50 (70%)
+
+vs Self-Tuning Agent:
+  As P1: 33/50 (66%)
+
+Overall Results: 603/800 (75%)
+
+[2025-05-16_03-48-46] Starting optimization cycle 3
+[2025-05-16_03-48-46] Phase: EXPLORATION
+[2025-05-16_03-48-46] Opponent: Adaptive Heuristic Agent
+[2025-05-16_03-48-46] Evaluation games: 20
+[2025-05-16_03-48-46] Population size: 10
+[2025-05-16_03-48-46] Generations: 5
+[2025-05-16_03-48-46] Mutation rate: 0.3
+[2025-05-16_03-48-46] Mutation strength: 0.3
+[2025-05-16_03-48-48] Advanced to phase: EXPLOITATION
+[2025-05-16_03-48-48] Starting optimization cycle 1
+[2025-05-16_03-48-48] Phase: EXPLOITATION
+[2025-05-16_03-48-48] Opponent: Better Random Agent
+[2025-05-16_03-48-48] Evaluation games: 40
+[2025-05-16_03-48-48] Population size: 15
+[2025-05-16_03-48-48] Generations: 8
+[2025-05-16_03-48-48] Mutation rate: 0.2
+[2025-05-16_03-48-48] Mutation strength: 0.15
+[2025-05-16_03-48-55] Starting optimization cycle 2
+[2025-05-16_03-48-55] Phase: EXPLOITATION
+[2025-05-16_03-48-55] Opponent: Careful Random Agent
+[2025-05-16_03-48-55] Evaluation games: 40
+[2025-05-16_03-48-55] Population size: 15
+[2025-05-16_03-48-55] Generations: 8
+[2025-05-16_03-48-55] Mutation rate: 0.2
+[2025-05-16_03-48-55] Mutation strength: 0.15
+[2025-05-16_03-49-01] Starting optimization cycle 3
+[2025-05-16_03-49-01] Phase: EXPLOITATION
+[2025-05-16_03-49-01] Opponent: Adaptive Heuristic Agent
+[2025-05-16_03-49-01] Evaluation games: 40
+[2025-05-16_03-49-01] Population size: 15
+[2025-05-16_03-49-01] Generations: 8
+[2025-05-16_03-49-01] Mutation rate: 0.2
+[2025-05-16_03-49-01] Mutation strength: 0.15
+[2025-05-16_03-49-09] Advanced to phase: REFINEMENT
+[2025-05-16_03-49-09] Starting optimization cycle 1
+[2025-05-16_03-49-09] Phase: REFINEMENT
+[2025-05-16_03-49-09] Opponent: Better Random Agent
+[2025-05-16_03-49-09] Evaluation games: 60
+[2025-05-16_03-49-09] Population size: 20
+[2025-05-16_03-49-09] Generations: 10
+[2025-05-16_03-49-09] Mutation rate: 0.1
+[2025-05-16_03-49-09] Mutation strength: 0.05
+[2025-05-16_03-50-31] Test Results
+=============
+vs Better Random Agent:
+  As P1: 47/50 (94%)
+  As P2: 49/50 (98%)
+  Overall: 96/100 (96%)
+vs Careful Random Agent:
+  As P1: 37/50 (74%)
+  As P2: 34/50 (68%)
+  Overall: 71/100 (71%)
+vs Adaptive Heuristic Agent:
+  As P1: 28/50 (56%)
+  As P2: 28/50 (56%)
+  Overall: 56/100 (56%)
+vs Hybrid Strategic Evo Agent Cheeni:
+  As P1: 50/50 (100%)
+  As P2: 50/50 (100%)
+  Overall: 100/100 (100%)
+vs Strategic Heuristic Agent Ammar:
+  As P1: 26/50 (52%)
+  As P2: 17/50 (34%)
+  Overall: 43/100 (43%)
+vs Self-Tuning Heuristic Agent:
+  As P1: 22/50 (44%)
+  As P2: 21/50 (42%)
+  Overall: 43/100 (43%)
+vs EvoAgent-400-30-0.8-true:
+  As P1: 17/50 (34%)
+  As P2: 24/50 (48%)
+  Overall: 41/100 (41%)
+
+vs Base AdaptiveHeuristicAgent:
+  As P1: 36/50 (72%)
+
+vs Self-Tuning Agent:
+  As P1: 17/50 (34%)
+
+Overall Results: 503/800 (62%)
+
+[2025-05-16_03-50-31] Starting optimization cycle 2
+[2025-05-16_03-50-31] Phase: REFINEMENT
+[2025-05-16_03-50-31] Opponent: Careful Random Agent
+[2025-05-16_03-50-31] Evaluation games: 60
+[2025-05-16_03-50-31] Population size: 20
+[2025-05-16_03-50-31] Generations: 10
+[2025-05-16_03-50-31] Mutation rate: 0.1
+[2025-05-16_03-50-31] Mutation strength: 0.05
+[2025-05-16_03-50-46] Starting optimization cycle 3
+[2025-05-16_03-50-46] Phase: REFINEMENT
+[2025-05-16_03-50-46] Opponent: Adaptive Heuristic Agent
+[2025-05-16_03-50-46] Evaluation games: 60
+[2025-05-16_03-50-46] Population size: 20
+[2025-05-16_03-50-46] Generations: 10
+[2025-05-16_03-50-46] Mutation rate: 0.1
+[2025-05-16_03-50-46] Mutation strength: 0.05
+[2025-05-16_03-51-09] Advanced to phase: VERIFICATION
+[2025-05-16_03-51-09] Starting optimization cycle 1
+[2025-05-16_03-51-09] Phase: VERIFICATION
+[2025-05-16_03-51-09] Opponent: Better Random Agent
+[2025-05-16_03-51-09] Evaluation games: 100
+[2025-05-16_03-51-09] Population size: 10
+[2025-05-16_03-51-09] Generations: 3
+[2025-05-16_03-51-09] Mutation rate: 0.05
+[2025-05-16_03-51-09] Mutation strength: 0.02
+[2025-05-16_03-51-12] Starting optimization cycle 2
+[2025-05-16_03-51-12] Phase: VERIFICATION
+[2025-05-16_03-51-12] Opponent: Careful Random Agent
+[2025-05-16_03-51-12] Evaluation games: 100
+[2025-05-16_03-51-12] Population size: 10
+[2025-05-16_03-51-12] Generations: 3
+[2025-05-16_03-51-12] Mutation rate: 0.05
+[2025-05-16_03-51-12] Mutation strength: 0.02
+[2025-05-16_03-51-16] Starting optimization cycle 3
+[2025-05-16_03-51-16] Phase: VERIFICATION
+[2025-05-16_03-51-16] Opponent: Adaptive Heuristic Agent
+[2025-05-16_03-51-16] Evaluation games: 100
+[2025-05-16_03-51-16] Population size: 10
+[2025-05-16_03-51-16] Generations: 3
+[2025-05-16_03-51-16] Mutation rate: 0.05
+[2025-05-16_03-51-16] Mutation strength: 0.02
+[2025-05-16_03-52-28] Test Results
+=============
+vs Better Random Agent:
+  As P1: 48/50 (96%)
+  As P2: 48/50 (96%)
+  Overall: 96/100 (96%)
+vs Careful Random Agent:
+  As P1: 27/50 (54%)
+  As P2: 35/50 (70%)
+  Overall: 62/100 (62%)
+vs Adaptive Heuristic Agent:
+  As P1: 25/50 (50%)
+  As P2: 25/50 (50%)
+  Overall: 50/100 (50%)
+vs Hybrid Strategic Evo Agent Cheeni:
+  As P1: 49/50 (98%)
+  As P2: 50/50 (100%)
+  Overall: 99/100 (99%)
+vs Strategic Heuristic Agent Ammar:
+  As P1: 22/50 (44%)
+  As P2: 16/50 (32%)
+  Overall: 38/100 (38%)
+vs Self-Tuning Heuristic Agent:
+  As P1: 17/50 (34%)
+  As P2: 18/50 (36%)
+  Overall: 35/100 (35%)
+vs EvoAgent-400-30-0.8-true:
+  As P1: 23/50 (46%)
+  As P2: 26/50 (52%)
+  Overall: 49/100 (49%)
+
+vs Base AdaptiveHeuristicAgent:
+  As P1: 31/50 (62%)
+
+vs Self-Tuning Agent:
+  As P1: 16/50 (32%)
+
+Overall Results: 476/800 (59%)
+
+[2025-05-16_03-52-28] Advanced to phase: EXPLORATION
+[2025-05-16_03-52-28] Starting optimization cycle 1
+[2025-05-16_03-52-28] Phase: EXPLORATION
+[2025-05-16_03-52-28] Opponent: Better Random Agent
+[2025-05-16_03-52-28] Evaluation games: 20
+[2025-05-16_03-52-28] Population size: 10
+[2025-05-16_03-52-28] Generations: 5
+[2025-05-16_03-52-28] Mutation rate: 0.3
+[2025-05-16_03-52-28] Mutation strength: 0.3
+[2025-05-16_03-52-29] Starting optimization cycle 2
+[2025-05-16_03-52-29] Phase: EXPLORATION
+[2025-05-16_03-52-29] Opponent: Careful Random Agent
+[2025-05-16_03-52-29] Evaluation games: 20
+[2025-05-16_03-52-29] Population size: 10
+[2025-05-16_03-52-29] Generations: 5
+[2025-05-16_03-52-29] Mutation rate: 0.3
+[2025-05-16_03-52-29] Mutation strength: 0.3
+[2025-05-16_03-52-30] Starting optimization cycle 3
+[2025-05-16_03-52-30] Phase: EXPLORATION
+[2025-05-16_03-52-30] Opponent: Adaptive Heuristic Agent
+[2025-05-16_03-52-30] Evaluation games: 20
+[2025-05-16_03-52-30] Population size: 10
+[2025-05-16_03-52-30] Generations: 5
+[2025-05-16_03-52-30] Mutation rate: 0.3
+[2025-05-16_03-52-30] Mutation strength: 0.3
+[2025-05-16_03-52-32] Advanced to phase: EXPLOITATION
+[2025-05-16_03-52-32] Starting optimization cycle 1
+[2025-05-16_03-52-32] Phase: EXPLOITATION
+[2025-05-16_03-52-32] Opponent: Better Random Agent
+[2025-05-16_03-52-32] Evaluation games: 40
+[2025-05-16_03-52-32] Population size: 15
+[2025-05-16_03-52-32] Generations: 8
+[2025-05-16_03-52-32] Mutation rate: 0.2
+[2025-05-16_03-52-32] Mutation strength: 0.15
+[2025-05-16_03-52-39] Starting optimization cycle 2
+[2025-05-16_03-52-39] Phase: EXPLOITATION
+[2025-05-16_03-52-39] Opponent: Careful Random Agent
+[2025-05-16_03-52-39] Evaluation games: 40
+[2025-05-16_03-52-39] Population size: 15
+[2025-05-16_03-52-39] Generations: 8
+[2025-05-16_03-52-39] Mutation rate: 0.2
+[2025-05-16_03-52-39] Mutation strength: 0.15
+[2025-05-16_03-53-52] Test Results
+=============
+vs Better Random Agent:
+  As P1: 50/50 (100%)
+  As P2: 49/50 (98%)
+  Overall: 99/100 (99%)
+vs Careful Random Agent:
+  As P1: 47/50 (94%)
+  As P2: 32/50 (64%)
+  Overall: 79/100 (79%)
+vs Adaptive Heuristic Agent:
+  As P1: 27/50 (54%)
+  As P2: 30/50 (60%)
+  Overall: 57/100 (57%)
+vs Hybrid Strategic Evo Agent Cheeni:
+  As P1: 50/50 (100%)
+  As P2: 50/50 (100%)
+  Overall: 100/100 (100%)
+vs Strategic Heuristic Agent Ammar:
+  As P1: 24/50 (48%)
+  As P2: 20/50 (40%)
+  Overall: 44/100 (44%)
+vs Self-Tuning Heuristic Agent:
+  As P1: 25/50 (50%)
+  As P2: 24/50 (48%)
+  Overall: 49/100 (49%)
+vs EvoAgent-400-30-0.8-true:
+  As P1: 20/50 (40%)
+  As P2: 32/50 (64%)
+  Overall: 52/100 (52%)
+
+vs Base AdaptiveHeuristicAgent:
+  As P1: 30/50 (60%)
+
+vs Self-Tuning Agent:
+  As P1: 27/50 (54%)
+
+Overall Results: 537/800 (67%)
+
+[2025-05-16_03-53-52] Starting optimization cycle 3
+[2025-05-16_03-53-52] Phase: EXPLOITATION
+[2025-05-16_03-53-52] Opponent: Adaptive Heuristic Agent
+[2025-05-16_03-53-52] Evaluation games: 40
+[2025-05-16_03-53-52] Population size: 15
+[2025-05-16_03-53-52] Generations: 8
+[2025-05-16_03-53-52] Mutation rate: 0.2
+[2025-05-16_03-53-52] Mutation strength: 0.15
+[2025-05-16_03-54-01] Advanced to phase: REFINEMENT
+[2025-05-16_03-54-01] Starting optimization cycle 1
+[2025-05-16_03-54-01] Phase: REFINEMENT
+[2025-05-16_03-54-01] Opponent: Better Random Agent
+[2025-05-16_03-54-01] Evaluation games: 60
+[2025-05-16_03-54-01] Population size: 20
+[2025-05-16_03-54-01] Generations: 10
+[2025-05-16_03-54-01] Mutation rate: 0.1
+[2025-05-16_03-54-01] Mutation strength: 0.05
+[2025-05-16_03-54-16] Starting optimization cycle 2
+[2025-05-16_03-54-16] Phase: REFINEMENT
+[2025-05-16_03-54-16] Opponent: Careful Random Agent
+[2025-05-16_03-54-16] Evaluation games: 60
+[2025-05-16_03-54-16] Population size: 20
+[2025-05-16_03-54-16] Generations: 10
+[2025-05-16_03-54-16] Mutation rate: 0.1
+[2025-05-16_03-54-16] Mutation strength: 0.05
+[2025-05-16_03-54-32] Starting optimization cycle 3
+[2025-05-16_03-54-32] Phase: REFINEMENT
+[2025-05-16_03-54-32] Opponent: Adaptive Heuristic Agent
+[2025-05-16_03-54-32] Evaluation games: 60
+[2025-05-16_03-54-32] Population size: 20
+[2025-05-16_03-54-32] Generations: 10
+[2025-05-16_03-54-32] Mutation rate: 0.1
+[2025-05-16_03-54-32] Mutation strength: 0.05
+[2025-05-16_03-54-54] Advanced to phase: VERIFICATION
+[2025-05-16_03-54-54] Starting optimization cycle 1
+[2025-05-16_03-54-54] Phase: VERIFICATION
+[2025-05-16_03-54-54] Opponent: Better Random Agent
+[2025-05-16_03-54-54] Evaluation games: 100
+[2025-05-16_03-54-54] Population size: 10
+[2025-05-16_03-54-54] Generations: 3
+[2025-05-16_03-54-54] Mutation rate: 0.05
+[2025-05-16_03-54-54] Mutation strength: 0.02
+[2025-05-16_03-56-04] Test Results
+=============
+vs Better Random Agent:
+  As P1: 49/50 (98%)
+  As P2: 47/50 (94%)
+  Overall: 96/100 (96%)
+vs Careful Random Agent:
+  As P1: 34/50 (68%)
+  As P2: 35/50 (70%)
+  Overall: 69/100 (69%)
+vs Adaptive Heuristic Agent:
+  As P1: 33/50 (66%)
+  As P2: 26/50 (52%)
+  Overall: 59/100 (59%)
+vs Hybrid Strategic Evo Agent Cheeni:
+  As P1: 50/50 (100%)
+  As P2: 49/50 (98%)
+  Overall: 99/100 (99%)
+vs Strategic Heuristic Agent Ammar:
+  As P1: 16/50 (32%)
+  As P2: 12/50 (24%)
+  Overall: 28/100 (28%)
+vs Self-Tuning Heuristic Agent:
+  As P1: 22/50 (44%)
+  As P2: 16/50 (32%)
+  Overall: 38/100 (38%)
+vs EvoAgent-400-30-0.8-true:
+  As P1: 15/50 (30%)
+  As P2: 26/50 (52%)
+  Overall: 41/100 (41%)
+
+vs Base AdaptiveHeuristicAgent:
+  As P1: 30/50 (60%)
+
+vs Self-Tuning Agent:
+  As P1: 24/50 (48%)
+
+Overall Results: 484/800 (60%)
+
+[2025-05-16_03-56-04] Starting optimization cycle 2
+[2025-05-16_03-56-04] Phase: VERIFICATION
+[2025-05-16_03-56-04] Opponent: Careful Random Agent
+[2025-05-16_03-56-04] Evaluation games: 100
+[2025-05-16_03-56-04] Population size: 10
+[2025-05-16_03-56-04] Generations: 3
+[2025-05-16_03-56-04] Mutation rate: 0.05
+[2025-05-16_03-56-04] Mutation strength: 0.02
+[2025-05-16_03-56-08] Starting optimization cycle 3
+[2025-05-16_03-56-08] Phase: VERIFICATION
+[2025-05-16_03-56-08] Opponent: Adaptive Heuristic Agent
+[2025-05-16_03-56-08] Evaluation games: 100
+[2025-05-16_03-56-08] Population size: 10
+[2025-05-16_03-56-08] Generations: 3
+[2025-05-16_03-56-08] Mutation rate: 0.05
+[2025-05-16_03-56-08] Mutation strength: 0.02
+[2025-05-16_03-56-13] Advanced to phase: EXPLORATION
+[2025-05-16_03-56-13] Starting optimization cycle 1
+[2025-05-16_03-56-13] Phase: EXPLORATION
+[2025-05-16_03-56-13] Opponent: Better Random Agent
+[2025-05-16_03-56-13] Evaluation games: 20
+[2025-05-16_03-56-13] Population size: 10
+[2025-05-16_03-56-13] Generations: 5
+[2025-05-16_03-56-13] Mutation rate: 0.3
+[2025-05-16_03-56-13] Mutation strength: 0.3
+[2025-05-16_03-56-14] Starting optimization cycle 2
+[2025-05-16_03-56-14] Phase: EXPLORATION
+[2025-05-16_03-56-14] Opponent: Careful Random Agent
+[2025-05-16_03-56-14] Evaluation games: 20
+[2025-05-16_03-56-14] Population size: 10
+[2025-05-16_03-56-14] Generations: 5
+[2025-05-16_03-56-14] Mutation rate: 0.3
+[2025-05-16_03-56-14] Mutation strength: 0.3
+[2025-05-16_03-56-15] Starting optimization cycle 3
+[2025-05-16_03-56-15] Phase: EXPLORATION
+[2025-05-16_03-56-15] Opponent: Adaptive Heuristic Agent
+[2025-05-16_03-56-15] Evaluation games: 20
+[2025-05-16_03-56-15] Population size: 10
+[2025-05-16_03-56-15] Generations: 5
+[2025-05-16_03-56-15] Mutation rate: 0.3
+[2025-05-16_03-56-15] Mutation strength: 0.3
+[2025-05-16_03-57-28] Test Results
+=============
+vs Better Random Agent:
+  As P1: 50/50 (100%)
+  As P2: 47/50 (94%)
+  Overall: 97/100 (97%)
+vs Careful Random Agent:
+  As P1: 39/50 (78%)
+  As P2: 38/50 (76%)
+  Overall: 77/100 (77%)
+vs Adaptive Heuristic Agent:
+  As P1: 34/50 (68%)
+  As P2: 39/50 (78%)
+  Overall: 73/100 (73%)
+vs Hybrid Strategic Evo Agent Cheeni:
+  As P1: 50/50 (100%)
+  As P2: 50/50 (100%)
+  Overall: 100/100 (100%)
+vs Strategic Heuristic Agent Ammar:
+  As P1: 22/50 (44%)
+  As P2: 18/50 (36%)
+  Overall: 40/100 (40%)
+vs Self-Tuning Heuristic Agent:
+  As P1: 26/50 (52%)
+  As P2: 26/50 (52%)
+  Overall: 52/100 (52%)
+vs EvoAgent-400-30-0.8-true:
+  As P1: 30/50 (60%)
+  As P2: 23/50 (46%)
+  Overall: 53/100 (53%)
+
+vs Base AdaptiveHeuristicAgent:
+  As P1: 39/50 (78%)
+
+vs Self-Tuning Agent:
+  As P1: 26/50 (52%)
+
+Overall Results: 557/800 (69%)
+
+[2025-05-16_03-57-28] Advanced to phase: EXPLOITATION
+[2025-05-16_03-57-28] Starting optimization cycle 1
+[2025-05-16_03-57-28] Phase: EXPLOITATION
+[2025-05-16_03-57-28] Opponent: Better Random Agent
+[2025-05-16_03-57-28] Evaluation games: 40
+[2025-05-16_03-57-28] Population size: 15
+[2025-05-16_03-57-28] Generations: 8
+[2025-05-16_03-57-28] Mutation rate: 0.2
+[2025-05-16_03-57-28] Mutation strength: 0.15
+[2025-05-16_03-57-34] Starting optimization cycle 2
+[2025-05-16_03-57-34] Phase: EXPLOITATION
+[2025-05-16_03-57-34] Opponent: Careful Random Agent
+[2025-05-16_03-57-34] Evaluation games: 40
+[2025-05-16_03-57-34] Population size: 15
+[2025-05-16_03-57-34] Generations: 8
+[2025-05-16_03-57-34] Mutation rate: 0.2
+[2025-05-16_03-57-34] Mutation strength: 0.15
+[2025-05-16_03-57-40] Starting optimization cycle 3
+[2025-05-16_03-57-40] Phase: EXPLOITATION
+[2025-05-16_03-57-40] Opponent: Adaptive Heuristic Agent
+[2025-05-16_03-57-40] Evaluation games: 40
+[2025-05-16_03-57-40] Population size: 15
+[2025-05-16_03-57-40] Generations: 8
+[2025-05-16_03-57-40] Mutation rate: 0.2
+[2025-05-16_03-57-40] Mutation strength: 0.15
+[2025-05-16_03-57-49] Advanced to phase: REFINEMENT
+[2025-05-16_03-57-49] Starting optimization cycle 1
+[2025-05-16_03-57-49] Phase: REFINEMENT
+[2025-05-16_03-57-49] Opponent: Better Random Agent
+[2025-05-16_03-57-49] Evaluation games: 60
+[2025-05-16_03-57-49] Population size: 20
+[2025-05-16_03-57-49] Generations: 10
+[2025-05-16_03-57-49] Mutation rate: 0.1
+[2025-05-16_03-57-49] Mutation strength: 0.05
+[2025-05-16_03-58-04] Starting optimization cycle 2
+[2025-05-16_03-58-04] Phase: REFINEMENT
+[2025-05-16_03-58-04] Opponent: Careful Random Agent
+[2025-05-16_03-58-04] Evaluation games: 60
+[2025-05-16_03-58-04] Population size: 20
+[2025-05-16_03-58-04] Generations: 10
+[2025-05-16_03-58-04] Mutation rate: 0.1
+[2025-05-16_03-58-04] Mutation strength: 0.05
+[2025-05-16_03-58-54] Test Results
+=============
+vs Better Random Agent:
+  As P1: 47/50 (94%)
+  As P2: 49/50 (98%)
+  Overall: 96/100 (96%)
+vs Careful Random Agent:
+  As P1: 39/50 (78%)
+  As P2: 35/50 (70%)
+  Overall: 74/100 (74%)
+vs Adaptive Heuristic Agent:
+  As P1: 29/50 (58%)
+  As P2: 29/50 (58%)
+  Overall: 58/100 (58%)
+vs Hybrid Strategic Evo Agent Cheeni:
+  As P1: 50/50 (100%)
+  As P2: 50/50 (100%)
+  Overall: 100/100 (100%)
+vs Strategic Heuristic Agent Ammar:
+  As P1: 19/50 (38%)
+  As P2: 19/50 (38%)
+  Overall: 38/100 (38%)
+vs Self-Tuning Heuristic Agent:
+  As P1: 20/50 (40%)
+  As P2: 17/50 (34%)
+  Overall: 37/100 (37%)
+vs EvoAgent-400-30-0.8-true:
+  As P1: 27/50 (54%)
+  As P2: 24/50 (48%)
+  Overall: 51/100 (51%)
+
+vs Base AdaptiveHeuristicAgent:
+  As P1: 35/50 (70%)
+
+vs Self-Tuning Agent:
+  As P1: 21/50 (42%)
+
+Overall Results: 510/800 (63%)
+
+[2025-05-16_03-58-54] Starting optimization cycle 3
+[2025-05-16_03-58-54] Phase: REFINEMENT
+[2025-05-16_03-58-54] Opponent: Adaptive Heuristic Agent
+[2025-05-16_03-58-54] Evaluation games: 60
+[2025-05-16_03-58-54] Population size: 20
+[2025-05-16_03-58-54] Generations: 10
+[2025-05-16_03-58-54] Mutation rate: 0.1
+[2025-05-16_03-58-54] Mutation strength: 0.05
+[2025-05-16_03-59-06] Advanced to phase: VERIFICATION
+[2025-05-16_03-59-06] Starting optimization cycle 1
+[2025-05-16_03-59-06] Phase: VERIFICATION
+[2025-05-16_03-59-06] Opponent: Better Random Agent
+[2025-05-16_03-59-06] Evaluation games: 100
+[2025-05-16_03-59-06] Population size: 10
+[2025-05-16_03-59-06] Generations: 3
+[2025-05-16_03-59-06] Mutation rate: 0.05
+[2025-05-16_03-59-06] Mutation strength: 0.02
+[2025-05-16_03-59-08] Starting optimization cycle 2
+[2025-05-16_03-59-08] Phase: VERIFICATION
+[2025-05-16_03-59-08] Opponent: Careful Random Agent
+[2025-05-16_03-59-08] Evaluation games: 100
+[2025-05-16_03-59-08] Population size: 10
+[2025-05-16_03-59-08] Generations: 3
+[2025-05-16_03-59-08] Mutation rate: 0.05
+[2025-05-16_03-59-08] Mutation strength: 0.02
+[2025-05-16_03-59-11] Starting optimization cycle 3
+[2025-05-16_03-59-11] Phase: VERIFICATION
+[2025-05-16_03-59-11] Opponent: Adaptive Heuristic Agent
+[2025-05-16_03-59-11] Evaluation games: 100
+[2025-05-16_03-59-11] Population size: 10
+[2025-05-16_03-59-11] Generations: 3
+[2025-05-16_03-59-11] Mutation rate: 0.05
+[2025-05-16_03-59-11] Mutation strength: 0.02
+[2025-05-16_03-59-14] Advanced to phase: EXPLORATION
+[2025-05-16_03-59-14] Starting optimization cycle 1
+[2025-05-16_03-59-14] Phase: EXPLORATION
+[2025-05-16_03-59-14] Opponent: Better Random Agent
+[2025-05-16_03-59-14] Evaluation games: 20
+[2025-05-16_03-59-14] Population size: 10
+[2025-05-16_03-59-14] Generations: 5
+[2025-05-16_03-59-14] Mutation rate: 0.3
+[2025-05-16_03-59-14] Mutation strength: 0.3
+[2025-05-16_03-59-52] Test Results
+=============
+vs Better Random Agent:
+  As P1: 49/50 (98%)
+  As P2: 50/50 (100%)
+  Overall: 99/100 (99%)
+vs Careful Random Agent:
+  As P1: 35/50 (70%)
+  As P2: 35/50 (70%)
+  Overall: 70/100 (70%)
+vs Adaptive Heuristic Agent:
+  As P1: 34/50 (68%)
+  As P2: 24/50 (48%)
+  Overall: 58/100 (58%)
+vs Hybrid Strategic Evo Agent Cheeni:
+  As P1: 50/50 (100%)
+  As P2: 49/50 (98%)
+  Overall: 99/100 (99%)
+vs Strategic Heuristic Agent Ammar:
+  As P1: 15/50 (30%)
+  As P2: 14/50 (28%)
+  Overall: 29/100 (29%)
+vs Self-Tuning Heuristic Agent:
+  As P1: 18/50 (36%)
+  As P2: 16/50 (32%)
+  Overall: 34/100 (34%)
+vs EvoAgent-400-30-0.8-true:
+  As P1: 15/50 (30%)
+  As P2: 18/50 (36%)
+  Overall: 33/100 (33%)
+
+vs Base AdaptiveHeuristicAgent:
+  As P1: 32/50 (64%)
+
+vs Self-Tuning Agent:
+  As P1: 21/50 (42%)
+
+Overall Results: 475/800 (59%)
+
+[2025-05-16_03-59-52] Starting optimization cycle 2
+[2025-05-16_03-59-52] Phase: EXPLORATION
+[2025-05-16_03-59-52] Opponent: Careful Random Agent
+[2025-05-16_03-59-52] Evaluation games: 20
+[2025-05-16_03-59-52] Population size: 10
+[2025-05-16_03-59-52] Generations: 5
+[2025-05-16_03-59-52] Mutation rate: 0.3
+[2025-05-16_03-59-52] Mutation strength: 0.3
+[2025-05-16_03-59-52] Starting optimization cycle 3
+[2025-05-16_03-59-52] Phase: EXPLORATION
+[2025-05-16_03-59-52] Opponent: Adaptive Heuristic Agent
+[2025-05-16_03-59-52] Evaluation games: 20
+[2025-05-16_03-59-52] Population size: 10
+[2025-05-16_03-59-52] Generations: 5
+[2025-05-16_03-59-52] Mutation rate: 0.3
+[2025-05-16_03-59-52] Mutation strength: 0.3
+[2025-05-16_03-59-53] Advanced to phase: EXPLOITATION
+[2025-05-16_03-59-53] Starting optimization cycle 1
+[2025-05-16_03-59-53] Phase: EXPLOITATION
+[2025-05-16_03-59-53] Opponent: Better Random Agent
+[2025-05-16_03-59-53] Evaluation games: 40
+[2025-05-16_03-59-53] Population size: 15
+[2025-05-16_03-59-53] Generations: 8
+[2025-05-16_03-59-53] Mutation rate: 0.2
+[2025-05-16_03-59-53] Mutation strength: 0.15
+[2025-05-16_03-59-57] Starting optimization cycle 2
+[2025-05-16_03-59-57] Phase: EXPLOITATION
+[2025-05-16_03-59-57] Opponent: Careful Random Agent
+[2025-05-16_03-59-57] Evaluation games: 40
+[2025-05-16_03-59-57] Population size: 15
+[2025-05-16_03-59-57] Generations: 8
+[2025-05-16_03-59-57] Mutation rate: 0.2
+[2025-05-16_03-59-57] Mutation strength: 0.15
+[2025-05-16_04-00-01] Starting optimization cycle 3
+[2025-05-16_04-00-01] Phase: EXPLOITATION
+[2025-05-16_04-00-01] Opponent: Adaptive Heuristic Agent
+[2025-05-16_04-00-01] Evaluation games: 40
+[2025-05-16_04-00-01] Population size: 15
+[2025-05-16_04-00-01] Generations: 8
+[2025-05-16_04-00-01] Mutation rate: 0.2
+[2025-05-16_04-00-01] Mutation strength: 0.15
+[2025-05-16_04-00-42] Test Results
+=============
+vs Better Random Agent:
+  As P1: 48/50 (96%)
+  As P2: 48/50 (96%)
+  Overall: 96/100 (96%)
+vs Careful Random Agent:
+  As P1: 36/50 (72%)
+  As P2: 38/50 (76%)
+  Overall: 74/100 (74%)
+vs Adaptive Heuristic Agent:
+  As P1: 33/50 (66%)
+  As P2: 32/50 (64%)
+  Overall: 65/100 (65%)
+vs Hybrid Strategic Evo Agent Cheeni:
+  As P1: 50/50 (100%)
+  As P2: 50/50 (100%)
+  Overall: 100/100 (100%)
+vs Strategic Heuristic Agent Ammar:
+  As P1: 24/50 (48%)
+  As P2: 13/50 (26%)
+  Overall: 37/100 (37%)
+vs Self-Tuning Heuristic Agent:
+  As P1: 20/50 (40%)
+  As P2: 25/50 (50%)
+  Overall: 45/100 (45%)
+vs EvoAgent-400-30-0.8-true:
+  As P1: 27/50 (54%)
+  As P2: 24/50 (48%)
+  Overall: 51/100 (51%)
+
+vs Base AdaptiveHeuristicAgent:
+  As P1: 34/50 (68%)
+
+vs Self-Tuning Agent:
+  As P1: 16/50 (32%)
+
+Overall Results: 518/800 (64%)
+
+[2025-05-16_04-00-42] Advanced to phase: REFINEMENT
+[2025-05-16_04-00-42] Starting optimization cycle 1
+[2025-05-16_04-00-42] Phase: REFINEMENT
+[2025-05-16_04-00-42] Opponent: Better Random Agent
+[2025-05-16_04-00-42] Evaluation games: 60
+[2025-05-16_04-00-42] Population size: 20
+[2025-05-16_04-00-42] Generations: 10
+[2025-05-16_04-00-42] Mutation rate: 0.1
+[2025-05-16_04-00-42] Mutation strength: 0.05
+[2025-05-16_04-00-51] Starting optimization cycle 2
+[2025-05-16_04-00-51] Phase: REFINEMENT
+[2025-05-16_04-00-51] Opponent: Careful Random Agent
+[2025-05-16_04-00-51] Evaluation games: 60
+[2025-05-16_04-00-51] Population size: 20
+[2025-05-16_04-00-51] Generations: 10
+[2025-05-16_04-00-51] Mutation rate: 0.1
+[2025-05-16_04-00-51] Mutation strength: 0.05
+[2025-05-16_04-00-59] Starting optimization cycle 3
+[2025-05-16_04-00-59] Phase: REFINEMENT
+[2025-05-16_04-00-59] Opponent: Adaptive Heuristic Agent
+[2025-05-16_04-00-59] Evaluation games: 60
+[2025-05-16_04-00-59] Population size: 20
+[2025-05-16_04-00-59] Generations: 10
+[2025-05-16_04-00-59] Mutation rate: 0.1
+[2025-05-16_04-00-59] Mutation strength: 0.05
+[2025-05-16_04-01-11] Advanced to phase: VERIFICATION
+[2025-05-16_04-01-11] Starting optimization cycle 1
+[2025-05-16_04-01-11] Phase: VERIFICATION
+[2025-05-16_04-01-11] Opponent: Better Random Agent
+[2025-05-16_04-01-11] Evaluation games: 100
+[2025-05-16_04-01-11] Population size: 10
+[2025-05-16_04-01-11] Generations: 3
+[2025-05-16_04-01-11] Mutation rate: 0.05
+[2025-05-16_04-01-11] Mutation strength: 0.02
+[2025-05-16_04-01-13] Starting optimization cycle 2
+[2025-05-16_04-01-13] Phase: VERIFICATION
+[2025-05-16_04-01-13] Opponent: Careful Random Agent
+[2025-05-16_04-01-13] Evaluation games: 100
+[2025-05-16_04-01-13] Population size: 10
+[2025-05-16_04-01-13] Generations: 3
+[2025-05-16_04-01-13] Mutation rate: 0.05
+[2025-05-16_04-01-13] Mutation strength: 0.02
+[2025-05-16_04-01-52] Test Results
+=============
+vs Better Random Agent:
+  As P1: 49/50 (98%)
+  As P2: 47/50 (94%)
+  Overall: 96/100 (96%)
+vs Careful Random Agent:
+  As P1: 39/50 (78%)
+  As P2: 42/50 (84%)
+  Overall: 81/100 (81%)
+vs Adaptive Heuristic Agent:
+  As P1: 33/50 (66%)
+  As P2: 33/50 (66%)
+  Overall: 66/100 (66%)
+vs Hybrid Strategic Evo Agent Cheeni:
+  As P1: 50/50 (100%)
+  As P2: 50/50 (100%)
+  Overall: 100/100 (100%)
+vs Strategic Heuristic Agent Ammar:
+  As P1: 13/50 (26%)
+  As P2: 20/50 (40%)
+  Overall: 33/100 (33%)
+vs Self-Tuning Heuristic Agent:
+  As P1: 26/50 (52%)
+  As P2: 24/50 (48%)
+  Overall: 50/100 (50%)
+vs EvoAgent-400-30-0.8-true:
+  As P1: 24/50 (48%)
+  As P2: 23/50 (46%)
+  Overall: 47/100 (47%)
+
+vs Base AdaptiveHeuristicAgent:
+  As P1: 31/50 (62%)
+
+vs Self-Tuning Agent:
+  As P1: 26/50 (52%)
+
+Overall Results: 530/800 (66%)
+
+[2025-05-16_04-01-52] Starting optimization cycle 3
+[2025-05-16_04-01-52] Phase: VERIFICATION
+[2025-05-16_04-01-52] Opponent: Adaptive Heuristic Agent
+[2025-05-16_04-01-52] Evaluation games: 100
+[2025-05-16_04-01-52] Population size: 10
+[2025-05-16_04-01-52] Generations: 3
+[2025-05-16_04-01-52] Mutation rate: 0.05
+[2025-05-16_04-01-52] Mutation strength: 0.02
+[2025-05-16_04-01-55] Advanced to phase: EXPLORATION
+[2025-05-16_04-01-55] Starting optimization cycle 1
+[2025-05-16_04-01-55] Phase: EXPLORATION
+[2025-05-16_04-01-55] Opponent: Better Random Agent
+[2025-05-16_04-01-55] Evaluation games: 20
+[2025-05-16_04-01-55] Population size: 10
+[2025-05-16_04-01-55] Generations: 5
+[2025-05-16_04-01-55] Mutation rate: 0.3
+[2025-05-16_04-01-55] Mutation strength: 0.3
+[2025-05-16_04-01-56] Starting optimization cycle 2
+[2025-05-16_04-01-56] Phase: EXPLORATION
+[2025-05-16_04-01-56] Opponent: Careful Random Agent
+[2025-05-16_04-01-56] Evaluation games: 20
+[2025-05-16_04-01-56] Population size: 10
+[2025-05-16_04-01-56] Generations: 5
+[2025-05-16_04-01-56] Mutation rate: 0.3
+[2025-05-16_04-01-56] Mutation strength: 0.3
+[2025-05-16_04-01-56] Starting optimization cycle 3
+[2025-05-16_04-01-56] Phase: EXPLORATION
+[2025-05-16_04-01-56] Opponent: Adaptive Heuristic Agent
+[2025-05-16_04-01-56] Evaluation games: 20
+[2025-05-16_04-01-56] Population size: 10
+[2025-05-16_04-01-56] Generations: 5
+[2025-05-16_04-01-56] Mutation rate: 0.3
+[2025-05-16_04-01-56] Mutation strength: 0.3
+[2025-05-16_04-01-57] Advanced to phase: EXPLOITATION
+[2025-05-16_04-01-57] Starting optimization cycle 1
+[2025-05-16_04-01-57] Phase: EXPLOITATION
+[2025-05-16_04-01-57] Opponent: Better Random Agent
+[2025-05-16_04-01-57] Evaluation games: 40
+[2025-05-16_04-01-57] Population size: 15
+[2025-05-16_04-01-57] Generations: 8
+[2025-05-16_04-01-57] Mutation rate: 0.2
+[2025-05-16_04-01-57] Mutation strength: 0.15
+[2025-05-16_04-02-37] Test Results
+=============
+vs Better Random Agent:
+  As P1: 43/50 (86%)
+  As P2: 44/50 (88%)
+  Overall: 87/100 (87%)
+vs Careful Random Agent:
+  As P1: 26/50 (52%)
+  As P2: 30/50 (60%)
+  Overall: 56/100 (56%)
+vs Adaptive Heuristic Agent:
+  As P1: 20/50 (40%)
+  As P2: 19/50 (38%)
+  Overall: 39/100 (39%)
+vs Hybrid Strategic Evo Agent Cheeni:
+  As P1: 49/50 (98%)
+  As P2: 49/50 (98%)
+  Overall: 98/100 (98%)
+vs Strategic Heuristic Agent Ammar:
+  As P1: 16/50 (32%)
+  As P2: 16/50 (32%)
+  Overall: 32/100 (32%)
+vs Self-Tuning Heuristic Agent:
+  As P1: 15/50 (30%)
+  As P2: 10/50 (20%)
+  Overall: 25/100 (25%)
+vs EvoAgent-400-30-0.8-true:
+  As P1: 11/50 (22%)
+  As P2: 12/50 (24%)
+  Overall: 23/100 (23%)
+
+vs Base AdaptiveHeuristicAgent:
+  As P1: 23/50 (46%)
+
+vs Self-Tuning Agent:
+  As P1: 15/50 (30%)
+
+Overall Results: 398/800 (49%)
+
+[2025-05-16_04-02-37] Starting optimization cycle 2
+[2025-05-16_04-02-37] Phase: EXPLOITATION
+[2025-05-16_04-02-37] Opponent: Careful Random Agent
+[2025-05-16_04-02-37] Evaluation games: 40
+[2025-05-16_04-02-37] Population size: 15
+[2025-05-16_04-02-37] Generations: 8
+[2025-05-16_04-02-37] Mutation rate: 0.2
+[2025-05-16_04-02-37] Mutation strength: 0.15
+[2025-05-16_04-02-41] Starting optimization cycle 3
+[2025-05-16_04-02-41] Phase: EXPLOITATION
+[2025-05-16_04-02-41] Opponent: Adaptive Heuristic Agent
+[2025-05-16_04-02-41] Evaluation games: 40
+[2025-05-16_04-02-41] Population size: 15
+[2025-05-16_04-02-41] Generations: 8
+[2025-05-16_04-02-41] Mutation rate: 0.2
+[2025-05-16_04-02-41] Mutation strength: 0.15
+[2025-05-16_04-02-45] Advanced to phase: REFINEMENT
+[2025-05-16_04-02-45] Starting optimization cycle 1
+[2025-05-16_04-02-45] Phase: REFINEMENT
+[2025-05-16_04-02-45] Opponent: Better Random Agent
+[2025-05-16_04-02-45] Evaluation games: 60
+[2025-05-16_04-02-45] Population size: 20
+[2025-05-16_04-02-45] Generations: 10
+[2025-05-16_04-02-45] Mutation rate: 0.1
+[2025-05-16_04-02-45] Mutation strength: 0.05
+[2025-05-16_04-02-54] Starting optimization cycle 2
+[2025-05-16_04-02-54] Phase: REFINEMENT
+[2025-05-16_04-02-54] Opponent: Careful Random Agent
+[2025-05-16_04-02-54] Evaluation games: 60
+[2025-05-16_04-02-54] Population size: 20
+[2025-05-16_04-02-54] Generations: 10
+[2025-05-16_04-02-54] Mutation rate: 0.1
+[2025-05-16_04-02-54] Mutation strength: 0.05
+[2025-05-16_04-03-02] Starting optimization cycle 3
+[2025-05-16_04-03-02] Phase: REFINEMENT
+[2025-05-16_04-03-02] Opponent: Adaptive Heuristic Agent
+[2025-05-16_04-03-02] Evaluation games: 60
+[2025-05-16_04-03-02] Population size: 20
+[2025-05-16_04-03-02] Generations: 10
+[2025-05-16_04-03-02] Mutation rate: 0.1
+[2025-05-16_04-03-02] Mutation strength: 0.05
+[2025-05-16_04-03-50] Test Results
+=============
+vs Better Random Agent:
+  As P1: 48/50 (96%)
+  As P2: 48/50 (96%)
+  Overall: 96/100 (96%)
+vs Careful Random Agent:
+  As P1: 35/50 (70%)
+  As P2: 40/50 (80%)
+  Overall: 75/100 (75%)
+vs Adaptive Heuristic Agent:
+  As P1: 37/50 (74%)
+  As P2: 33/50 (66%)
+  Overall: 70/100 (70%)
+vs Hybrid Strategic Evo Agent Cheeni:
+  As P1: 50/50 (100%)
+  As P2: 49/50 (98%)
+  Overall: 99/100 (99%)
+vs Strategic Heuristic Agent Ammar:
+  As P1: 15/50 (30%)
+  As P2: 16/50 (32%)
+  Overall: 31/100 (31%)
+vs Self-Tuning Heuristic Agent:
+  As P1: 20/50 (40%)
+  As P2: 24/50 (48%)
+  Overall: 44/100 (44%)
+vs EvoAgent-400-30-0.8-true:
+  As P1: 21/50 (42%)
+  As P2: 27/50 (54%)
+  Overall: 48/100 (48%)
+
+vs Base AdaptiveHeuristicAgent:
+  As P1: 31/50 (62%)
+
+vs Self-Tuning Agent:
+  As P1: 29/50 (58%)
+
+Overall Results: 523/800 (65%)
+
+[2025-05-16_04-03-50] Advanced to phase: VERIFICATION
+[2025-05-16_04-03-50] Starting optimization cycle 1
+[2025-05-16_04-03-50] Phase: VERIFICATION
+[2025-05-16_04-03-50] Opponent: Better Random Agent
+[2025-05-16_04-03-50] Evaluation games: 100
+[2025-05-16_04-03-50] Population size: 10
+[2025-05-16_04-03-50] Generations: 3
+[2025-05-16_04-03-50] Mutation rate: 0.05
+[2025-05-16_04-03-50] Mutation strength: 0.02
+[2025-05-16_04-03-52] Starting optimization cycle 2
+[2025-05-16_04-03-52] Phase: VERIFICATION
+[2025-05-16_04-03-52] Opponent: Careful Random Agent
+[2025-05-16_04-03-52] Evaluation games: 100
+[2025-05-16_04-03-52] Population size: 10
+[2025-05-16_04-03-52] Generations: 3
+[2025-05-16_04-03-52] Mutation rate: 0.05
+[2025-05-16_04-03-52] Mutation strength: 0.02
+[2025-05-16_04-03-54] Starting optimization cycle 3
+[2025-05-16_04-03-54] Phase: VERIFICATION
+[2025-05-16_04-03-54] Opponent: Adaptive Heuristic Agent
+[2025-05-16_04-03-54] Evaluation games: 100
+[2025-05-16_04-03-54] Population size: 10
+[2025-05-16_04-03-54] Generations: 3
+[2025-05-16_04-03-54] Mutation rate: 0.05
+[2025-05-16_04-03-54] Mutation strength: 0.02
+[2025-05-16_04-03-58] Advanced to phase: EXPLORATION
+[2025-05-16_04-03-58] Starting optimization cycle 1
+[2025-05-16_04-03-58] Phase: EXPLORATION
+[2025-05-16_04-03-58] Opponent: Better Random Agent
+[2025-05-16_04-03-58] Evaluation games: 20
+[2025-05-16_04-03-58] Population size: 10
+[2025-05-16_04-03-58] Generations: 5
+[2025-05-16_04-03-58] Mutation rate: 0.3
+[2025-05-16_04-03-58] Mutation strength: 0.3
+[2025-05-16_04-03-58] Starting optimization cycle 2
+[2025-05-16_04-03-58] Phase: EXPLORATION
+[2025-05-16_04-03-58] Opponent: Careful Random Agent
+[2025-05-16_04-03-58] Evaluation games: 20
+[2025-05-16_04-03-58] Population size: 10
+[2025-05-16_04-03-58] Generations: 5
+[2025-05-16_04-03-58] Mutation rate: 0.3
+[2025-05-16_04-03-58] Mutation strength: 0.3
+[2025-05-16_04-04-34] Test Results
+=============
+vs Better Random Agent:
+  As P1: 50/50 (100%)
+  As P2: 50/50 (100%)
+  Overall: 100/100 (100%)
+vs Careful Random Agent:
+  As P1: 44/50 (88%)
+  As P2: 47/50 (94%)
+  Overall: 91/100 (91%)
+vs Adaptive Heuristic Agent:
+  As P1: 26/50 (52%)
+  As P2: 38/50 (76%)
+  Overall: 64/100 (64%)
+vs Hybrid Strategic Evo Agent Cheeni:
+  As P1: 50/50 (100%)
+  As P2: 50/50 (100%)
+  Overall: 100/100 (100%)
+vs Strategic Heuristic Agent Ammar:
+  As P1: 20/50 (40%)
+  As P2: 25/50 (50%)
+  Overall: 45/100 (45%)
+vs Self-Tuning Heuristic Agent:
+  As P1: 19/50 (38%)
+  As P2: 25/50 (50%)
+  Overall: 44/100 (44%)
+vs EvoAgent-400-30-0.8-true:
+  As P1: 32/50 (64%)
+  As P2: 28/50 (56%)
+  Overall: 60/100 (60%)
+
+vs Base AdaptiveHeuristicAgent:
+  As P1: 35/50 (70%)
+
+vs Self-Tuning Agent:
+  As P1: 19/50 (38%)
+
+Overall Results: 558/800 (69%)
+
+[2025-05-16_04-04-34] Starting optimization cycle 3
+[2025-05-16_04-04-34] Phase: EXPLORATION
+[2025-05-16_04-04-34] Opponent: Adaptive Heuristic Agent
+[2025-05-16_04-04-34] Evaluation games: 20
+[2025-05-16_04-04-34] Population size: 10
+[2025-05-16_04-04-34] Generations: 5
+[2025-05-16_04-04-34] Mutation rate: 0.3
+[2025-05-16_04-04-34] Mutation strength: 0.3
+[2025-05-16_04-04-36] Advanced to phase: EXPLOITATION
+[2025-05-16_04-04-36] Starting optimization cycle 1
+[2025-05-16_04-04-36] Phase: EXPLOITATION
+[2025-05-16_04-04-36] Opponent: Better Random Agent
+[2025-05-16_04-04-36] Evaluation games: 40
+[2025-05-16_04-04-36] Population size: 15
+[2025-05-16_04-04-36] Generations: 8
+[2025-05-16_04-04-36] Mutation rate: 0.2
+[2025-05-16_04-04-36] Mutation strength: 0.15
+[2025-05-16_04-04-39] Starting optimization cycle 2
+[2025-05-16_04-04-39] Phase: EXPLOITATION
+[2025-05-16_04-04-39] Opponent: Careful Random Agent
+[2025-05-16_04-04-39] Evaluation games: 40
+[2025-05-16_04-04-39] Population size: 15
+[2025-05-16_04-04-39] Generations: 8
+[2025-05-16_04-04-39] Mutation rate: 0.2
+[2025-05-16_04-04-39] Mutation strength: 0.15
+[2025-05-16_04-04-42] Starting optimization cycle 3
+[2025-05-16_04-04-42] Phase: EXPLOITATION
+[2025-05-16_04-04-42] Opponent: Adaptive Heuristic Agent
+[2025-05-16_04-04-42] Evaluation games: 40
+[2025-05-16_04-04-42] Population size: 15
+[2025-05-16_04-04-42] Generations: 8
+[2025-05-16_04-04-42] Mutation rate: 0.2
+[2025-05-16_04-04-42] Mutation strength: 0.15
+[2025-05-16_04-04-47] Advanced to phase: REFINEMENT
+[2025-05-16_04-04-47] Starting optimization cycle 1
+[2025-05-16_04-04-47] Phase: REFINEMENT
+[2025-05-16_04-04-47] Opponent: Better Random Agent
+[2025-05-16_04-04-47] Evaluation games: 60
+[2025-05-16_04-04-47] Population size: 20
+[2025-05-16_04-04-47] Generations: 10
+[2025-05-16_04-04-47] Mutation rate: 0.1
+[2025-05-16_04-04-47] Mutation strength: 0.05
+[2025-05-16_04-05-31] Test Results
+=============
+vs Better Random Agent:
+  As P1: 49/50 (98%)
+  As P2: 50/50 (100%)
+  Overall: 99/100 (99%)
+vs Careful Random Agent:
+  As P1: 37/50 (74%)
+  As P2: 38/50 (76%)
+  Overall: 75/100 (75%)
+vs Adaptive Heuristic Agent:
+  As P1: 26/50 (52%)
+  As P2: 34/50 (68%)
+  Overall: 60/100 (60%)
+vs Hybrid Strategic Evo Agent Cheeni:
+  As P1: 50/50 (100%)
+  As P2: 50/50 (100%)
+  Overall: 100/100 (100%)
+vs Strategic Heuristic Agent Ammar:
+  As P1: 19/50 (38%)
+  As P2: 17/50 (34%)
+  Overall: 36/100 (36%)
+vs Self-Tuning Heuristic Agent:
+  As P1: 17/50 (34%)
+  As P2: 15/50 (30%)
+  Overall: 32/100 (32%)
+vs EvoAgent-400-30-0.8-true:
+  As P1: 27/50 (54%)
+  As P2: 20/50 (40%)
+  Overall: 47/100 (47%)
+
+vs Base AdaptiveHeuristicAgent:
+  As P1: 29/50 (58%)
+
+vs Self-Tuning Agent:
+  As P1: 13/50 (26%)
+
+Overall Results: 491/800 (61%)
+
+[2025-05-16_04-05-31] Starting optimization cycle 2
+[2025-05-16_04-05-31] Phase: REFINEMENT
+[2025-05-16_04-05-31] Opponent: Careful Random Agent
+[2025-05-16_04-05-31] Evaluation games: 60
+[2025-05-16_04-05-31] Population size: 20
+[2025-05-16_04-05-31] Generations: 10
+[2025-05-16_04-05-31] Mutation rate: 0.1
+[2025-05-16_04-05-31] Mutation strength: 0.05
+[2025-05-16_04-05-39] Starting optimization cycle 3
+[2025-05-16_04-05-39] Phase: REFINEMENT
+[2025-05-16_04-05-39] Opponent: Adaptive Heuristic Agent
+[2025-05-16_04-05-39] Evaluation games: 60
+[2025-05-16_04-05-39] Population size: 20
+[2025-05-16_04-05-39] Generations: 10
+[2025-05-16_04-05-39] Mutation rate: 0.1
+[2025-05-16_04-05-39] Mutation strength: 0.05
+[2025-05-16_04-05-52] Advanced to phase: VERIFICATION
+[2025-05-16_04-05-52] Starting optimization cycle 1
+[2025-05-16_04-05-52] Phase: VERIFICATION
+[2025-05-16_04-05-52] Opponent: Better Random Agent
+[2025-05-16_04-05-52] Evaluation games: 100
+[2025-05-16_04-05-52] Population size: 10
+[2025-05-16_04-05-52] Generations: 3
+[2025-05-16_04-05-52] Mutation rate: 0.05
+[2025-05-16_04-05-52] Mutation strength: 0.02
+[2025-05-16_04-05-54] Starting optimization cycle 2
+[2025-05-16_04-05-54] Phase: VERIFICATION
+[2025-05-16_04-05-54] Opponent: Careful Random Agent
+[2025-05-16_04-05-54] Evaluation games: 100
+[2025-05-16_04-05-54] Population size: 10
+[2025-05-16_04-05-54] Generations: 3
+[2025-05-16_04-05-54] Mutation rate: 0.05
+[2025-05-16_04-05-54] Mutation strength: 0.02
+[2025-05-16_04-05-56] Starting optimization cycle 3
+[2025-05-16_04-05-56] Phase: VERIFICATION
+[2025-05-16_04-05-56] Opponent: Adaptive Heuristic Agent
+[2025-05-16_04-05-56] Evaluation games: 100
+[2025-05-16_04-05-56] Population size: 10
+[2025-05-16_04-05-56] Generations: 3
+[2025-05-16_04-05-56] Mutation rate: 0.05
+[2025-05-16_04-05-56] Mutation strength: 0.02
+[2025-05-16_04-06-35] Test Results
+=============
+vs Better Random Agent:
+  As P1: 50/50 (100%)
+  As P2: 47/50 (94%)
+  Overall: 97/100 (97%)
+vs Careful Random Agent:
+  As P1: 38/50 (76%)
+  As P2: 36/50 (72%)
+  Overall: 74/100 (74%)
+vs Adaptive Heuristic Agent:
+  As P1: 32/50 (64%)
+  As P2: 29/50 (58%)
+  Overall: 61/100 (61%)
+vs Hybrid Strategic Evo Agent Cheeni:
+  As P1: 50/50 (100%)
+  As P2: 50/50 (100%)
+  Overall: 100/100 (100%)
+vs Strategic Heuristic Agent Ammar:
+  As P1: 17/50 (34%)
+  As P2: 19/50 (38%)
+  Overall: 36/100 (36%)
+vs Self-Tuning Heuristic Agent:
+  As P1: 16/50 (32%)
+  As P2: 20/50 (40%)
+  Overall: 36/100 (36%)
+vs EvoAgent-400-30-0.8-true:
+  As P1: 26/50 (52%)
+  As P2: 19/50 (38%)
+  Overall: 45/100 (45%)
+
+vs Base AdaptiveHeuristicAgent:
+  As P1: 33/50 (66%)
+
+vs Self-Tuning Agent:
+  As P1: 24/50 (48%)
+
+Overall Results: 506/800 (63%)
+
+[2025-05-16_04-06-35] Advanced to phase: EXPLORATION
+[2025-05-16_04-06-35] Starting optimization cycle 1
+[2025-05-16_04-06-35] Phase: EXPLORATION
+[2025-05-16_04-06-35] Opponent: Better Random Agent
+[2025-05-16_04-06-35] Evaluation games: 20
+[2025-05-16_04-06-35] Population size: 10
+[2025-05-16_04-06-35] Generations: 5
+[2025-05-16_04-06-35] Mutation rate: 0.3
+[2025-05-16_04-06-35] Mutation strength: 0.3
+[2025-05-16_04-06-35] Starting optimization cycle 2
+[2025-05-16_04-06-35] Phase: EXPLORATION
+[2025-05-16_04-06-35] Opponent: Careful Random Agent
+[2025-05-16_04-06-35] Evaluation games: 20
+[2025-05-16_04-06-35] Population size: 10
+[2025-05-16_04-06-35] Generations: 5
+[2025-05-16_04-06-35] Mutation rate: 0.3
+[2025-05-16_04-06-35] Mutation strength: 0.3
+[2025-05-16_04-06-36] Starting optimization cycle 3
+[2025-05-16_04-06-36] Phase: EXPLORATION
+[2025-05-16_04-06-36] Opponent: Adaptive Heuristic Agent
+[2025-05-16_04-06-36] Evaluation games: 20
+[2025-05-16_04-06-36] Population size: 10
+[2025-05-16_04-06-36] Generations: 5
+[2025-05-16_04-06-36] Mutation rate: 0.3
+[2025-05-16_04-06-36] Mutation strength: 0.3
+[2025-05-16_04-06-37] Advanced to phase: EXPLOITATION
+[2025-05-16_04-06-37] Starting optimization cycle 1
+[2025-05-16_04-06-37] Phase: EXPLOITATION
+[2025-05-16_04-06-37] Opponent: Better Random Agent
+[2025-05-16_04-06-37] Evaluation games: 40
+[2025-05-16_04-06-37] Population size: 15
+[2025-05-16_04-06-37] Generations: 8
+[2025-05-16_04-06-37] Mutation rate: 0.2
+[2025-05-16_04-06-37] Mutation strength: 0.15
+[2025-05-16_04-06-40] Starting optimization cycle 2
+[2025-05-16_04-06-40] Phase: EXPLOITATION
+[2025-05-16_04-06-40] Opponent: Careful Random Agent
+[2025-05-16_04-06-40] Evaluation games: 40
+[2025-05-16_04-06-40] Population size: 15
+[2025-05-16_04-06-40] Generations: 8
+[2025-05-16_04-06-40] Mutation rate: 0.2
+[2025-05-16_04-06-40] Mutation strength: 0.15
+[2025-05-16_04-07-20] Test Results
+=============
+vs Better Random Agent:
+  As P1: 50/50 (100%)
+  As P2: 48/50 (96%)
+  Overall: 98/100 (98%)
+vs Careful Random Agent:
+  As P1: 39/50 (78%)
+  As P2: 38/50 (76%)
+  Overall: 77/100 (77%)
+vs Adaptive Heuristic Agent:
+  As P1: 26/50 (52%)
+  As P2: 24/50 (48%)
+  Overall: 50/100 (50%)
+vs Hybrid Strategic Evo Agent Cheeni:
+  As P1: 49/50 (98%)
+  As P2: 50/50 (100%)
+  Overall: 99/100 (99%)
+vs Strategic Heuristic Agent Ammar:
+  As P1: 21/50 (42%)
+  As P2: 26/50 (52%)
+  Overall: 47/100 (47%)
+vs Self-Tuning Heuristic Agent:
+  As P1: 17/50 (34%)
+  As P2: 16/50 (32%)
+  Overall: 33/100 (33%)
+vs EvoAgent-400-30-0.8-true:
+  As P1: 28/50 (56%)
+  As P2: 23/50 (46%)
+  Overall: 51/100 (51%)
+
+vs Base AdaptiveHeuristicAgent:
+  As P1: 26/50 (52%)
+
+vs Self-Tuning Agent:
+  As P1: 22/50 (44%)
+
+Overall Results: 503/800 (62%)
+
+[2025-05-16_04-07-20] Starting optimization cycle 3
+[2025-05-16_04-07-20] Phase: EXPLOITATION
+[2025-05-16_04-07-20] Opponent: Adaptive Heuristic Agent
+[2025-05-16_04-07-20] Evaluation games: 40
+[2025-05-16_04-07-20] Population size: 15
+[2025-05-16_04-07-20] Generations: 8
+[2025-05-16_04-07-20] Mutation rate: 0.2
+[2025-05-16_04-07-20] Mutation strength: 0.15
+[2025-05-16_04-07-24] Advanced to phase: REFINEMENT
+[2025-05-16_04-07-24] Starting optimization cycle 1
+[2025-05-16_04-07-24] Phase: REFINEMENT
+[2025-05-16_04-07-24] Opponent: Better Random Agent
+[2025-05-16_04-07-24] Evaluation games: 60
+[2025-05-16_04-07-24] Population size: 20
+[2025-05-16_04-07-24] Generations: 10
+[2025-05-16_04-07-24] Mutation rate: 0.1
+[2025-05-16_04-07-24] Mutation strength: 0.05
+[2025-05-16_04-07-33] Starting optimization cycle 2
+[2025-05-16_04-07-33] Phase: REFINEMENT
+[2025-05-16_04-07-33] Opponent: Careful Random Agent
+[2025-05-16_04-07-33] Evaluation games: 60
+[2025-05-16_04-07-33] Population size: 20
+[2025-05-16_04-07-33] Generations: 10
+[2025-05-16_04-07-33] Mutation rate: 0.1
+[2025-05-16_04-07-33] Mutation strength: 0.05
+[2025-05-16_04-07-41] Starting optimization cycle 3
+[2025-05-16_04-07-41] Phase: REFINEMENT
+[2025-05-16_04-07-41] Opponent: Adaptive Heuristic Agent
+[2025-05-16_04-07-41] Evaluation games: 60
+[2025-05-16_04-07-41] Population size: 20
+[2025-05-16_04-07-41] Generations: 10
+[2025-05-16_04-07-41] Mutation rate: 0.1
+[2025-05-16_04-07-41] Mutation strength: 0.05
+[2025-05-16_04-07-53] Advanced to phase: VERIFICATION
+[2025-05-16_04-07-53] Starting optimization cycle 1
+[2025-05-16_04-07-53] Phase: VERIFICATION
+[2025-05-16_04-07-53] Opponent: Better Random Agent
+[2025-05-16_04-07-53] Evaluation games: 100
+[2025-05-16_04-07-53] Population size: 10
+[2025-05-16_04-07-53] Generations: 3
+[2025-05-16_04-07-53] Mutation rate: 0.05
+[2025-05-16_04-07-53] Mutation strength: 0.02
+[2025-05-16_04-08-31] Test Results
+=============
+vs Better Random Agent:
+  As P1: 47/50 (94%)
+  As P2: 49/50 (98%)
+  Overall: 96/100 (96%)
+vs Careful Random Agent:
+  As P1: 39/50 (78%)
+  As P2: 38/50 (76%)
+  Overall: 77/100 (77%)
+vs Adaptive Heuristic Agent:
+  As P1: 28/50 (56%)
+  As P2: 24/50 (48%)
+  Overall: 52/100 (52%)
+vs Hybrid Strategic Evo Agent Cheeni:
+  As P1: 50/50 (100%)
+  As P2: 50/50 (100%)
+  Overall: 100/100 (100%)
+vs Strategic Heuristic Agent Ammar:
+  As P1: 16/50 (32%)
+  As P2: 16/50 (32%)
+  Overall: 32/100 (32%)
+vs Self-Tuning Heuristic Agent:
+  As P1: 17/50 (34%)
+  As P2: 23/50 (46%)
+  Overall: 40/100 (40%)
+vs EvoAgent-400-30-0.8-true:
+  As P1: 21/50 (42%)
+  As P2: 20/50 (40%)
+  Overall: 41/100 (41%)
+
+vs Base AdaptiveHeuristicAgent:
+  As P1: 28/50 (56%)
+
+vs Self-Tuning Agent:
+  As P1: 18/50 (36%)
+
+Overall Results: 484/800 (60%)
+
+[2025-05-16_04-08-31] Starting optimization cycle 2
+[2025-05-16_04-08-31] Phase: VERIFICATION
+[2025-05-16_04-08-31] Opponent: Careful Random Agent
+[2025-05-16_04-08-31] Evaluation games: 100
+[2025-05-16_04-08-31] Population size: 10
+[2025-05-16_04-08-31] Generations: 3
+[2025-05-16_04-08-31] Mutation rate: 0.05
+[2025-05-16_04-08-31] Mutation strength: 0.02
+[2025-05-16_04-08-33] Starting optimization cycle 3
+[2025-05-16_04-08-33] Phase: VERIFICATION
+[2025-05-16_04-08-33] Opponent: Adaptive Heuristic Agent
+[2025-05-16_04-08-33] Evaluation games: 100
+[2025-05-16_04-08-33] Population size: 10
+[2025-05-16_04-08-33] Generations: 3
+[2025-05-16_04-08-33] Mutation rate: 0.05
+[2025-05-16_04-08-33] Mutation strength: 0.02
+[2025-05-16_04-08-36] Advanced to phase: EXPLORATION
+[2025-05-16_04-08-36] Starting optimization cycle 1
+[2025-05-16_04-08-36] Phase: EXPLORATION
+[2025-05-16_04-08-36] Opponent: Better Random Agent
+[2025-05-16_04-08-36] Evaluation games: 20
+[2025-05-16_04-08-36] Population size: 10
+[2025-05-16_04-08-36] Generations: 5
+[2025-05-16_04-08-36] Mutation rate: 0.3
+[2025-05-16_04-08-36] Mutation strength: 0.3
+[2025-05-16_04-08-37] Starting optimization cycle 2
+[2025-05-16_04-08-37] Phase: EXPLORATION
+[2025-05-16_04-08-37] Opponent: Careful Random Agent
+[2025-05-16_04-08-37] Evaluation games: 20
+[2025-05-16_04-08-37] Population size: 10
+[2025-05-16_04-08-37] Generations: 5
+[2025-05-16_04-08-37] Mutation rate: 0.3
+[2025-05-16_04-08-37] Mutation strength: 0.3
+[2025-05-16_04-08-38] Starting optimization cycle 3
+[2025-05-16_04-08-38] Phase: EXPLORATION
+[2025-05-16_04-08-38] Opponent: Adaptive Heuristic Agent
+[2025-05-16_04-08-38] Evaluation games: 20
+[2025-05-16_04-08-38] Population size: 10
+[2025-05-16_04-08-38] Generations: 5
+[2025-05-16_04-08-38] Mutation rate: 0.3
+[2025-05-16_04-08-38] Mutation strength: 0.3
+[2025-05-16_04-09-16] Test Results
+=============
+vs Better Random Agent:
+  As P1: 49/50 (98%)
+  As P2: 46/50 (92%)
+  Overall: 95/100 (95%)
+vs Careful Random Agent:
+  As P1: 28/50 (56%)
+  As P2: 33/50 (66%)
+  Overall: 61/100 (61%)
+vs Adaptive Heuristic Agent:
+  As P1: 30/50 (60%)
+  As P2: 26/50 (52%)
+  Overall: 56/100 (56%)
+vs Hybrid Strategic Evo Agent Cheeni:
+  As P1: 50/50 (100%)
+  As P2: 49/50 (98%)
+  Overall: 99/100 (99%)
+vs Strategic Heuristic Agent Ammar:
+  As P1: 15/50 (30%)
+  As P2: 23/50 (46%)
+  Overall: 38/100 (38%)
+vs Self-Tuning Heuristic Agent:
+  As P1: 15/50 (30%)
+  As P2: 21/50 (42%)
+  Overall: 36/100 (36%)
+vs EvoAgent-400-30-0.8-true:
+  As P1: 22/50 (44%)
+  As P2: 21/50 (42%)
+  Overall: 43/100 (43%)
+
+vs Base AdaptiveHeuristicAgent:
+  As P1: 26/50 (52%)
+
+vs Self-Tuning Agent:
+  As P1: 19/50 (38%)
+
+Overall Results: 473/800 (59%)
+
+[2025-05-16_04-09-16] Advanced to phase: EXPLOITATION
+[2025-05-16_04-09-16] Starting optimization cycle 1
+[2025-05-16_04-09-16] Phase: EXPLOITATION
+[2025-05-16_04-09-16] Opponent: Better Random Agent
+[2025-05-16_04-09-16] Evaluation games: 40
+[2025-05-16_04-09-16] Population size: 15
+[2025-05-16_04-09-16] Generations: 8
+[2025-05-16_04-09-16] Mutation rate: 0.2
+[2025-05-16_04-09-16] Mutation strength: 0.15
+[2025-05-16_04-09-19] Starting optimization cycle 2
+[2025-05-16_04-09-19] Phase: EXPLOITATION
+[2025-05-16_04-09-19] Opponent: Careful Random Agent
+[2025-05-16_04-09-19] Evaluation games: 40
+[2025-05-16_04-09-19] Population size: 15
+[2025-05-16_04-09-19] Generations: 8
+[2025-05-16_04-09-19] Mutation rate: 0.2
+[2025-05-16_04-09-19] Mutation strength: 0.15
+[2025-05-16_04-09-22] Starting optimization cycle 3
+[2025-05-16_04-09-22] Phase: EXPLOITATION
+[2025-05-16_04-09-22] Opponent: Adaptive Heuristic Agent
+[2025-05-16_04-09-22] Evaluation games: 40
+[2025-05-16_04-09-22] Population size: 15
+[2025-05-16_04-09-22] Generations: 8
+[2025-05-16_04-09-22] Mutation rate: 0.2
+[2025-05-16_04-09-22] Mutation strength: 0.15
+[2025-05-16_04-09-28] Advanced to phase: REFINEMENT
+[2025-05-16_04-09-28] Starting optimization cycle 1
+[2025-05-16_04-09-28] Phase: REFINEMENT
+[2025-05-16_04-09-28] Opponent: Better Random Agent
+[2025-05-16_04-09-28] Evaluation games: 60
+[2025-05-16_04-09-28] Population size: 20
+[2025-05-16_04-09-28] Generations: 10
+[2025-05-16_04-09-28] Mutation rate: 0.1
+[2025-05-16_04-09-28] Mutation strength: 0.05
+[2025-05-16_04-09-36] Starting optimization cycle 2
+[2025-05-16_04-09-36] Phase: REFINEMENT
+[2025-05-16_04-09-36] Opponent: Careful Random Agent
+[2025-05-16_04-09-36] Evaluation games: 60
+[2025-05-16_04-09-36] Population size: 20
+[2025-05-16_04-09-36] Generations: 10
+[2025-05-16_04-09-36] Mutation rate: 0.1
+[2025-05-16_04-09-36] Mutation strength: 0.05
+[2025-05-16_04-10-22] Test Results
+=============
+vs Better Random Agent:
+  As P1: 49/50 (98%)
+  As P2: 49/50 (98%)
+  Overall: 98/100 (98%)
+vs Careful Random Agent:
+  As P1: 38/50 (76%)
+  As P2: 35/50 (70%)
+  Overall: 73/100 (73%)
+vs Adaptive Heuristic Agent:
+  As P1: 33/50 (66%)
+  As P2: 28/50 (56%)
+  Overall: 61/100 (61%)
+vs Hybrid Strategic Evo Agent Cheeni:
+  As P1: 50/50 (100%)
+  As P2: 50/50 (100%)
+  Overall: 100/100 (100%)
+vs Strategic Heuristic Agent Ammar:
+  As P1: 23/50 (46%)
+  As P2: 17/50 (34%)
+  Overall: 40/100 (40%)
+vs Self-Tuning Heuristic Agent:
+  As P1: 24/50 (48%)
+  As P2: 19/50 (38%)
+  Overall: 43/100 (43%)
+vs EvoAgent-400-30-0.8-true:
+  As P1: 21/50 (42%)
+  As P2: 21/50 (42%)
+  Overall: 42/100 (42%)
+
+vs Base AdaptiveHeuristicAgent:
+  As P1: 32/50 (64%)
+
+vs Self-Tuning Agent:
+  As P1: 17/50 (34%)
+
+Overall Results: 506/800 (63%)
+
+[2025-05-16_04-10-22] Starting optimization cycle 3
+[2025-05-16_04-10-22] Phase: REFINEMENT
+[2025-05-16_04-10-22] Opponent: Adaptive Heuristic Agent
+[2025-05-16_04-10-22] Evaluation games: 60
+[2025-05-16_04-10-22] Population size: 20
+[2025-05-16_04-10-22] Generations: 10
+[2025-05-16_04-10-22] Mutation rate: 0.1
+[2025-05-16_04-10-22] Mutation strength: 0.05
+[2025-05-16_04-10-36] Advanced to phase: VERIFICATION
+[2025-05-16_04-10-36] Starting optimization cycle 1
+[2025-05-16_04-10-36] Phase: VERIFICATION
+[2025-05-16_04-10-36] Opponent: Better Random Agent
+[2025-05-16_04-10-36] Evaluation games: 100
+[2025-05-16_04-10-36] Population size: 10
+[2025-05-16_04-10-36] Generations: 3
+[2025-05-16_04-10-36] Mutation rate: 0.05
+[2025-05-16_04-10-36] Mutation strength: 0.02
+[2025-05-16_04-10-38] Starting optimization cycle 2
+[2025-05-16_04-10-38] Phase: VERIFICATION
+[2025-05-16_04-10-38] Opponent: Careful Random Agent
+[2025-05-16_04-10-38] Evaluation games: 100
+[2025-05-16_04-10-38] Population size: 10
+[2025-05-16_04-10-38] Generations: 3
+[2025-05-16_04-10-38] Mutation rate: 0.05
+[2025-05-16_04-10-38] Mutation strength: 0.02
+[2025-05-16_04-10-40] Starting optimization cycle 3
+[2025-05-16_04-10-40] Phase: VERIFICATION
+[2025-05-16_04-10-40] Opponent: Adaptive Heuristic Agent
+[2025-05-16_04-10-40] Evaluation games: 100
+[2025-05-16_04-10-40] Population size: 10
+[2025-05-16_04-10-40] Generations: 3
+[2025-05-16_04-10-40] Mutation rate: 0.05
+[2025-05-16_04-10-40] Mutation strength: 0.02
+[2025-05-16_04-10-43] Advanced to phase: EXPLORATION
+[2025-05-16_04-10-43] Starting optimization cycle 1
+[2025-05-16_04-10-43] Phase: EXPLORATION
+[2025-05-16_04-10-43] Opponent: Better Random Agent
+[2025-05-16_04-10-43] Evaluation games: 20
+[2025-05-16_04-10-43] Population size: 10
+[2025-05-16_04-10-43] Generations: 5
+[2025-05-16_04-10-43] Mutation rate: 0.3
+[2025-05-16_04-10-43] Mutation strength: 0.3
+[2025-05-16_04-11-20] Test Results
+=============
+vs Better Random Agent:
+  As P1: 50/50 (100%)
+  As P2: 50/50 (100%)
+  Overall: 100/100 (100%)
+vs Careful Random Agent:
+  As P1: 40/50 (80%)
+  As P2: 35/50 (70%)
+  Overall: 75/100 (75%)
+vs Adaptive Heuristic Agent:
+  As P1: 38/50 (76%)
+  As P2: 31/50 (62%)
+  Overall: 69/100 (69%)
+vs Hybrid Strategic Evo Agent Cheeni:
+  As P1: 49/50 (98%)
+  As P2: 49/50 (98%)
+  Overall: 98/100 (98%)
+vs Strategic Heuristic Agent Ammar:
+  As P1: 17/50 (34%)
+  As P2: 18/50 (36%)
+  Overall: 35/100 (35%)
+vs Self-Tuning Heuristic Agent:
+  As P1: 15/50 (30%)
+  As P2: 21/50 (42%)
+  Overall: 36/100 (36%)
+vs EvoAgent-400-30-0.8-true:
+  As P1: 25/50 (50%)
+  As P2: 23/50 (46%)
+  Overall: 48/100 (48%)
+
+vs Base AdaptiveHeuristicAgent:
+  As P1: 27/50 (54%)
+
+vs Self-Tuning Agent:
+  As P1: 22/50 (44%)
+
+Overall Results: 510/800 (63%)
+
+[2025-05-16_04-11-20] Starting optimization cycle 2
+[2025-05-16_04-11-20] Phase: EXPLORATION
+[2025-05-16_04-11-20] Opponent: Careful Random Agent
+[2025-05-16_04-11-20] Evaluation games: 20
+[2025-05-16_04-11-20] Population size: 10
+[2025-05-16_04-11-20] Generations: 5
+[2025-05-16_04-11-20] Mutation rate: 0.3
+[2025-05-16_04-11-20] Mutation strength: 0.3
+[2025-05-16_04-11-20] Starting optimization cycle 3
+[2025-05-16_04-11-20] Phase: EXPLORATION
+[2025-05-16_04-11-20] Opponent: Adaptive Heuristic Agent
+[2025-05-16_04-11-20] Evaluation games: 20
+[2025-05-16_04-11-20] Population size: 10
+[2025-05-16_04-11-20] Generations: 5
+[2025-05-16_04-11-20] Mutation rate: 0.3
+[2025-05-16_04-11-20] Mutation strength: 0.3
+[2025-05-16_04-11-22] Advanced to phase: EXPLOITATION
+[2025-05-16_04-11-22] Starting optimization cycle 1
+[2025-05-16_04-11-22] Phase: EXPLOITATION
+[2025-05-16_04-11-22] Opponent: Better Random Agent
+[2025-05-16_04-11-22] Evaluation games: 40
+[2025-05-16_04-11-22] Population size: 15
+[2025-05-16_04-11-22] Generations: 8
+[2025-05-16_04-11-22] Mutation rate: 0.2
+[2025-05-16_04-11-22] Mutation strength: 0.15
+[2025-05-16_04-11-25] Starting optimization cycle 2
+[2025-05-16_04-11-25] Phase: EXPLOITATION
+[2025-05-16_04-11-25] Opponent: Careful Random Agent
+[2025-05-16_04-11-25] Evaluation games: 40
+[2025-05-16_04-11-25] Population size: 15
+[2025-05-16_04-11-25] Generations: 8
+[2025-05-16_04-11-25] Mutation rate: 0.2
+[2025-05-16_04-11-25] Mutation strength: 0.15
+[2025-05-16_04-11-28] Starting optimization cycle 3
+[2025-05-16_04-11-28] Phase: EXPLOITATION
+[2025-05-16_04-11-28] Opponent: Adaptive Heuristic Agent
+[2025-05-16_04-11-28] Evaluation games: 40
+[2025-05-16_04-11-28] Population size: 15
+[2025-05-16_04-11-28] Generations: 8
+[2025-05-16_04-11-28] Mutation rate: 0.2
+[2025-05-16_04-11-28] Mutation strength: 0.15
+[2025-05-16_04-12-09] Test Results
+=============
+vs Better Random Agent:
+  As P1: 49/50 (98%)
+  As P2: 50/50 (100%)
+  Overall: 99/100 (99%)
+vs Careful Random Agent:
+  As P1: 42/50 (84%)
+  As P2: 44/50 (88%)
+  Overall: 86/100 (86%)
+vs Adaptive Heuristic Agent:
+  As P1: 37/50 (74%)
+  As P2: 36/50 (72%)
+  Overall: 73/100 (73%)
+vs Hybrid Strategic Evo Agent Cheeni:
+  As P1: 50/50 (100%)
+  As P2: 50/50 (100%)
+  Overall: 100/100 (100%)
+vs Strategic Heuristic Agent Ammar:
+  As P1: 21/50 (42%)
+  As P2: 24/50 (48%)
+  Overall: 45/100 (45%)
+vs Self-Tuning Heuristic Agent:
+  As P1: 30/50 (60%)
+  As P2: 28/50 (56%)
+  Overall: 58/100 (58%)
+vs EvoAgent-400-30-0.8-true:
+  As P1: 30/50 (60%)
+  As P2: 32/50 (64%)
+  Overall: 62/100 (62%)
+
+vs Base AdaptiveHeuristicAgent:
+  As P1: 40/50 (80%)
+
+vs Self-Tuning Agent:
+  As P1: 30/50 (60%)
+
+Overall Results: 593/800 (74%)
+
+[2025-05-16_04-12-09] Advanced to phase: REFINEMENT
+[2025-05-16_04-12-09] Starting optimization cycle 1
+[2025-05-16_04-12-09] Phase: REFINEMENT
+[2025-05-16_04-12-09] Opponent: Better Random Agent
+[2025-05-16_04-12-09] Evaluation games: 60
+[2025-05-16_04-12-09] Population size: 20
+[2025-05-16_04-12-09] Generations: 10
+[2025-05-16_04-12-09] Mutation rate: 0.1
+[2025-05-16_04-12-09] Mutation strength: 0.05
+[2025-05-16_04-12-17] Starting optimization cycle 2
+[2025-05-16_04-12-17] Phase: REFINEMENT
+[2025-05-16_04-12-17] Opponent: Careful Random Agent
+[2025-05-16_04-12-17] Evaluation games: 60
+[2025-05-16_04-12-17] Population size: 20
+[2025-05-16_04-12-17] Generations: 10
+[2025-05-16_04-12-17] Mutation rate: 0.1
+[2025-05-16_04-12-17] Mutation strength: 0.05
+[2025-05-16_04-12-26] Starting optimization cycle 3
+[2025-05-16_04-12-26] Phase: REFINEMENT
+[2025-05-16_04-12-26] Opponent: Adaptive Heuristic Agent
+[2025-05-16_04-12-26] Evaluation games: 60
+[2025-05-16_04-12-26] Population size: 20
+[2025-05-16_04-12-26] Generations: 10
+[2025-05-16_04-12-26] Mutation rate: 0.1
+[2025-05-16_04-12-26] Mutation strength: 0.05
+[2025-05-16_04-12-39] Advanced to phase: VERIFICATION
+[2025-05-16_04-12-39] Starting optimization cycle 1
+[2025-05-16_04-12-39] Phase: VERIFICATION
+[2025-05-16_04-12-39] Opponent: Better Random Agent
+[2025-05-16_04-12-39] Evaluation games: 100
+[2025-05-16_04-12-39] Population size: 10
+[2025-05-16_04-12-39] Generations: 3
+[2025-05-16_04-12-39] Mutation rate: 0.05
+[2025-05-16_04-12-39] Mutation strength: 0.02
+[2025-05-16_04-12-41] Starting optimization cycle 2
+[2025-05-16_04-12-41] Phase: VERIFICATION
+[2025-05-16_04-12-41] Opponent: Careful Random Agent
+[2025-05-16_04-12-41] Evaluation games: 100
+[2025-05-16_04-12-41] Population size: 10
+[2025-05-16_04-12-41] Generations: 3
+[2025-05-16_04-12-41] Mutation rate: 0.05
+[2025-05-16_04-12-41] Mutation strength: 0.02
+[2025-05-16_04-13-20] Test Results
+=============
+vs Better Random Agent:
+  As P1: 49/50 (98%)
+  As P2: 49/50 (98%)
+  Overall: 98/100 (98%)
+vs Careful Random Agent:
+  As P1: 30/50 (60%)
+  As P2: 32/50 (64%)
+  Overall: 62/100 (62%)
+vs Adaptive Heuristic Agent:
+  As P1: 31/50 (62%)
+  As P2: 27/50 (54%)
+  Overall: 58/100 (58%)
+vs Hybrid Strategic Evo Agent Cheeni:
+  As P1: 50/50 (100%)
+  As P2: 50/50 (100%)
+  Overall: 100/100 (100%)
+vs Strategic Heuristic Agent Ammar:
+  As P1: 18/50 (36%)
+  As P2: 11/50 (22%)
+  Overall: 29/100 (29%)
+vs Self-Tuning Heuristic Agent:
+  As P1: 25/50 (50%)
+  As P2: 20/50 (40%)
+  Overall: 45/100 (45%)
+vs EvoAgent-400-30-0.8-true:
+  As P1: 28/50 (56%)
+  As P2: 28/50 (56%)
+  Overall: 56/100 (56%)
+
+vs Base AdaptiveHeuristicAgent:
+  As P1: 39/50 (78%)
+
+vs Self-Tuning Agent:
+  As P1: 22/50 (44%)
+
+Overall Results: 509/800 (63%)
+
+[2025-05-16_04-13-20] Starting optimization cycle 3
+[2025-05-16_04-13-20] Phase: VERIFICATION
+[2025-05-16_04-13-20] Opponent: Adaptive Heuristic Agent
+[2025-05-16_04-13-20] Evaluation games: 100
+[2025-05-16_04-13-20] Population size: 10
+[2025-05-16_04-13-20] Generations: 3
+[2025-05-16_04-13-20] Mutation rate: 0.05
+[2025-05-16_04-13-20] Mutation strength: 0.02
+[2025-05-16_04-13-23] Advanced to phase: EXPLORATION
+[2025-05-16_04-13-23] Starting optimization cycle 1
+[2025-05-16_04-13-23] Phase: EXPLORATION
+[2025-05-16_04-13-23] Opponent: Better Random Agent
+[2025-05-16_04-13-23] Evaluation games: 20
+[2025-05-16_04-13-23] Population size: 10
+[2025-05-16_04-13-23] Generations: 5
+[2025-05-16_04-13-23] Mutation rate: 0.3
+[2025-05-16_04-13-23] Mutation strength: 0.3
+[2025-05-16_04-13-23] Starting optimization cycle 2
+[2025-05-16_04-13-23] Phase: EXPLORATION
+[2025-05-16_04-13-23] Opponent: Careful Random Agent
+[2025-05-16_04-13-23] Evaluation games: 20
+[2025-05-16_04-13-23] Population size: 10
+[2025-05-16_04-13-23] Generations: 5
+[2025-05-16_04-13-23] Mutation rate: 0.3
+[2025-05-16_04-13-23] Mutation strength: 0.3
+[2025-05-16_04-13-24] Starting optimization cycle 3
+[2025-05-16_04-13-24] Phase: EXPLORATION
+[2025-05-16_04-13-24] Opponent: Adaptive Heuristic Agent
+[2025-05-16_04-13-24] Evaluation games: 20
+[2025-05-16_04-13-24] Population size: 10
+[2025-05-16_04-13-24] Generations: 5
+[2025-05-16_04-13-24] Mutation rate: 0.3
+[2025-05-16_04-13-24] Mutation strength: 0.3
+[2025-05-16_04-13-25] Advanced to phase: EXPLOITATION
+[2025-05-16_04-13-25] Starting optimization cycle 1
+[2025-05-16_04-13-25] Phase: EXPLOITATION
+[2025-05-16_04-13-25] Opponent: Better Random Agent
+[2025-05-16_04-13-25] Evaluation games: 40
+[2025-05-16_04-13-25] Population size: 15
+[2025-05-16_04-13-25] Generations: 8
+[2025-05-16_04-13-25] Mutation rate: 0.2
+[2025-05-16_04-13-25] Mutation strength: 0.15
+[2025-05-16_04-14-04] Test Results
+=============
+vs Better Random Agent:
+  As P1: 50/50 (100%)
+  As P2: 45/50 (90%)
+  Overall: 95/100 (95%)
+vs Careful Random Agent:
+  As P1: 31/50 (62%)
+  As P2: 29/50 (58%)
+  Overall: 60/100 (60%)
+vs Adaptive Heuristic Agent:
+  As P1: 22/50 (44%)
+  As P2: 26/50 (52%)
+  Overall: 48/100 (48%)
+vs Hybrid Strategic Evo Agent Cheeni:
+  As P1: 50/50 (100%)
+  As P2: 50/50 (100%)
+  Overall: 100/100 (100%)
+vs Strategic Heuristic Agent Ammar:
+  As P1: 16/50 (32%)
+  As P2: 21/50 (42%)
+  Overall: 37/100 (37%)
+vs Self-Tuning Heuristic Agent:
+  As P1: 26/50 (52%)
+  As P2: 18/50 (36%)
+  Overall: 44/100 (44%)
+vs EvoAgent-400-30-0.8-true:
+  As P1: 24/50 (48%)
+  As P2: 22/50 (44%)
+  Overall: 46/100 (46%)
+
+vs Base AdaptiveHeuristicAgent:
+  As P1: 31/50 (62%)
+
+vs Self-Tuning Agent:
+  As P1: 13/50 (26%)
+
+Overall Results: 474/800 (59%)
+
+[2025-05-16_04-14-04] Starting optimization cycle 2
+[2025-05-16_04-14-04] Phase: EXPLOITATION
+[2025-05-16_04-14-04] Opponent: Careful Random Agent
+[2025-05-16_04-14-04] Evaluation games: 40
+[2025-05-16_04-14-04] Population size: 15
+[2025-05-16_04-14-04] Generations: 8
+[2025-05-16_04-14-04] Mutation rate: 0.2
+[2025-05-16_04-14-04] Mutation strength: 0.15
+[2025-05-16_04-14-08] Starting optimization cycle 3
+[2025-05-16_04-14-08] Phase: EXPLOITATION
+[2025-05-16_04-14-08] Opponent: Adaptive Heuristic Agent
+[2025-05-16_04-14-08] Evaluation games: 40
+[2025-05-16_04-14-08] Population size: 15
+[2025-05-16_04-14-08] Generations: 8
+[2025-05-16_04-14-08] Mutation rate: 0.2
+[2025-05-16_04-14-08] Mutation strength: 0.15
+[2025-05-16_04-14-13] Advanced to phase: REFINEMENT
+[2025-05-16_04-14-13] Starting optimization cycle 1
+[2025-05-16_04-14-13] Phase: REFINEMENT
+[2025-05-16_04-14-13] Opponent: Better Random Agent
+[2025-05-16_04-14-13] Evaluation games: 60
+[2025-05-16_04-14-13] Population size: 20
+[2025-05-16_04-14-13] Generations: 10
+[2025-05-16_04-14-13] Mutation rate: 0.1
+[2025-05-16_04-14-13] Mutation strength: 0.05
+[2025-05-16_04-14-22] Starting optimization cycle 2
+[2025-05-16_04-14-22] Phase: REFINEMENT
+[2025-05-16_04-14-22] Opponent: Careful Random Agent
+[2025-05-16_04-14-22] Evaluation games: 60
+[2025-05-16_04-14-22] Population size: 20
+[2025-05-16_04-14-22] Generations: 10
+[2025-05-16_04-14-22] Mutation rate: 0.1
+[2025-05-16_04-14-22] Mutation strength: 0.05
+[2025-05-16_04-14-30] Starting optimization cycle 3
+[2025-05-16_04-14-30] Phase: REFINEMENT
+[2025-05-16_04-14-30] Opponent: Adaptive Heuristic Agent
+[2025-05-16_04-14-30] Evaluation games: 60
+[2025-05-16_04-14-30] Population size: 20
+[2025-05-16_04-14-30] Generations: 10
+[2025-05-16_04-14-30] Mutation rate: 0.1
+[2025-05-16_04-14-30] Mutation strength: 0.05
+[2025-05-16_04-15-19] Test Results
+=============
+vs Better Random Agent:
+  As P1: 46/50 (92%)
+  As P2: 49/50 (98%)
+  Overall: 95/100 (95%)
+vs Careful Random Agent:
+  As P1: 34/50 (68%)
+  As P2: 37/50 (74%)
+  Overall: 71/100 (71%)
+vs Adaptive Heuristic Agent:
+  As P1: 26/50 (52%)
+  As P2: 22/50 (44%)
+  Overall: 48/100 (48%)
+vs Hybrid Strategic Evo Agent Cheeni:
+  As P1: 50/50 (100%)
+  As P2: 50/50 (100%)
+  Overall: 100/100 (100%)
+vs Strategic Heuristic Agent Ammar:
+  As P1: 15/50 (30%)
+  As P2: 23/50 (46%)
+  Overall: 38/100 (38%)
+vs Self-Tuning Heuristic Agent:
+  As P1: 23/50 (46%)
+  As P2: 21/50 (42%)
+  Overall: 44/100 (44%)
+vs EvoAgent-400-30-0.8-true:
+  As P1: 23/50 (46%)
+  As P2: 19/50 (38%)
+  Overall: 42/100 (42%)
+
+vs Base AdaptiveHeuristicAgent:
+  As P1: 35/50 (70%)
+
+vs Self-Tuning Agent:
+  As P1: 20/50 (40%)
+
+Overall Results: 493/800 (61%)
+
+[2025-05-16_04-15-19] Advanced to phase: VERIFICATION
+[2025-05-16_04-15-19] Starting optimization cycle 1
+[2025-05-16_04-15-19] Phase: VERIFICATION
+[2025-05-16_04-15-19] Opponent: Better Random Agent
+[2025-05-16_04-15-19] Evaluation games: 100
+[2025-05-16_04-15-19] Population size: 10
+[2025-05-16_04-15-19] Generations: 3
+[2025-05-16_04-15-19] Mutation rate: 0.05
+[2025-05-16_04-15-19] Mutation strength: 0.02
+[2025-05-16_04-15-22] Starting optimization cycle 2
+[2025-05-16_04-15-22] Phase: VERIFICATION
+[2025-05-16_04-15-22] Opponent: Careful Random Agent
+[2025-05-16_04-15-22] Evaluation games: 100
+[2025-05-16_04-15-22] Population size: 10
+[2025-05-16_04-15-22] Generations: 3
+[2025-05-16_04-15-22] Mutation rate: 0.05
+[2025-05-16_04-15-22] Mutation strength: 0.02
+[2025-05-16_04-15-24] Starting optimization cycle 3
+[2025-05-16_04-15-24] Phase: VERIFICATION
+[2025-05-16_04-15-24] Opponent: Adaptive Heuristic Agent
+[2025-05-16_04-15-24] Evaluation games: 100
+[2025-05-16_04-15-24] Population size: 10
+[2025-05-16_04-15-24] Generations: 3
+[2025-05-16_04-15-24] Mutation rate: 0.05
+[2025-05-16_04-15-24] Mutation strength: 0.02
+[2025-05-16_04-15-27] Advanced to phase: EXPLORATION
+[2025-05-16_04-15-27] Starting optimization cycle 1
+[2025-05-16_04-15-27] Phase: EXPLORATION
+[2025-05-16_04-15-27] Opponent: Better Random Agent
+[2025-05-16_04-15-27] Evaluation games: 20
+[2025-05-16_04-15-27] Population size: 10
+[2025-05-16_04-15-27] Generations: 5
+[2025-05-16_04-15-27] Mutation rate: 0.3
+[2025-05-16_04-15-27] Mutation strength: 0.3
+[2025-05-16_04-15-28] Starting optimization cycle 2
+[2025-05-16_04-15-28] Phase: EXPLORATION
+[2025-05-16_04-15-28] Opponent: Careful Random Agent
+[2025-05-16_04-15-28] Evaluation games: 20
+[2025-05-16_04-15-28] Population size: 10
+[2025-05-16_04-15-28] Generations: 5
+[2025-05-16_04-15-28] Mutation rate: 0.3
+[2025-05-16_04-15-28] Mutation strength: 0.3
+[2025-05-16_04-16-05] Test Results
+=============
+vs Better Random Agent:
+  As P1: 50/50 (100%)
+  As P2: 50/50 (100%)
+  Overall: 100/100 (100%)
+vs Careful Random Agent:
+  As P1: 36/50 (72%)
+  As P2: 39/50 (78%)
+  Overall: 75/100 (75%)
+vs Adaptive Heuristic Agent:
+  As P1: 30/50 (60%)
+  As P2: 36/50 (72%)
+  Overall: 66/100 (66%)
+vs Hybrid Strategic Evo Agent Cheeni:
+  As P1: 50/50 (100%)
+  As P2: 50/50 (100%)
+  Overall: 100/100 (100%)
+vs Strategic Heuristic Agent Ammar:
+  As P1: 21/50 (42%)
+  As P2: 19/50 (38%)
+  Overall: 40/100 (40%)
+vs Self-Tuning Heuristic Agent:
+  As P1: 25/50 (50%)
+  As P2: 18/50 (36%)
+  Overall: 43/100 (43%)
+vs EvoAgent-400-30-0.8-true:
+  As P1: 31/50 (62%)
+  As P2: 33/50 (66%)
+  Overall: 64/100 (64%)
+
+vs Base AdaptiveHeuristicAgent:
+  As P1: 39/50 (78%)
+
+vs Self-Tuning Agent:
+  As P1: 32/50 (64%)
+
+Overall Results: 559/800 (69%)
+
+[2025-05-16_04-16-05] Starting optimization cycle 3
+[2025-05-16_04-16-05] Phase: EXPLORATION
+[2025-05-16_04-16-05] Opponent: Adaptive Heuristic Agent
+[2025-05-16_04-16-05] Evaluation games: 20
+[2025-05-16_04-16-05] Population size: 10
+[2025-05-16_04-16-05] Generations: 5
+[2025-05-16_04-16-05] Mutation rate: 0.3
+[2025-05-16_04-16-05] Mutation strength: 0.3
+[2025-05-16_04-16-06] Advanced to phase: EXPLOITATION
+[2025-05-16_04-16-06] Starting optimization cycle 1
+[2025-05-16_04-16-06] Phase: EXPLOITATION
+[2025-05-16_04-16-06] Opponent: Better Random Agent
+[2025-05-16_04-16-06] Evaluation games: 40
+[2025-05-16_04-16-06] Population size: 15
+[2025-05-16_04-16-06] Generations: 8
+[2025-05-16_04-16-06] Mutation rate: 0.2
+[2025-05-16_04-16-06] Mutation strength: 0.15
+[2025-05-16_04-16-10] Starting optimization cycle 2
+[2025-05-16_04-16-10] Phase: EXPLOITATION
+[2025-05-16_04-16-10] Opponent: Careful Random Agent
+[2025-05-16_04-16-10] Evaluation games: 40
+[2025-05-16_04-16-10] Population size: 15
+[2025-05-16_04-16-10] Generations: 8
+[2025-05-16_04-16-10] Mutation rate: 0.2
+[2025-05-16_04-16-10] Mutation strength: 0.15
+[2025-05-16_04-16-13] Starting optimization cycle 3
+[2025-05-16_04-16-13] Phase: EXPLOITATION
+[2025-05-16_04-16-13] Opponent: Adaptive Heuristic Agent
+[2025-05-16_04-16-13] Evaluation games: 40
+[2025-05-16_04-16-13] Population size: 15
+[2025-05-16_04-16-13] Generations: 8
+[2025-05-16_04-16-13] Mutation rate: 0.2
+[2025-05-16_04-16-13] Mutation strength: 0.15
+[2025-05-16_04-16-19] Advanced to phase: REFINEMENT
+[2025-05-16_04-16-19] Starting optimization cycle 1
+[2025-05-16_04-16-19] Phase: REFINEMENT
+[2025-05-16_04-16-19] Opponent: Better Random Agent
+[2025-05-16_04-16-19] Evaluation games: 60
+[2025-05-16_04-16-19] Population size: 20
+[2025-05-16_04-16-19] Generations: 10
+[2025-05-16_04-16-19] Mutation rate: 0.1
+[2025-05-16_04-16-19] Mutation strength: 0.05
+[2025-05-16_04-17-04] Test Results
+=============
+vs Better Random Agent:
+  As P1: 49/50 (98%)
+  As P2: 49/50 (98%)
+  Overall: 98/100 (98%)
+vs Careful Random Agent:
+  As P1: 32/50 (64%)
+  As P2: 28/50 (56%)
+  Overall: 60/100 (60%)
+vs Adaptive Heuristic Agent:
+  As P1: 26/50 (52%)
+  As P2: 27/50 (54%)
+  Overall: 53/100 (53%)
+vs Hybrid Strategic Evo Agent Cheeni:
+  As P1: 50/50 (100%)
+  As P2: 50/50 (100%)
+  Overall: 100/100 (100%)
+vs Strategic Heuristic Agent Ammar:
+  As P1: 15/50 (30%)
+  As P2: 10/50 (20%)
+  Overall: 25/100 (25%)
+vs Self-Tuning Heuristic Agent:
+  As P1: 18/50 (36%)
+  As P2: 17/50 (34%)
+  Overall: 35/100 (35%)
+vs EvoAgent-400-30-0.8-true:
+  As P1: 21/50 (42%)
+  As P2: 18/50 (36%)
+  Overall: 39/100 (39%)
+
+vs Base AdaptiveHeuristicAgent:
+  As P1: 24/50 (48%)
+
+vs Self-Tuning Agent:
+  As P1: 15/50 (30%)
+
+Overall Results: 449/800 (56%)
+
+[2025-05-16_04-17-04] Starting optimization cycle 2
+[2025-05-16_04-17-04] Phase: REFINEMENT
+[2025-05-16_04-17-04] Opponent: Careful Random Agent
+[2025-05-16_04-17-04] Evaluation games: 60
+[2025-05-16_04-17-04] Population size: 20
+[2025-05-16_04-17-04] Generations: 10
+[2025-05-16_04-17-04] Mutation rate: 0.1
+[2025-05-16_04-17-04] Mutation strength: 0.05
+[2025-05-16_04-17-13] Starting optimization cycle 3
+[2025-05-16_04-17-13] Phase: REFINEMENT
+[2025-05-16_04-17-13] Opponent: Adaptive Heuristic Agent
+[2025-05-16_04-17-13] Evaluation games: 60
+[2025-05-16_04-17-13] Population size: 20
+[2025-05-16_04-17-13] Generations: 10
+[2025-05-16_04-17-13] Mutation rate: 0.1
+[2025-05-16_04-17-13] Mutation strength: 0.05
+[2025-05-16_04-17-26] Advanced to phase: VERIFICATION
+[2025-05-16_04-17-26] Starting optimization cycle 1
+[2025-05-16_04-17-26] Phase: VERIFICATION
+[2025-05-16_04-17-26] Opponent: Better Random Agent
+[2025-05-16_04-17-26] Evaluation games: 100
+[2025-05-16_04-17-26] Population size: 10
+[2025-05-16_04-17-26] Generations: 3
+[2025-05-16_04-17-26] Mutation rate: 0.05
+[2025-05-16_04-17-26] Mutation strength: 0.02
+[2025-05-16_04-17-28] Starting optimization cycle 2
+[2025-05-16_04-17-28] Phase: VERIFICATION
+[2025-05-16_04-17-28] Opponent: Careful Random Agent
+[2025-05-16_04-17-28] Evaluation games: 100
+[2025-05-16_04-17-28] Population size: 10
+[2025-05-16_04-17-28] Generations: 3
+[2025-05-16_04-17-28] Mutation rate: 0.05
+[2025-05-16_04-17-28] Mutation strength: 0.02
+[2025-05-16_04-17-30] Starting optimization cycle 3
+[2025-05-16_04-17-30] Phase: VERIFICATION
+[2025-05-16_04-17-30] Opponent: Adaptive Heuristic Agent
+[2025-05-16_04-17-30] Evaluation games: 100
+[2025-05-16_04-17-30] Population size: 10
+[2025-05-16_04-17-30] Generations: 3
+[2025-05-16_04-17-30] Mutation rate: 0.05
+[2025-05-16_04-17-30] Mutation strength: 0.02

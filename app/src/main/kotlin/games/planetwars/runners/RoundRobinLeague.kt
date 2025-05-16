@@ -2,10 +2,17 @@ package games.planetwars.runners
 
 import games.planetwars.agents.DoNothingAgent
 import games.planetwars.agents.PlanetWarsAgent
+import games.planetwars.agents.evo.ParameterHistory
 import games.planetwars.agents.evo.SimpleEvoAgent
 import games.planetwars.agents.random.BetterRandomAgent
 import games.planetwars.agents.random.CarefulRandomAgent
 import games.planetwars.agents.random.PureRandomAgent
+import games.planetwars.agents.random.AdaptiveHeuristicAgent
+import games.planetwars.agents.random.TunableHeuristicAgent
+import games.planetwars.agents.random.SelfTuningHeuristicAgent
+import games.planetwars.agents.random.HeuristicParameters
+import games.planetwars.agents.random.HybridStrategicEvoAgentCheeni
+import games.planetwars.agents.random.StrategicHeuristicAgentAmmar
 import games.planetwars.core.GameParams
 import games.planetwars.core.Player
 
@@ -40,10 +47,16 @@ class SamplePlayerLists {
     }
 
     fun getFullList(): MutableList<PlanetWarsAgent> {
+       
         return mutableListOf(
 //            PureRandomAgent(),
             BetterRandomAgent(),
             CarefulRandomAgent(),
+            AdaptiveHeuristicAgent(),
+            HybridStrategicEvoAgentCheeni(),
+            StrategicHeuristicAgentAmmar(),    
+            TunableHeuristicAgent(),
+            SelfTuningHeuristicAgent(),
             SimpleEvoAgent(
                 useShiftBuffer = true,
                 nEvals = 30,
@@ -53,6 +66,7 @@ class SamplePlayerLists {
             ),
         )
     }
+    
 }
 
 data class RoundRobinLeague(

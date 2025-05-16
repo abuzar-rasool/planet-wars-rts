@@ -1,0 +1,17 @@
+# Best parameters found at 2025-05-16_03-39-03
+# Win rate: 100,00%
+
+reserveRatio=0.2554082484169616
+availableShipsRatio=0.7374626173138302
+defenseReinforceRatio=0.7092046142386055
+defensePriorityBase=985.5322662510232
+neutralHorizon=52
+enemyGrowthWeight=5.0
+attackPriorityForLargestEnemy=72.72407865451116
+vulnerabilityPenalty=19.11464339647105
+sourceMinShips=2
+maxAttackDistance=36
+internalRedistributionDistance=19
+internalRedistributionShips=23
+defensiveOverkillMargin=6
+attackOverkillMargin=5
