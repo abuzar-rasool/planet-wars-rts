@@ -1,5 +1,5 @@
 | Rank | Agent Name | Win Rate % | Played |
 |------|------------|----------|--------|
-| 1 | EvoAgent-400-30-0.8-true | 95.0 | 20 |
-| 2 | Careful Random Agent | 55.0 | 20 |
-| 3 | Better Random Agent | 0.0 | 20 |
+| 1 | Strategic Heuristic Agent - Ammar Lakho | 85,0 | 40 |
+| 2 | EvoAgent-400-30-0.8-true | 65,0 | 40 |
+| 3 | RLAgent-DQN - By Abuzar | 0,0 | 40 |

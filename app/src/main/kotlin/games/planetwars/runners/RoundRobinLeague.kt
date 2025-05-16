@@ -3,18 +3,24 @@ package games.planetwars.runners
 import games.planetwars.agents.DoNothingAgent
 import games.planetwars.agents.PlanetWarsAgent
 import games.planetwars.agents.evo.SimpleEvoAgent
+//import games.planetwars.agents.mcts.MCTSAgent
 import games.planetwars.agents.random.BetterRandomAgent
 import games.planetwars.agents.random.CarefulRandomAgent
 import games.planetwars.agents.random.PureRandomAgent
+import  games.planetwars.agents.random.StrategicHeuristicAgent
+import games.planetwars.agents.rl.RLAgent
 import games.planetwars.core.GameParams
 import games.planetwars.core.Player
+import java.io.File
+import java.io.FileFilter
 
-fun main() {
-//    val agents = SamplePlayerLists().getRandomTrio()
-    val agents = SamplePlayerLists().getFullList()
-//    agents.add(DoNothingAgent())
-    val league = RoundRobinLeague(agents, gamesPerPair = 5)
+fun main(args: Array<String>) {
+    // Get the agent list based on whether we have a trained model
+    val agents = SamplePlayerLists().getListWithTrainedAgent()
+    
+    val league = RoundRobinLeague(agents, gamesPerPair = 10)
     val results = league.runRoundRobin()
+    
     // use the League utils to print the results
     println(results)
     val writer = LeagueWriter()
@@ -27,8 +33,9 @@ fun main() {
     for (entry in sortedResults.values) {
         println("${entry.agentName} : ${entry.points} : ${entry.nGames}")
     }
-
 }
+
+
 
 class SamplePlayerLists {
     fun getRandomTrio(): MutableList<PlanetWarsAgent> {
@@ -39,9 +46,40 @@ class SamplePlayerLists {
         )
     }
 
+
+    /**
+     * Find the latest trained model in the results directory
+     */
+    fun findLatestTrainedModel(): String? {
+        val resultsDir = File("results/rl_selfplay")
+        if (!resultsDir.exists() || !resultsDir.isDirectory) return null
+
+        // Find the most recent directory
+        val latestDir = resultsDir.listFiles(FileFilter { f -> f.isDirectory })
+            ?.sortedByDescending { it.lastModified() }
+            ?.firstOrNull()
+            ?: return null
+
+        // Look for final model first
+        val finalModel = File("${latestDir.absolutePath}/models/final_model.bin")
+        if (finalModel.exists()) return finalModel.absolutePath
+
+        // Look for the latest snapshot
+        val snapshotsDir = File("${latestDir.absolutePath}/models/snapshots")
+        if (!snapshotsDir.exists() || !snapshotsDir.isDirectory) return null
+
+        return snapshotsDir.listFiles(FileFilter { f -> f.name.endsWith(".bin") })
+            ?.sortedByDescending {
+                val epNumber = it.name.removePrefix("model_ep").removeSuffix(".bin").toIntOrNull() ?: 0
+                epNumber
+            }
+            ?.firstOrNull()
+            ?.absolutePath
+    }
+
     fun getFullList(): MutableList<PlanetWarsAgent> {
         return mutableListOf(
-//            PureRandomAgent(),
+            PureRandomAgent(),
             BetterRandomAgent(),
             CarefulRandomAgent(),
             SimpleEvoAgent(
@@ -51,6 +89,72 @@ class SamplePlayerLists {
                 opponentModel = DoNothingAgent(),
                 probMutation = 0.8,
             ),
+            //MCTSAgent(),
+            StrategicHeuristicAgent()
+        )
+    }
+
+    fun getTrainedAgent(): PlanetWarsAgent {
+        val modelPath = findLatestTrainedModel()
+        val modelDirectory = File(modelPath).parent
+        if (modelPath == null) {
+            println("No trained model found")
+            throw RuntimeException("No trained model found")
+        }
+        return RLAgent(
+            modelDirectory = modelDirectory,
+            isTraining = false,
+            explorationRate = 0.0
+        ).apply {
+            loadSpecificModel(modelPath)
+        }
+    }
+
+    
+    fun getListWithTrainedAgent(): MutableList<PlanetWarsAgent> {
+        val modelPath = findLatestTrainedModel()
+        // If a model path is specified or found, print it
+        if (modelPath != null) {
+            println("Using trained model: $modelPath")
+        } else {
+            println("No trained model specified or found. Using default agents.")
+            return getFullList()
+        }
+        val modelDirectory = File(modelPath).parent
+        
+        return mutableListOf(
+            // PureRandomAgent(),
+            // BetterRandomAgent(),
+            // CarefulRandomAgent(),
+            SimpleEvoAgent(
+                useShiftBuffer = true,
+                nEvals = 30,
+                sequenceLength = 400,
+                opponentModel = DoNothingAgent(),
+                probMutation = 0.8,
+            ),
+            // Add our trained RL Agent
+//            RLAgent(
+//                modelDirectory = modelDirectory,
+//                isTraining = false,
+//                explorationRate = 0.0
+//            ).apply {
+//                loadSpecificModel(modelPath)
+//            } ,
+            //MCTSAgent(),
+            StrategicHeuristicAgent()
+        )
+    }
+    
+    fun getRLTestList(): MutableList<PlanetWarsAgent> {
+        return mutableListOf(
+            BetterRandomAgent(),
+            CarefulRandomAgent(),
+            RLAgent(
+                modelDirectory = "models/rl",
+                isTraining = false,
+                explorationRate = 0.0
+            )
         )
     }
 }

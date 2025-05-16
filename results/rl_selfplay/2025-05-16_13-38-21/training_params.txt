@@ -1,0 +1,10 @@
+=== Self-Play Training Parameters ===
+numPlanets: 20
+maxTicks: 300
+trainingEpisodes: 2000
+snapshotFrequency: 100
+opponentPoolSize: 10
+evaluationFrequency: 200
+evaluationGames: 10
+initialExplorationRate: 0.3
+finalExplorationRate: 0.05
