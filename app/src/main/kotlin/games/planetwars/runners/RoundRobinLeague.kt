@@ -9,6 +9,8 @@ import games.planetwars.agents.random.PureRandomAgent
 import games.planetwars.agents.strategic.StrategicHeuristicAgent
 import games.planetwars.core.GameParams
 import games.planetwars.core.Player
+import games.planetwars.agents.strategic.StrategicAgent
+
 
 fun main() {
 //    val agents = SamplePlayerLists().getRandomTrio()
@@ -44,15 +46,16 @@ class SamplePlayerLists {
         return mutableListOf(
 //            PureRandomAgent(),
             BetterRandomAgent(),
-            CarefulRandomAgent(),
-            SimpleEvoAgent(
-                useShiftBuffer = true,
-                nEvals = 30,
-                sequenceLength = 400,
-                opponentModel = DoNothingAgent(),
-                probMutation = 0.8,
-            ),
-            StrategicHeuristicAgent()
+//            CarefulRandomAgent(),
+//            SimpleEvoAgent(
+//                useShiftBuffer = true,
+//                nEvals = 30,
+//                sequenceLength = 400,
+//                opponentModel = DoNothingAgent(),
+//                probMutation = 0.8,
+//            ),
+            StrategicHeuristicAgent(),
+            StrategicAgent()
         )
     }
 }
@@ -60,7 +63,7 @@ class SamplePlayerLists {
 data class RoundRobinLeague(
     val agents: List<PlanetWarsAgent>,
     val gamesPerPair: Int = 10,
-    val gameParams: GameParams = GameParams(numPlanets = 20),
+    val gameParams: GameParams = GameParams(numPlanets = 20, maxTicks = 1000),
 ) {
     fun runPair(agent1: PlanetWarsAgent, agent2: PlanetWarsAgent): Map<Player, Int> {
         val gameRunner = GameRunner(agent1, agent2, gameParams)
