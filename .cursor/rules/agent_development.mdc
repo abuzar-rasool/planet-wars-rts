@@ -1,0 +1,714 @@
+---
+description: This guide provides essential information for developing agents to compete in Planet Wars RTS. It covers the technical interfaces, game state access, action construction, and best practices for building competitive agents.
+globs:
+alwaysApply: true
+---
+# Planet Wars RTS - Agent Development Guidelines
+
+## Overview
+
+This guide provides essential information for developing agents to compete in Planet Wars RTS. It covers the technical interfaces, game state access, action construction, and best practices for building competitive agents.
+
+## Agent Interface Requirements
+
+### 1. Full Observability Agents
+
+#### Core Interface: `PlanetWarsAgent`
+All full observability agents must implement the `PlanetWarsAgent` interface with the following methods:
+
+```kotlin
+interface PlanetWarsAgent {
+    fun getAction(gameState: GameState): Action
+    fun getAgentType(): String
+    fun prepareToPlayAs(player: Player, params: GameParams, opponent: String?): String
+    fun processGameOver(finalState: GameState) {}  // Optional override
+}
+```
+
+#### Recommended Base Class: `PlanetWarsPlayer`
+For convenience, extend the abstract `PlanetWarsPlayer` class which provides:
+- **Automatic player assignment**: Access via `protected var player: Player`
+- **Game parameters access**: Access via `protected var params: GameParams`
+- **Default initialization**: Handles `prepareToPlayAs` implementation
+
+```kotlin
+class MyAgent : PlanetWarsPlayer() {
+    override fun getAction(gameState: GameState): Action {
+        // Your decision logic here
+        // Access current player via this.player
+        // Access game parameters via this.params
+    }
+    
+    override fun getAgentType(): String = "MyAgent-v1.0"
+}
+```
+
+### 2. Partial Observability Agents
+
+#### Core Interface: `PartialObservationAgent`
+For limited information games, implement:
+
+```kotlin
+interface PartialObservationAgent {
+    fun getAction(observation: Observation): Action
+    fun getAgentType(): String
+    fun prepareToPlayAs(player: Player, params: GameParams, opponent: Player?): PartialObservationAgent
+    fun processGameOver(finalState: GameState) {}  // Optional override
+}
+```
+
+#### Recommended Base Class: `PartialObservationPlayer`
+Similar benefits to `PlanetWarsPlayer` but for partial observation scenarios.
+
+## Accessing Game Information
+
+### 1. Game State Structure
+
+The `GameState` provides complete game information:
+
+```kotlin
+data class GameState(
+    val planets: List<Planet>,    // All planets in the game
+    var gameTick: Int            // Current turn number
+)
+```
+
+#### Essential GameState Methods:
+- **`deepCopy()`**: Creates a complete independent copy for simulation
+- **Planet access**: `gameState.planets[planetId]` or iterate through list
+- **Turn tracking**: `gameState.gameTick` for current game turn
+
+### 2. Planet Information
+
+Each `Planet` object contains:
+
+```kotlin
+data class Planet(
+    var owner: Player,              // Who controls this planet
+    var nShips: Double,             // Current ship count (supports fractional)
+    val position: Vec2d,            // 2D coordinates
+    val growthRate: Double,         // Ships produced per turn
+    val radius: Double,             // Collision radius
+    var transporter: Transporter?,  // Active outgoing transporter (null if available)
+    var id: Int                     // Unique planet identifier
+)
+```
+
+#### Key Planet Properties:
+- **Ownership**: `Planet.owner` (Player.Player1, Player.Player2, Player.Neutral)
+- **Economic value**: `Planet.growthRate` (ships per turn when owned)
+- **Military strength**: `Planet.nShips` (current defensive/offensive capability)
+- **Availability**: `Planet.transporter == null` means can launch new transporter
+- **Strategic position**: `Planet.position` for distance calculations
+
+### 3. Transporter Information
+
+Active transporters contain:
+
+```kotlin
+data class Transporter(
+    var s: Vec2d,               // Current position
+    var v: Vec2d,               // Velocity vector
+    val owner: Player,          // Controlling player
+    val sourceIndex: Int,       // Origin planet ID
+    val destinationIndex: Int,  // Target planet ID
+    val nShips: Double         // Ships being transported
+)
+```
+
+### 4. Game Parameters Access
+
+The `GameParams` object contains all game configuration:
+
+```kotlin
+data class GameParams(
+    // Spatial
+    val width: Int = 640,
+    val height: Int = 480,
+    
+    // Game Mechanics (COMPETITION RANGES)
+    val numPlanets: Int = 10,              // COMPETITION: 10-30
+    val initialNeutralRatio: Double = 0.5, // COMPETITION: ~0.3
+    val maxTicks: Int = 2000,
+    val minInitialShipsPerPlanet: Int = 2,
+    val maxInitialShipsPerPlanet: Int = 20,
+    val minGrowthRate: Double = 0.02,
+    val maxGrowthRate: Double = 0.1,       // COMPETITION: up to 0.2
+    val transporterSpeed: Double = 3.0,    // COMPETITION: 2.0-5.0
+    val newMapEachRun: Boolean = true
+)
+```
+
+#### Critical Parameters for Agent Logic:
+- **`transporterSpeed`**: Calculate travel times: `distance / params.transporterSpeed`
+- **`maxTicks`**: Plan horizon: `params.maxTicks - gameState.gameTick`
+- **Scale awareness**: Handle `numPlanets` range 10-30 dynamically
+- **Speed adaptation**: Account for 2.5x variance in transporter speeds
+
+### 5. Player Information
+
+```kotlin
+enum class Player {
+    Player1, Player2, Neutral
+    
+    fun opponent(): Player  // Get opposing player
+}
+```
+
+#### Essential Player Methods:
+- **Opponent identification**: `player.opponent()` returns enemy player
+- **Ownership filtering**: `planets.filter { it.owner == player }`
+- **Territory analysis**: Count owned, enemy, and neutral planets
+
+## Constructing Actions
+
+### 1. Action Structure
+
+All agent decisions are expressed as `Action` objects:
+
+```kotlin
+data class Action(
+    val playerId: Player,        // Who is making this action
+    val sourcePlanetId: Int,     // Origin planet ID
+    val destinationPlanetId: Int,// Target planet ID
+    val numShips: Double        // Number of ships to send
+)
+```
+
+### 2. Creating Valid Actions
+
+#### Standard Ship Transfer:
+```kotlin
+// Send ships from owned planet to any target
+val action = Action(
+    playerId = player,
+    sourcePlanetId = myPlanet.id,
+    destinationPlanetId = targetPlanet.id,
+    numShips = 10.0
+)
+```
+
+#### Do Nothing Action:
+```kotlin
+// Skip turn - always valid
+val action = Action.doNothing()
+// or
+val action = Action.DO_NOTHING
+```
+
+### 3. Action Validation Rules
+
+Actions will be **rejected** if:
+- **Source not owned**: `sourcePlanet.owner != player`
+- **Transporter busy**: `sourcePlanet.transporter != null`
+- **Insufficient ships**: `sourcePlanet.nShips < action.numShips`
+- **Invalid IDs**: Non-existent planet IDs
+
+#### Best Practices:
+```kotlin
+// Validate before creating actions
+val myPlanets = gameState.planets.filter { 
+    it.owner == player && 
+    it.transporter == null && 
+    it.nShips >= desiredShipCount 
+}
+
+if (myPlanets.isNotEmpty()) {
+    val source = myPlanets.maxByOrNull { it.nShips }
+    val action = Action(player, source.id, target.id, source.nShips / 2.0)
+}
+```
+
+## Essential Algorithms and Calculations
+
+### 1. Distance and Travel Time
+
+```kotlin
+// Calculate distance between planets
+fun distanceBetween(p1: Planet, p2: Planet): Double {
+    val dx = p1.position.x - p2.position.x
+    val dy = p1.position.y - p2.position.y
+    return sqrt(dx * dx + dy * dy)
+}
+
+// Calculate travel time (important for timing attacks)
+fun travelTime(source: Planet, target: Planet, params: GameParams): Double {
+    return distanceBetween(source, target) / params.transporterSpeed
+}
+```
+
+### 2. Combat Prediction
+
+```kotlin
+// Predict if attack will succeed
+fun willCapture(source: Planet, target: Planet, ships: Double, params: GameParams): Boolean {
+    val travelTime = travelTime(source, target, params)
+    val targetShipsAtArrival = target.nShips + (target.growthRate * travelTime)
+    return ships > targetShipsAtArrival
+}
+```
+
+### 3. Game State Simulation
+
+```kotlin
+// Simulate future game states
+fun simulateAction(gameState: GameState, action: Action, params: GameParams): GameState {
+    val model = ForwardModel(gameState.deepCopy(), params)
+    model.step(mapOf(player to action, player.opponent() to Action.doNothing()))
+    return model.state
+}
+```
+
+## Agent Development Patterns
+
+### 1. Basic Random Agent Template
+
+```kotlin
+class BasicRandomAgent : PlanetWarsPlayer() {
+    override fun getAction(gameState: GameState): Action {
+        val myPlanets = gameState.planets.filter { 
+            it.owner == player && it.transporter == null && it.nShips > 1.0 
+        }
+        if (myPlanets.isEmpty()) return Action.doNothing()
+        
+        val targets = gameState.planets.filter { it.owner != player }
+        if (targets.isEmpty()) return Action.doNothing()
+        
+        val source = myPlanets.random()
+        val target = targets.random()
+        return Action(player, source.id, target.id, source.nShips / 2.0)
+    }
+    
+    override fun getAgentType(): String = "BasicRandomAgent"
+}
+```
+
+### 2. Strategic Evaluation Template
+
+```kotlin
+class StrategicAgent : PlanetWarsPlayer() {
+    override fun getAction(gameState: GameState): Action {
+        val candidates = generateCandidateActions(gameState)
+        return candidates.maxByOrNull { evaluateAction(it, gameState) } 
+            ?: Action.doNothing()
+    }
+    
+    private fun generateCandidateActions(gameState: GameState): List<Action> {
+        val actions = mutableListOf<Action>()
+        val myPlanets = gameState.planets.filter { 
+            it.owner == player && it.transporter == null 
+        }
+        
+        for (source in myPlanets) {
+            for (target in gameState.planets.filter { it.owner != player }) {
+                if (source.nShips > 5.0) {
+                    actions.add(Action(player, source.id, target.id, source.nShips / 2.0))
+                }
+            }
+        }
+        return actions
+    }
+    
+    private fun evaluateAction(action: Action, gameState: GameState): Double {
+        // Implement evaluation logic
+        val futureState = simulateAction(gameState, action, params)
+        return evaluatePosition(futureState)
+    }
+}
+```
+
+## Competition-Specific Requirements
+
+### 1. Time Management
+
+**CRITICAL**: Competition agents face **100ms time limits per action**:
+
+```kotlin
+class CompetitiveAgent : PlanetWarsPlayer() {
+    override fun getAction(gameState: GameState): Action {
+        val startTime = System.currentTimeMillis()
+        val timeLimit = 90L // Leave margin for safety
+        
+        var bestAction = Action.doNothing()
+        var bestScore = Double.NEGATIVE_INFINITY
+        
+        for (candidate in generateCandidates(gameState)) {
+            if (System.currentTimeMillis() - startTime > timeLimit) break
+            
+            val score = evaluateAction(candidate, gameState)
+            if (score > bestScore) {
+                bestScore = score
+                bestAction = candidate
+            }
+        }
+        
+        return bestAction
+    }
+}
+```
+
+### 2. Parameter Robustness
+
+Handle dynamic parameter ranges:
+
+```kotlin
+class RobustAgent : PlanetWarsPlayer() {
+    override fun getAction(gameState: GameState): Action {
+        // Adapt to planet count (10-30 range)
+        val scalingFactor = params.numPlanets / 20.0
+        
+        // Adapt to speed variation (2.0-5.0 range)
+        val speedMultiplier = params.transporterSpeed / 3.0
+        
+        // Adapt evaluation based on actual parameters
+        return adaptiveStrategy(gameState, scalingFactor, speedMultiplier)
+    }
+}
+```
+
+### 3. Defensive Programming
+
+Ensure robust action generation:
+
+```kotlin
+fun safeActionGeneration(gameState: GameState): Action {
+    try {
+        val validSources = gameState.planets.filter { 
+            it.owner == player && 
+            it.transporter == null && 
+            it.nShips > 0.5 
+        }
+        
+        if (validSources.isEmpty()) return Action.doNothing()
+        
+        // Always have fallback logic
+        return generateBestAction(validSources) ?: Action.doNothing()
+    } catch (e: Exception) {
+        // Never crash - return safe action
+        return Action.doNothing()
+    }
+}
+```
+
+## Comprehensive Agent Testing Framework
+
+### 1. AgentTester Overview
+
+The `AgentTester` class provides comprehensive validation of your agents without running full competitions:
+
+```kotlin
+import games.planetwars.debug.AgentTester
+import games.planetwars.debug.quickTestAgent
+import games.planetwars.debug.detailedTestAgent
+```
+
+### 2. Quick Validation
+
+For rapid development feedback:
+
+```kotlin
+// Quick validation during development
+fun validateMyAgent(): Boolean {
+    return quickTestAgent { MyAgent() }
+}
+
+// Use in development workflow
+if (validateMyAgent()) {
+    println("✓ Agent ready for detailed testing")
+} else {
+    println("✗ Agent needs fixes")
+}
+```
+
+### 3. Comprehensive Testing
+
+For thorough validation before competition:
+
+```kotlin
+// Detailed testing with full reporting
+val result = detailedTestAgent { MyAgent() }
+
+println("Agent: ${result.agentType}")
+println("Overall Success: ${result.overallSuccess}")
+println("Summary:\n${result.summary}")
+
+// Check specific test categories
+val performanceTests = result.results.filter { it.testName.contains("Performance") }
+val validationTests = result.results.filter { it.testName.contains("Validation") }
+```
+
+### 4. Test Categories
+
+The AgentTester validates:
+
+#### Basic Functionality Tests
+- ✓ Agent creation and initialization
+- ✓ Player assignment handling
+- ✓ Basic action generation
+
+#### Action Validation Tests
+- ✓ Legal action generation across different scenarios
+- ✓ Handling of various planet counts (5, 15, 25 planets)
+- ✓ Multiple game state progressions
+
+#### Performance Tests
+- ✓ Response time under different planet counts (10, 20, 30 planets)
+- ✓ Stress testing with rapid decisions (50 quick decisions)
+- ✓ Compliance with 100ms time limits
+
+#### Parameter Robustness Tests
+- ✓ Extreme competition parameter ranges
+- ✓ Speed variations (2.0-5.0 range)
+- ✓ Planet count scaling (10-30 range)
+- ✓ Growth rate extremes (up to 0.2)
+
+#### Error Handling Tests
+- ✓ Minimal planet scenarios
+- ✓ No available planets situations
+- ✓ Edge case handling
+
+#### Scenario-Based Tests
+- ✓ Opening game strategy validation
+- ✓ Late game behavior
+- ✓ Strategic decision making
+
+### 5. Custom Testing
+
+Create custom test configurations:
+
+```kotlin
+// Custom performance limits
+val strictTester = AgentTester(verbose = true, performanceTargetMs = 50L)
+val result = strictTester.runCompleteTestSuite { MyAgent() }
+
+// Extract specific performance metrics
+val performanceData = result.results
+    .filter { it.testName.contains("Performance") }
+    .mapNotNull { test ->
+        test.details["avgTime"]?.let { avgTime ->
+            test.testName to (avgTime as Double).toInt()
+        }
+    }
+
+performanceData.forEach { (testName, avgTime) ->
+    println("$testName: ${avgTime}ms average")
+}
+```
+
+### 6. Development Workflow Integration
+
+Integrate testing into your development process:
+
+```kotlin
+class MyAgentDevelopment {
+    
+    // Step 1: Quick validation during development
+    fun quickCheck(): Boolean {
+        return quickTestAgent { MyAgent() }
+    }
+    
+    // Step 2: Pre-competition validation
+    fun fullValidation(): Boolean {
+        val result = detailedTestAgent { MyAgent() }
+        
+        if (!result.overallSuccess) {
+            println("Failed tests:")
+            result.results.filter { !it.passed }.forEach { test ->
+                println("  - ${test.testName}: ${test.message}")
+            }
+        }
+        
+        return result.overallSuccess
+    }
+    
+    // Step 3: Performance profiling
+    fun profilePerformance() {
+        val result = detailedTestAgent { MyAgent() }
+        
+        result.results
+            .filter { it.testName.contains("Performance") }
+            .forEach { test ->
+                println("${test.testName}:")
+                test.details["avgTime"]?.let { println("  Avg: ${(it as Double).toInt()}ms") }
+                test.details["maxTime"]?.let { println("  Max: ${it}ms") }
+            }
+    }
+}
+```
+
+### 7. Testing Best Practices
+
+#### Continuous Testing
+```kotlin
+// Test after each significant change
+fun developmentCycle() {
+    // 1. Make changes to agent
+    // 2. Quick validation
+    if (quickTestAgent { MyAgent() }) {
+        // 3. Continue development
+        println("✓ Changes look good")
+    } else {
+        // 4. Fix issues immediately
+        println("✗ Issues detected - fix before continuing")
+    }
+}
+```
+
+#### Pre-Competition Checklist
+```kotlin
+fun preCompetitionChecklist(): Boolean {
+    val checks = mutableListOf<Pair<String, Boolean>>()
+    
+    // Basic functionality
+    checks.add("Quick Test" to quickTestAgent { MyAgent() })
+    
+    // Detailed validation
+    val detailed = detailedTestAgent { MyAgent() }
+    checks.add("Full Test Suite" to detailed.overallSuccess)
+    
+    // Performance verification
+    val performanceOk = detailed.results
+        .filter { it.testName.contains("Performance") }
+        .all { it.passed }
+    checks.add("Performance Tests" to performanceOk)
+    
+    // Parameter robustness
+    val robustnessOk = detailed.results
+        .filter { it.testName.contains("Parameter") }
+        .all { it.passed }
+    checks.add("Parameter Robustness" to robustnessOk)
+    
+    // Report results
+    checks.forEach { (test, passed) ->
+        println("${if (passed) "✓" else "✗"} $test")
+    }
+    
+    return checks.all { it.second }
+}
+```
+
+### 8. Simple Agent Testing
+
+For quick agent testing, run the AgentTester main function:
+
+```kotlin
+// File: app/src/main/kotlin/games/planetwars/debug/AgentTester.kt
+fun main() {
+    // Change this line to test your agent:
+    val myAgent = { MyAgent() }
+    
+    // Automatic testing with smart workflow:
+    // 1. Quick test first
+    // 2. Detailed test if issues found
+    // 3. Clear recommendations for fixes
+}
+```
+
+**To test your agent:**
+1. Open `AgentTester.kt`
+2. Change the `myAgent` variable in `main()` to your agent
+3. Run the main function
+4. Get instant feedback with specific recommendations
+
+The testing workflow:
+- **✅ Quick Pass**: Agent is ready for basic use
+- **❌ Quick Fail**: Runs detailed test with specific issue diagnosis
+- **🔍 Detailed Analysis**: Shows exactly what failed and how to fix it
+- **💡 Recommendations**: Actionable steps to improve your agent
+
+## Testing and Debugging
+
+### 1. Agent Validation Framework
+
+Use the comprehensive `AgentTester` for all validation needs:
+
+```kotlin
+import games.planetwars.debug.*
+
+// Quick development check
+fun quickCheck() = quickTestAgent { MyAgent() }
+
+// Comprehensive pre-competition validation
+fun fullValidation() = detailedTestAgent { MyAgent() }
+```
+
+### 2. Manual Testing Utilities
+
+For custom validation scenarios:
+
+```kotlin
+fun isValidAction(action: Action, gameState: GameState, player: Player): Boolean {
+    if (action == Action.doNothing() || action == Action.DO_NOTHING) return true
+    
+    val source = gameState.planets[action.sourcePlanetId]
+    return source.owner == player && 
+           source.transporter == null && 
+           source.nShips >= action.numShips
+}
+
+fun testAgentWithScenario(agentFactory: () -> PlanetWarsAgent, params: GameParams) {
+    val agent = agentFactory()
+    agent.prepareToPlayAs(Player.Player1, params)
+    
+    val gameState = GameStateFactory(params).createGame()
+    val action = agent.getAction(gameState)
+    
+    println("Agent: ${agent.getAgentType()}")
+    println("Action: $action")
+    println("Valid: ${isValidAction(action, gameState, Player.Player1)}")
+}
+```
+
+### 3. Performance Monitoring
+
+```kotlin
+fun measureAgentPerformance(agentFactory: () -> PlanetWarsAgent, iterations: Int = 100) {
+    val agent = agentFactory()
+    val params = GameParams()
+    agent.prepareToPlayAs(Player.Player1, params)
+    
+    val times = mutableListOf<Long>()
+    
+    repeat(iterations) {
+        val gameState = GameStateFactory(params).createGame()
+        val startTime = System.currentTimeMillis()
+        agent.getAction(gameState)
+        val duration = System.currentTimeMillis() - startTime
+        times.add(duration)
+    }
+    
+    println("Performance over $iterations iterations:")
+    println("Average: ${times.average().toInt()}ms")
+    println("Max: ${times.maxOrNull()}ms")
+    println("Min: ${times.minOrNull()}ms")
+    println("95th percentile: ${times.sorted()[(times.size * 0.95).toInt()]}ms")
+}
+```
+
+## Key Success Factors
+
+### 1. Algorithm Design
+- **Anytime algorithms**: Can return valid results at any time
+- **Progressive refinement**: Improve decisions until time limit
+- **Caching**: Reuse expensive calculations across turns
+- **Pruning**: Limit search space intelligently
+
+### 2. Strategic Considerations
+- **Economic focus**: Prioritize high-growth planets
+- **Timing coordination**: Synchronize multiple attacks
+- **Defensive balance**: Maintain sufficient home defenses
+- **Opponent modeling**: Predict and counter enemy strategies
+
+### 3. Technical Robustness
+- **Parameter adaptation**: Handle 10-30 planets, 2.0-5.0 speeds dynamically
+- **Error handling**: Never crash on unexpected inputs
+- **Time budgeting**: Reserve time for action construction
+- **Resource management**: Clean up data structures periodically
+
+### 4. Testing and Validation
+- **Continuous testing**: Use `quickTestAgent()` during development
+- **Pre-competition validation**: Use `detailedTestAgent()` before submission
+- **Performance profiling**: Monitor timing across different scenarios
+- **Parameter robustness**: Test with extreme competition parameter ranges
+
+This comprehensive guide provides everything needed to develop competitive Planet Wars RTS agents while adhering to the official competition requirements and technical constraints. The integrated testing framework ensures your agent is ready for competition-level play.

@@ -1,0 +1,297 @@
+---
+description: All about competetion participation and game parameters
+globs:
+alwaysApply: true
+---
+# Planet Wars RTS Competition Details
+
+## Competition Overview
+
+Planet Wars RTS is featured in major AI conferences including:
+- **GECCO 2025** - The Genetic and Evolutionary Computation Conference
+- **IEEE Conference on Games 2025** 
+
+The competition features two-player real-time strategy gameplay with symmetric maps where players compete for planetary dominance through strategic ship deployment and tactical combat.
+
+## Official Competition Parameters (CONFIRMED BY ORGANIZERS - Prof. Simon Lucas)
+
+### Core Game Configuration - Official Ranges (CONFIRMED)
+- **Number of Planets**: **10-30** (variable each match)
+- **Initial Neutral Ratio**: **~0.3** (around 30% neutral planets)
+- **Initial Ships per Planet**: **2-20** (random assignment per planet)
+- **Growth Rate Range**: **0.02-0.2** ships per tick (10x variance)
+- **Transporter Speed**: **2.0-5.0** distance units per tick (variable, 2.5x range)
+- **Game Duration**: 200-2000 ticks (standard, may vary)
+
+### Spatial Configuration (Standard)
+- **Map Size**: 640x480 pixels
+- **Edge Separation**: 25.0 units minimum
+- **Planet Separation**: 1.5x radius minimum
+- **Radius Scaling**: Proportional to growth rate
+- **Map Generation**: Fresh symmetric map each game
+
+### Official Time Constraints (CONFIRMED)
+- **Per-move timeout**: **0.1 seconds (100ms)** - OFFICIAL CONFIRMED
+- **Game frequency**: **10Hz** (10 moves per second) - CONFIRMED
+- **Asynchronous execution**: Agents must respond within 100ms or forfeit move
+
+## Game Execution Modes
+
+### Synchronous Mode (Development/Testing)
+**Single-threaded execution** where the game runner:
+1. Calls each agent's `getAction` method sequentially
+2. Waits indefinitely for agent responses
+3. Applies both actions simultaneously using the forward model
+4. Repeats until game completion
+
+**Characteristics**:
+- **No time pressure**: Agents have unlimited thinking time
+- **Debugging friendly**: Deterministic execution order
+- **Testing utility**: Useful for algorithm development and validation
+- **Performance**: Often faster due to no coroutine/timeout overhead
+- **Single-core utilization**: Agents run sequentially
+
+### Asynchronous Mode (COMPETITION STANDARD)
+**Multi-threaded/coroutine execution** where the game runner:
+1. **Sends observations** to both agents simultaneously
+2. **Waits exactly 100ms** for agent responses
+3. **Timeout enforcement**: If agent doesn't respond in time, assumes `doNothing` action
+4. **Proceeds immediately**: Game steps forward regardless of agent response status
+5. **True real-time**: Game progresses at exactly 10Hz frequency
+
+**Critical Competition Characteristics**:
+- **Hard timeout**: **100ms response deadline (OFFICIAL)**
+- **Automatic forfeit**: Late responses become `doNothing` actions
+- **Parallel execution**: Both agents can think simultaneously
+- **Real-time pressure**: Game waits for no agent
+- **Multi-core potential**: Agents can utilize separate CPU cores
+
+### Competition Execution Requirements (ASYNCHRONOUS MODE)
+
+#### Timeout Behavior (CRITICAL)
+- **Response window**: Agent has exactly 100ms from observation receipt
+- **Late response penalty**: Automatic `doNothing` action assignment
+- **No grace period**: Hard cutoff at 100ms boundary
+- **Cumulative impact**: Multiple timeouts can destroy game position
+- **Strategic consequences**: Missing key defensive or offensive moves
+
+#### Agent Implementation Requirements
+- **Time management**: Must complete decision-making within 100ms
+- **Graceful degradation**: Return best available action before timeout
+- **Fallback strategies**: Always have a reasonable action ready
+- **Timeout handling**: Code must not hang or crash on time pressure
+- **Resource cleanup**: Terminate searches and computations cleanly
+
+#### Performance Optimization for Asynchronous Mode
+- **Progressive search**: Improve action quality until time limit
+- **Anytime algorithms**: Can return valid results at any point
+- **Time budgeting**: Reserve time for action construction and I/O
+- **Parallel computation**: Utilize multiple cores within time limit
+- **Caching strategies**: Pre-compute frequently used calculations
+
+### Strategic Implications of Asynchronous Mode
+
+#### Competitive Advantages
+- **Faster agents**: Agents that think efficiently gain more thinking cycles
+- **Parallel utilization**: Multi-core algorithms can outperform single-threaded approaches
+- **Caching benefits**: Pre-computed strategies become more valuable
+- **Time management**: Superior time allocation becomes a competitive edge
+
+#### Risk Factors (CRITICAL FOR COMPETITION)
+- **Timeout penalties**: Single timeout can cost critical turns
+- **Cumulative damage**: Multiple timeouts can be game-ending
+- **Defensive vulnerabilities**: Missing defensive actions due to timeouts
+- **Economic losses**: Failed expansion moves hurt long-term position
+- **Opponent exploitation**: Opponents may time attacks to create pressure
+
+#### Algorithm Design Considerations
+- **Anytime approaches**: Monte Carlo Tree Search, iterative deepening
+- **Time allocation**: Budget time across game phases (opening, mid-game, endgame)
+- **Emergency protocols**: Quick heuristic decisions when time runs out
+- **State caching**: Reuse computations from previous turns
+- **Opponent modeling**: Faster if pre-computed behavioral patterns exist
+
+### Tournament Format
+
+#### Round Robin League Structure
+- **Games per matchup**: 80-100 games (ensures statistical significance)
+- **Parallel execution**: 4+ threads (leverages multi-core processors)
+- **Evaluation time**: **100ms per decision (OFFICIAL CONFIRMED)**
+- **Scoring system**: Win/loss points (no draws counted in rankings)
+
+#### Required Agent Interface
+Agents must implement the standard PlanetWarsAgent interface with:
+- Action decision method within time limits
+- Unique agent identifier
+- Player initialization method
+- Optional learning callback
+
+## Competition Variants
+
+### Full Observability (Standard)
+- Complete game state visible to both players
+- All ship counts, positions, and movements known
+- Focus on strategic planning and tactical execution
+
+### Partial Observability (Advanced)
+- Only own assets fully visible
+- Enemy ship counts hidden
+- Introduces information warfare and uncertainty management
+- Requires state reconstruction and opponent modeling
+
+## Key Competition Adaptations Required
+
+### Parameter Variability Impact (OFFICIAL RANGES)
+Agents must handle dynamic parameter ranges confirmed by organizers:
+- **10-30 planets** (3x variance in map scale)
+- **~0.3 neutral ratio** (around 30% neutral planets - less expansion opportunity)
+- **0.02-0.2 growth rates** (10x variance in economic acceleration)
+- **2.0-5.0 transporter speeds** (2.5x variance affecting all tactical timing)
+- **100ms strict time limit** (real-time constraint - CONFIRMED)
+
+### Strategy Implications
+- **Variable planet count**: Algorithms must scale efficiently from 10 to 30 planets
+- **Lower neutral ratio**: ~30% vs 50% development default = more aggressive early competition
+- **Extreme growth variance**: 0.02-0.2 range requires adaptive economic strategies
+- **Dynamic transporter speed**: 2.0-5.0 affects all distance and timing calculations
+- **Tight time budget**: 100ms requires highly optimized decision algorithms
+
+## Technical Competition Requirements
+
+### Agent Implementation Standards
+- **Time management**: CRITICAL - 100ms hard limit enforcement (CONFIRMED)
+- **Parameter adaptation**: Must handle all OFFICIAL parameter ranges dynamically
+- **Error handling**: Graceful timeout and exception management
+- **Resource efficiency**: Reasonable memory and CPU usage
+- **Scalability**: Handle 10-30 planet maps efficiently
+
+### Deployment Requirements
+- **JVM compatibility**: Kotlin/Java primary languages
+- **Container support**: Docker/Podman deployment (future)
+- **Performance standards**: Must respond within 100ms consistently
+- **Parameter robustness**: Handle all OFFICIAL parameter ranges
+- **Interface compliance**: Implement required agent interface
+
+### Evaluation Infrastructure
+- **Parallel tournament execution** using coroutines
+- **Result persistence** with markdown table generation
+- **Progress tracking** with real-time standings updates
+- **Statistical analysis** for ranking confidence
+
+## Competition Timeline & Process (UPDATED)
+
+### Practice League (OFFICIAL UPDATE)
+- **Launch Timeline**: **End of January 2025** (confirmed by organizers)
+- **Status**: Coming soon - announcements expected by end of next week
+- **Purpose**: Test agents against varied official parameters and opponents
+- **Access**: Watch for official announcements
+
+### Submission Process (OFFICIAL STATUS)
+- **Current Status**: **Details to be announced soon** (confirmed by organizers)
+- **Timeline**: Submission workflow announcements coming
+- **Documentation**: Requirements and process details pending
+- **Format**: TBD by competition organizers
+- **Action Required**: **Watch for announcements** on submission process
+
+## Map Generation & Fairness
+
+### Symmetry Requirements
+- **Bilateral symmetry**: Maps mirrored across X and Y axes
+- **Position fairness**: Players start with equivalent territories
+- **Resource balance**: Equal initial ship and growth potential
+- **Spatial constraints**: Minimum separations enforced
+
+### Procedural Generation Standards (Supporting Official Ranges)
+- Equal player starting positions
+- Symmetric resource distribution  
+- Minimum planet spacing enforcement
+- Edge boundary compliance
+- **Handles 10-30 planet range** (OFFICIAL CONFIRMED)
+
+## Agent Development Guidelines
+
+### Search & Evaluation Requirements
+- **Time management**: CRITICAL - 100ms hard limit (CONFIRMED)
+- **Caching strategies**: Essential for parameter variation across official ranges
+- **Progressive deepening**: Search deeper when time permits
+- **Fallback moves**: Always have a valid action ready
+- **Parameter scaling**: Algorithms must adapt to 10-30 planets efficiently
+
+### Strategic Considerations (Official Parameter Impact)
+- **Opening theory**: Adapt to ~30% neutral ratio (confirmed - less expansion)
+- **Mid-game expansion**: Balance growth vs. security across 10-30 planet maps
+- **End-game tactics**: Handle extreme growth rates (up to 0.2 - CONFIRMED)
+- **Speed adaptation**: Distance calculations for 2.0-5.0 transporter speeds (CONFIRMED)
+- **Opponent modeling**: Adapt to different play styles within time constraints
+
+### Performance Optimization Requirements
+- **Forward model efficiency**: Critical for 100ms limit (CONFIRMED)
+- **Action generation**: Smart move ordering and pruning for 10-30 planets
+- **Memory management**: Clean up caches periodically
+- **Parallel computation**: Limited by 100ms constraint
+- **Parameter caching**: Cache calculations for official parameter ranges
+
+## Agent Requirements Checklist (Updated for Official Parameters)
+
+### Core Functionality
+- [ ] Implement required agent interface
+- [ ] Unique agent type identifier
+- [ ] 100ms timeout compliance (OFFICIAL CONFIRMED)
+- [ ] Official parameter adaptation support (10-30 planets, 0.3 neutral ratio, etc.)
+- [ ] Graceful error handling
+
+### Asynchronous Mode Requirements (COMPETITION CRITICAL)
+- [ ] **Timeout compliance**: Never exceed 100ms response time
+- [ ] **Fallback actions**: Always have a valid action ready before timeout
+- [ ] **Time monitoring**: Track remaining time during decision process
+- [ ] **Graceful termination**: Stop computations cleanly when time expires
+- [ ] **Thread safety**: Handle concurrent execution properly
+- [ ] **Resource management**: Clean up resources on timeout
+- [ ] **Exception handling**: Prevent crashes under time pressure
+- [ ] **Progressive refinement**: Improve action quality until timeout
+
+### Performance Standards (Official Ranges)
+- [ ] Scale efficiently to 10-30 planet maps (CONFIRMED RANGE)
+- [ ] Handle 2.0-5.0 transporter speeds dynamically (CONFIRMED RANGE)
+- [ ] Adapt to 0.02-0.2 growth rates (CONFIRMED RANGE)
+- [ ] Work optimally with ~30% neutral ratio (CONFIRMED)
+- [ ] Consistent sub-100ms response times (CONFIRMED LIMIT)
+- [ ] Maintain performance under real-time pressure
+
+### Testing Requirements (Against Official Parameters)
+- [ ] Parameter stress testing across ALL official ranges
+- [ ] **Asynchronous mode testing**: Validate behavior under 100ms timeouts
+- [ ] **Timeout stress testing**: Verify graceful handling of time pressure
+- [ ] **Multi-game endurance**: Ensure stable performance over many games
+- [ ] Baseline performance against random agents
+- [ ] Scaling validation for 10-30 planet maps
+- [ ] Speed adaptation testing (2.0-5.0 range)
+- [ ] Growth rate extremes testing (0.02-0.2 range)
+
+### Critical Competition Differences from Development Environment (CONFIRMED)
+1. **Asynchronous execution mode** (vs synchronous development testing) - CRITICAL CHANGE
+2. **Strict 100ms time limit** (vs flexible development timing) - CONFIRMED
+3. **Automatic timeout penalties** (doNothing actions for late responses) - CRITICAL
+4. **Variable planet count 10-30** (vs fixed development defaults) - CONFIRMED RANGE
+5. **Lower neutral ratio ~0.3** (vs 0.5 in development defaults) - CONFIRMED
+6. **Higher max growth 0.2** (vs 0.1 in development defaults) - CONFIRMED RANGE
+7. **Variable transporter speed 2.0-5.0** (vs fixed 3.0 in development) - CONFIRMED RANGE
+8. **10Hz real-time execution** (vs batch processing in development) - CONFIRMED
+9. **Multi-threaded environment** (vs single-threaded development testing)
+
+## Next Steps for Competition Preparation
+
+### Immediate Actions Required
+1. **Monitor announcements** for practice league launch (end of January 2025)
+2. **Watch for submission process** details (coming soon)
+3. **Test agents** against all CONFIRMED official parameter ranges
+4. **Optimize for 100ms time limit** (critical requirement)
+5. **Implement parameter adaptation** for 10-30 planets, 0.3 neutral ratio, etc.
+
+### Development Focus Areas
+- **Time optimization**: Ensure sub-100ms response under all conditions
+- **Parameter robustness**: Handle full official ranges smoothly
+- **Scaling efficiency**: Optimize for 10-30 planet variations
+- **Speed adaptation**: Account for 2.0-5.0 transporter speed range
+
+This comprehensive competition framework incorporates all CONFIRMED official parameters and requirements from the GECCO 2025 Planet Wars RTS competition organizers.

@@ -16,7 +16,7 @@ class StrategicAgentImproved(
     val openingSearchDepth: Int = 10,
     val openingBranchingFactor: Int = 10,
     val maxHorizon: Int = 50,
-    val timeLimitMillis: Long = 20L
+    val timeLimitMillis: Long = 100L
 ) : PlanetWarsPlayer() {
 
     private var currentTurn = 0

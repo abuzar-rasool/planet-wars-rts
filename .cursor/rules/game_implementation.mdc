@@ -1,0 +1,352 @@
+---
+description: Techincal implementation of the game itself
+globs: 
+alwaysApply: true
+---
+# Planet Wars RTS - Game Implementation Documentation
+
+## Overview
+
+Planet Wars is a real-time strategy (RTS) game implemented in Kotlin where two players compete for control of planets in space. The game features planet ownership, ship production, and tactical combat through transporter deployments.
+
+## Core Game Components
+
+### 1. Game Parameters (`GameParams.kt`)
+
+The game is configurable through the `GameParams` data class:
+
+#### Spatial Parameters
+- **width**: Screen width (default: 640px)
+- **height**: Screen height (default: 480px)
+- **edgeSeparation**: Minimum distance between planets and screen edges (default: 25.0)
+- **radialSeparation**: Minimum separation multiplier between planets (default: 1.5)
+- **growthToRadiusFactor**: Factor converting growth rate to planet radius (default: 200.0)
+
+#### Game Mechanics Parameters (OFFICIAL COMPETITION RANGES)
+- **numPlanets**: Total number of planets in the game (**COMPETITION: 10-30**, development default: 10)
+- **initialNeutralRatio**: Fraction of planets that start neutral (**COMPETITION: ~0.3**, development default: 0.5)
+- **maxTicks**: Maximum game duration in turns (**COMPETITION: 2000 standard**, development default: 2000)
+- **minInitialShipsPerPlanet**: Minimum starting ships per planet (**COMPETITION: 2**, development default: 2)
+- **maxInitialShipsPerPlanet**: Maximum starting ships per planet (**COMPETITION: 20**, development default: 20)
+- **minGrowthRate**: Minimum ship production rate (**COMPETITION: 0.02**, development default: 0.02)
+- **maxGrowthRate**: Maximum ship production rate (**COMPETITION: 0.2**, development default: 0.1)
+- **transporterSpeed**: Speed of ship transporters (**COMPETITION: 2.0-5.0**, development default: 3.0)
+
+#### Meta Parameters
+- **newMapEachRun**: Whether to generate new maps each game (default: true)
+
+**IMPORTANT**: Competition parameters differ significantly from development defaults. Agents must handle the full official ranges dynamically.
+
+### 2. Game State (`GameState.kt`)
+
+#### Player Enumeration
+```kotlin
+enum class Player {
+    Player1, Player2, Neutral
+}
+```
+
+Players can be either Player1, Player2, or Neutral (unowned). Each player has an `opponent()` method to get their adversary.
+
+#### Planet Structure
+Each planet contains:
+- **owner**: Which player controls the planet
+- **nShips**: Current number of ships (supports fractional values)
+- **position**: 2D coordinates in space
+- **growthRate**: Ships produced per game tick
+- **radius**: Visual and collision radius
+- **transporter**: Optional transporter currently departing from this planet
+- **id**: Unique planet identifier
+
+#### Transporter Structure
+Transporters represent ships in transit between planets:
+- **s**: Current position vector
+- **v**: Velocity vector
+- **owner**: Controlling player
+- **sourceIndex**: Origin planet ID
+- **destinationIndex**: Target planet ID
+- **nShips**: Number of ships being transported
+
+#### GameState Structure
+- **planets**: Immutable list of all planets
+- **gameTick**: Current game turn counter
+- **deepCopy()**: Creates a complete deep copy of the game state
+
+### 3. Game State Factory (`GameStateFactory.kt`)
+
+#### Map Generation Algorithm
+
+The factory creates symmetrical maps with the following process:
+
+1. **Left Half Generation**: Randomly places planets in the left half of the screen
+2. **Ownership Assignment**: 
+   - First `nNeutral` planets are set to Neutral
+   - Remaining planets are assigned to Player1
+3. **Reflection**: Creates mirrored planets in the right half
+   - Neutral planets remain neutral
+   - Player1 planets become Player2 planets
+   - Coordinates are reflected: `(width - x, height - y)`
+4. **Validation**: Ensures planets meet spacing requirements:
+   - Minimum edge separation
+   - Minimum radial separation between planets
+5. **ID Assignment**: Sequential numbering of all planets
+
+### 4. Forward Model (`ForwardModel.kt`)
+
+The forward model handles game state transitions and rule enforcement.
+
+#### Game Loop Process
+
+Each game step (`step()`) executes in this order:
+
+1. **Action Application**: Process player actions
+2. **Transporter Updates**: Move transporters and handle arrivals
+3. **Planet Updates**: Apply growth and resolve conflicts
+4. **Tick Increment**: Advance game time
+
+#### Action Processing
+
+Actions are validated and applied with these rules:
+- Planet must be owned by the acting player
+- Planet must not have an active transporter
+- Planet must have sufficient ships for the action
+- Invalid actions are counted but ignored
+
+#### Transporter Mechanics
+
+- **Movement**: Transporters move along velocity vectors each tick
+- **Arrival Detection**: Collision detection with destination planet radius
+- **Pending System**: Arrivals are queued for fair conflict resolution
+
+#### Planet Update Rules
+
+**Neutral Planets**:
+- No ship production
+- Incoming ships reduce neutral ship count
+- If overwhelmed, ownership transfers to the dominant attacker
+- Net ship difference determines new owner
+
+**Player Planets**:
+- Ships grow by `growthRate` each tick
+- Own transporters add ships, enemy transporters subtract
+- Ownership changes if ships go negative
+- Ship count becomes absolute value after ownership change
+
+#### Termination Conditions
+
+The game ends when:
+- Maximum tick count is reached (`maxTicks`)
+- One player has no planets remaining
+
+#### Performance Tracking
+
+The model tracks:
+- Total update calls (`nUpdates`)
+- Successful actions executed (`nActions`)  
+- Failed/invalid actions (`nFailedActions`)
+
+### 5. Observation System (`Observation.kt`)
+
+#### Information Hiding
+
+The observation system implements fog of war through the `ObservationFactory`:
+
+**Full Visibility** (owned planets):
+- Complete planet information
+- Exact ship counts
+- Transporter details including ship numbers
+
+**Limited Visibility** (unowned planets):
+- Planet owner and position
+- Growth rate and radius
+- Hidden ship counts (`null`)
+- Transporter presence but not ship counts (optional)
+
+#### Observation Structure
+
+- **PlanetObservation**: Planet data with nullable ship counts
+- **TransporterObservation**: Transporter data with nullable ship counts
+- **Observation**: Complete observable game state for a player set
+
+### 6. Action System (`GameInterfaces.kt`)
+
+#### Action Structure
+
+Actions specify player moves:
+```kotlin
+data class Action (
+    val playerId: Player,
+    val sourcePlanetId: Int,
+    val destinationPlanetId: Int,
+    val numShips: Double
+)
+```
+
+#### Special Actions
+
+- **DO_NOTHING**: Predefined action for skipping turns
+- Uses `Player.Neutral` and invalid IDs to represent inaction
+
+### 7. Game Execution (`GameRunner.kt`)
+
+#### Standard Game Runner
+
+Manages complete information games:
+- **Agent Initialization**: Prepares agents with player assignments
+- **Game Loop**: Alternates between agent decisions and state updates
+- **Result Tracking**: Records wins/losses across multiple games
+
+#### Partial Observation Runner
+
+Manages limited information games:
+- **Observation Generation**: Creates player-specific views
+- **Information Filtering**: Hides enemy ship counts and positions
+- **Isolated Decision Making**: Agents only see their observable state
+
+### 8. Visualization System (`GameView.kt`)
+
+#### Rendering Components
+
+**Planets**:
+- Circular representation with radius-based sizing
+- Color-coded by owner (red/blue/gray)
+- Ship count display for observable planets
+
+**Transporters**:
+- Arrow-shaped sprites indicating direction
+- Color-coded by owner
+- Rotated based on velocity vector
+- Ship count display for observable transporters
+
+**UI Elements**:
+- Game status display (tick, ship counts, leader)
+- Real-time updates during gameplay
+
+#### Interactive Controls
+
+- **Spacebar**: Pause/unpause gameplay
+- **S Key**: Slow down frame rate (halve speed)
+- **F Key**: Speed up frame rate (double speed, max 100fps)
+
+#### Visual Configuration
+
+The `ColorScheme` class defines:
+- Background color (black)
+- Player colors (red/blue)
+- Neutral color (gray)  
+- Text color (white)
+- Outline colors for various elements
+
+## Game Flow and Mechanics
+
+### 1. Initialization Phase
+
+1. **Parameter Setup**: Configure game rules and map properties
+2. **Map Generation**: Create symmetrical planet layout
+3. **Agent Preparation**: Initialize AI players with their assignments
+
+### 2. Gameplay Loop
+
+1. **Action Collection**: Request actions from both players
+2. **Action Validation**: Check legality and apply valid moves
+3. **Physics Update**: Move transporters through space
+4. **Conflict Resolution**: Handle simultaneous arrivals fairly
+5. **Growth Application**: Add ships to player planets
+6. **Termination Check**: Evaluate win/loss conditions
+
+### 3. Conflict Resolution
+
+The game uses a sophisticated pending system for fair combat:
+
+1. **Arrival Queuing**: All transporter arrivals in a tick are collected
+2. **Net Calculation**: Player ships are summed and subtracted
+3. **Ownership Resolution**: Winner takes control with remaining ships
+4. **Simultaneous Processing**: No first-mover advantage in conflicts
+
+### 4. Strategic Elements
+
+**Resource Management**:
+- Ships are both currency and army
+- Growth rates determine economic strength
+- Planet positioning affects strategic value
+
+**Tactical Combat**:
+- Timing of attacks crucial for coordination
+- Neutral planets provide expansion opportunities
+- Transporter vulnerability during transit
+
+**Information Warfare** (Partial Observation):
+- Hidden ship counts create uncertainty
+- Scouting vs. aggressive expansion tradeoffs
+- Bluffing and misdirection possibilities
+
+## Technical Architecture
+
+### 1. Design Patterns
+
+**Forward Model Pattern**: Clear separation of game state and game rules enables:
+- Easy AI development and testing
+- Deterministic gameplay simulation
+- State space exploration for planning algorithms
+
+**Observer Pattern**: Observation system supports:
+- Fog of war implementation
+- Information asymmetry gameplay
+- Fair competitive scenarios
+
+**Factory Pattern**: GameStateFactory enables:
+- Procedural map generation
+- Consistent initialization
+- Parameter-driven variety
+
+### 2. Performance Considerations
+
+- **Fractional Ships**: Avoids rounding errors in calculations
+- **In-Place Updates**: Modifies state directly for efficiency
+- **Pending Maps**: Batch conflict resolution for fairness
+- **Deep Copy**: Full state isolation for AI safety
+
+### 3. Serialization Support
+
+All core data structures implement Kotlin serialization:
+- **JSON Compatibility**: Network play and data persistence
+- **Remote Agents**: Distributed AI competition support
+- **State Reconstruction**: Debugging and analysis tools
+
+## Extensibility and Customization
+
+The modular design supports various extensions:
+
+**Game Rules**: Modify ForwardModel for different mechanics
+**Map Generation**: Customize GameStateFactory for varied layouts  
+**Visualization**: Extend GameView for enhanced graphics
+**AI Integration**: Implement agent interfaces for new strategies
+**Network Play**: Leverage serialization for multiplayer support
+
+This implementation provides a complete, well-structured foundation for strategic AI research and competitive gameplay in the real-time strategy domain, with special attention to GECCO 2025 competition requirements.
+
+## Competition Adaptations Required
+
+### Parameter Robustness Requirements (OFFICIAL RANGES CONFIRMED)
+Agents must dynamically handle variable parameters:
+- **Planet Count**: **10-30 range** (not fixed) - OFFICIAL CONFIRMED
+- **Growth Rates**: **Up to 0.2** (vs 0.1 development default) - OFFICIAL CONFIRMED
+- **Transporter Speed**: **2.0-5.0 range** (vs fixed 3.0) - OFFICIAL CONFIRMED
+- **Neutral Ratio**: **~0.3** (vs 0.5 development default) - OFFICIAL CONFIRMED
+- **Time Constraints**: **Strict 100ms limits at 10Hz** - OFFICIAL CONFIRMED
+
+### Key Differences from Development Environment (CONFIRMED BY ORGANIZERS)
+1. **Strict time limits**: **100ms vs variable development times** - OFFICIAL
+2. **Parameter variability**: **Fixed values become ranges** - OFFICIAL RANGES
+3. **Real-time execution**: **10Hz vs batch processing** - OFFICIAL
+4. **Scaling requirements**: **10-30 planets vs fixed counts** - OFFICIAL RANGE
+5. **Strategic shifts**: **Lower neutral ratio (~0.3) changes expansion dynamics** - OFFICIAL
+
+### Critical Development Considerations
+- **Parameter Adaptation**: Code must handle 3x planet count variation (10-30)
+- **Growth Rate Scaling**: 10x variance in growth rates (0.02-0.2) 
+- **Speed Adaptation**: 2.5x variance in transporter speeds (2.0-5.0)
+- **Economic Strategy**: ~30% neutral ratio vs 50% development default
+- **Time Optimization**: All algorithms must complete within 100ms hard limit
+
+This implementation provides a complete, well-structured foundation for strategic AI research and competitive gameplay in the real-time strategy domain, with special attention to GECCO 2025 competition requirements. 

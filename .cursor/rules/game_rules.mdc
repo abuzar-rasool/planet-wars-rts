@@ -1,0 +1,185 @@
+---
+description: Comprehensive documentation of the actual gameplay rules for Planet Wars RTS. This document focuses on the player experience and game mechanics rather than implementation details.
+globs:
+alwaysApply: true
+---
+# Planet Wars RTS - Game Rules
+
+## Objective
+
+Planet Wars is a two-player real-time strategy game where players compete to dominate the galaxy by controlling planets and commanding fleets of ships. The goal is to eliminate your opponent by capturing all their planets or having the most ships when the time limit expires.
+
+## Game Setup
+
+### Map Generation
+- The battlefield contains **10-30 planets** (competition variable range) arranged symmetrically
+- Maps are mirrored across both X and Y axes to ensure fairness
+- **~30% of planets start as neutral** (unowned) - OFFICIAL COMPETITION PARAMETER
+- Each player starts with control of an equal number of planets
+- Planet positions are randomly generated with minimum spacing requirements
+
+### Initial Conditions
+- Each planet starts with **2-20 ships** (randomly assigned) - OFFICIAL COMPETITION RANGE
+- Each planet has a growth rate between **0.02-0.2 ships per turn** - OFFICIAL COMPETITION RANGE
+- Planet radius is proportional to its growth rate (higher growth = larger planet) 
+- Players begin on opposite sides of the map
+
+## Core Mechanics
+
+### Planets
+**Ownership**: Planets can be owned by Player 1, Player 2, or remain Neutral
+**Ship Production**: Owned planets continuously produce ships at their growth rate each game tick
+**Capacity**: Planets have no maximum ship capacity
+**Radius**: Each planet has a radius that determines collision detection for arriving transporters
+
+### Ships
+**Dual Purpose**: Ships serve as both economic units (stay on planets to defend) and military units (sent via transporters)
+**Fractional Values**: Ship counts can be fractional for precise calculations
+**Growth**: Only owned planets produce ships; neutral planets do not grow
+
+### Transporters
+**Function**: Mobile fleets that carry ships between planets
+**Speed**: All transporters move at **2.0-5.0 distance units per tick** (competition variable) - OFFICIAL RANGE
+**Limitation**: Each planet can only launch one transporter at a time
+**Vulnerability**: Transporters in transit cannot be recalled or redirected
+
+## Turn Structure
+
+### Simultaneous Actions
+- Both players submit actions simultaneously each turn
+- No turn order advantage - all actions are processed fairly
+- Game progresses in discrete ticks with continuous movement
+
+### Action Phase
+1. **Action Collection**: Both players choose their moves
+2. **Action Validation**: System checks if moves are legal
+3. **Action Execution**: Valid moves are applied to the game state
+
+### Movement Phase
+1. **Transporter Movement**: All transporters move toward their destinations
+2. **Arrival Detection**: Check if any transporters reach their target planets
+3. **Combat Resolution**: Process all simultaneous arrivals
+
+### Growth Phase
+1. **Ship Production**: All owned planets produce ships according to their growth rate
+2. **State Update**: Game tick counter advances
+
+## Actions
+
+### Valid Actions
+**Launch Transporter**: Send ships from an owned planet to any other planet
+- Must own the source planet
+- Source planet must not already have a transporter in transit
+- Must have sufficient ships to send (minimum 1)
+- Can send fractional numbers of ships
+
+**Do Nothing**: Skip the turn (always valid)
+
+### Invalid Actions
+Actions that fail validation are ignored:
+- Launching from an unowned planet
+- Launching when a transporter is already in transit from that planet
+- Sending more ships than available on the planet
+- Invalid planet IDs
+
+## Combat Resolution
+
+### Arrival Processing
+When transporters reach their destination:
+1. **Batching**: All transporters arriving on the same tick are processed together
+2. **Net Calculation**: Sum friendly ships minus enemy ships arriving
+3. **Fair Resolution**: No first-arrival advantage within the same tick
+
+### Neutral Planet Capture
+- Incoming ships reduce the neutral planet's ship count
+- If incoming ships outnumber neutral ships, the planet is captured
+- The capturing player gains control with remaining ships
+- If multiple players arrive simultaneously, the one with more ships wins
+
+### Owned Planet Combat
+- Friendly transporters add ships to the planet
+- Enemy transporters subtract ships from the planet
+- If the planet's ship count goes negative, ownership transfers
+- The new owner gains control with the absolute value of remaining ships
+
+### Simultaneous Arrivals
+- Multiple transporters arriving at the same planet on the same tick are resolved together
+- Player 1 ships and Player 2 ships are summed separately
+- Net difference determines the outcome
+- Prevents unfair advantages based on processing order
+
+## Victory Conditions
+
+### Elimination Victory
+- Win immediately by eliminating all enemy planets
+- A player with zero owned planets loses instantly
+
+### Time Limit Victory
+- Game ends after **2000 ticks (standard, may vary in competition)**
+- Player with the most total ships wins
+- Ships are counted across all owned planets
+- Transporters in transit count toward their owner's total
+
+### Draw Conditions
+- Equal ship counts at time limit result in a draw
+- Mutual elimination (both players lose all planets simultaneously) results in a draw
+
+## Strategic Elements
+
+### Resource Management
+- **Ship Allocation**: Balance between defense (keeping ships) and offense (sending ships)
+- **Growth Investment**: Higher growth rate planets are more valuable long-term
+- **Timing**: Coordinate attacks to overwhelm defenses
+
+### Territorial Control
+- **Expansion**: Capture neutral planets for additional ship production
+- **Positioning**: Control strategically located planets for tactical advantage
+- **Defense**: Maintain ship reserves to defend against attacks
+
+### Information Warfare (Partial Observation Mode)
+- **Hidden Information**: Enemy ship counts are concealed
+- **Scouting**: Send small forces to gather intelligence
+- **Deception**: Feint attacks to misdirect enemy attention
+- **Uncertainty**: Make decisions with incomplete information
+
+## Special Rules
+
+### Transporter Constraints
+- **One Per Planet**: Each planet can only have one outgoing transporter at a time
+- **No Cancellation**: Transporters cannot be recalled once launched
+- **Linear Movement**: Transporters travel in straight lines at constant speed
+- **Variable Speed**: Competition speed range **2.0-5.0 distance units per tick** - OFFICIAL
+- **Collision Detection**: Transporters arrive when touching the planet's radius
+
+### Ship Management
+- **Fractional Ships**: Calculations use precise decimal values
+- **Minimum Sending**: Must send at least some ships (cannot send 0)
+- **Growth Timing**: Ship production occurs after combat resolution
+- **No Attrition**: Ships do not decay over time
+
+### Map Constraints
+- **Symmetric Design**: Maps are always balanced between players
+- **Edge Boundaries**: Planets maintain minimum distance from map edges
+- **Spacing Requirements**: Planets cannot be too close to each other
+- **Fixed Layout**: Planet positions remain constant during a game
+
+## Advanced Tactics
+
+### Timing Attacks
+- **Synchronization**: Coordinate multiple transporters to arrive simultaneously
+- **Overwhelm Defense**: Send more ships than the planet can defend against
+- **Chain Attacks**: Capture planets to immediately launch follow-up attacks
+
+### Economic Strategy
+- **Growth Focus**: Prioritize capturing high-growth planets
+- **Expansion**: Balance between growth and territorial control
+- **Defense Investment**: Maintain sufficient ships to repel attacks
+
+### Spatial Positioning
+- **Central Control**: Dominate the center of the map for tactical flexibility
+- **Distance Management**: Consider travel times when planning attacks
+- **Choke Points**: Control key planets that limit enemy movement options
+
+This rule set provides a deep strategic experience with simple core mechanics, emphasizing tactical planning, resource management, and spatial reasoning while maintaining accessibility and clear victory conditions.
+
+**Note**: For GECCO 2025 competition, parameters will vary within official ranges: 10-30 planets, ~0.3 neutral ratio, 0.02-0.2 growth rates, 2.0-5.0 transporter speeds, with 100ms per-move time limits at 10Hz execution frequency.

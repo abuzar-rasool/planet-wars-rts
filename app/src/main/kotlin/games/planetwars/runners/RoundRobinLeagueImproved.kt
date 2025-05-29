@@ -1,6 +1,7 @@
 package games.planetwars.runners
 
 import games.planetwars.agents.PlanetWarsAgent
+import games.planetwars.agents.evo.SimpleEvoAgent
 import games.planetwars.core.GameParams
 import games.planetwars.core.Player
 import kotlinx.coroutines.*
@@ -13,6 +14,7 @@ import games.planetwars.agents.strategic.StrategicAgentImproved
 import games.planetwars.agents.random.BetterRandomAgent
 import games.planetwars.agents.random.CarefulRandomAgent
 import games.planetwars.agents.random.PureRandomAgent
+import games.planetwars.agents.strategic.BocsimackoAgent
 import kotlin.reflect.full.primaryConstructor
 import kotlin.reflect.KClass
 
@@ -21,7 +23,7 @@ import kotlin.reflect.KClass
  */
 data class RoundRobinLeagueImproved(
     val agentFactories: List<() -> PlanetWarsAgent>, // Use factories to create fresh instances
-    val gamesPerPair: Int = 100,
+    val gamesPerPair: Int = 10,
     val gameParams: GameParams = GameParams(numPlanets = 20, maxTicks = 200),
     val parallelism: Int = Runtime.getRuntime().availableProcessors(), // Default to number of available cores
     val verboseGameLogs: Boolean = false // Control verbose logging of individual games
@@ -247,17 +249,22 @@ fun main() = runBlocking {
     // Create the list of agent factories
     val agentFactories = listOf<() -> PlanetWarsAgent>(
         { StrategicAgent() },
-        { StrategicAgentImproved() }
+        { StrategicAgentImproved() },
+        { BocsimackoAgent() },
+        { BetterRandomAgent() },
+        { CarefulRandomAgent() },
+        { PureRandomAgent() },
+        { SimpleEvoAgent() },
     )
     
     println("Starting Parallel Round Robin League with ${agentFactories.size} agents")
-    val gameParams = GameParams(numPlanets = 20, maxTicks = 200)
+    val gameParams = GameParams(numPlanets = 20, maxTicks = 400)
     printGameParams(gameParams)
     
     // Create league with agent factories to instantiate new agents for each game
     val league = RoundRobinLeagueImproved(
         agentFactories = agentFactories, 
-        gamesPerPair = 80, 
+        gamesPerPair = 40,
         gameParams = gameParams,
         parallelism = 4,
         verboseGameLogs = false
