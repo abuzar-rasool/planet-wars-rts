@@ -1,5 +1,4 @@
 | Rank | Agent Name | Win Rate % | Played |
 |------|------------|----------|--------|
-| 1 | Strategic Heuristic Agent - Ammar Lakho | 75,0 | 20 |
-| 2 | StrategicAgent-10-10-50 | 75,0 | 20 |
-| 3 | Better Random Agent | 0,0 | 20 |
+| 1 | StrategicAgentImproved-D10-B10-H50 | 50,0 | 160 |
+| 2 | StrategicAgent-10-10-50 | 39,4 | 160 |
