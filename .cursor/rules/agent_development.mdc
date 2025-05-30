@@ -43,6 +43,101 @@ class MyAgent : PlanetWarsPlayer() {
 }
 ```
 
+#### The `prepareToPlayAs` Function: Critical for GameParams Access
+
+The `prepareToPlayAs` function is **the primary mechanism** for agents to access game configuration parameters. This function is called by the game framework before any games begin and serves multiple critical purposes:
+
+**Function Signature:**
+```kotlin
+fun prepareToPlayAs(player: Player, params: GameParams, opponent: String?): String
+```
+
+**Key Purposes:**
+1. **GameParams Access**: Provides the complete game configuration (planet count, speeds, growth rates, etc.)
+2. **Player Assignment**: Tells the agent which player it will be (Player1 or Player2)
+3. **Opponent Information**: Optional opponent identification for strategy adaptation
+4. **Initialization Trigger**: Signals the start of a new game/tournament
+5. **Configuration Response**: Returns agent's acknowledgment/configuration string
+
+**Critical Parameters Provided:**
+- **`params.numPlanets`**: Number of planets (COMPETITION: 10-30)
+- **`params.transporterSpeed`**: Ship movement speed (COMPETITION: 2.0-5.0)
+- **`params.maxGrowthRate`**: Maximum planet growth rate (COMPETITION: up to 0.2)
+- **`params.initialNeutralRatio`**: Fraction of neutral planets (COMPETITION: ~0.3)
+- **`params.maxTicks`**: Game duration limit
+- **All other game configuration parameters**
+
+**Usage Examples:**
+```kotlin
+class AdaptiveAgent : PlanetWarsPlayer() {
+    private var scalingFactor: Double = 1.0
+    private var speedMultiplier: Double = 1.0
+    
+    override fun prepareToPlayAs(player: Player, params: GameParams, opponent: String?): String {
+        // Call parent to store player and params
+        super.prepareToPlayAs(player, params, opponent)
+        
+        // Adapt strategy based on game parameters
+        scalingFactor = params.numPlanets / 20.0  // Adjust for planet count
+        speedMultiplier = params.transporterSpeed / 3.0  // Adjust for speed
+        
+        // Initialize any caches or precomputed values
+        initializeStrategy(params)
+        
+        return "AdaptiveAgent configured for ${params.numPlanets} planets at ${params.transporterSpeed} speed"
+    }
+    
+    private fun initializeStrategy(params: GameParams) {
+        // Pre-compute distance matrices, initialize caches, etc.
+        // Adapt algorithm parameters based on competition ranges
+    }
+}
+```
+
+**Manual Implementation (without PlanetWarsPlayer):**
+```kotlin
+class CustomAgent : PlanetWarsAgent {
+    private lateinit var player: Player
+    private lateinit var params: GameParams
+    
+    override fun prepareToPlayAs(player: Player, params: GameParams, opponent: String?): String {
+        this.player = player
+        this.params = params
+        
+        // Now you can access params throughout your agent
+        configureForParameters(params)
+        
+        return getAgentType()
+    }
+    
+    override fun getAction(gameState: GameState): Action {
+        // Use this.params to access game configuration
+        val travelTime = calculateTravelTime(source, target, params.transporterSpeed)
+        // ... rest of decision logic
+    }
+}
+```
+
+**Competition Adaptation Pattern:**
+```kotlin
+override fun prepareToPlayAs(player: Player, params: GameParams, opponent: String?): String {
+    super.prepareToPlayAs(player, params, opponent)
+    
+    // Adapt to competition parameter ranges
+    when {
+        params.numPlanets <= 15 -> setStrategy("aggressive_expansion")
+        params.numPlanets >= 25 -> setStrategy("defensive_consolidation")
+        else -> setStrategy("balanced")
+    }
+    
+    // Adjust time allocation based on game complexity
+    val complexity = params.numPlanets * params.maxGrowthRate / params.transporterSpeed
+    adjustTimeAllocation(complexity)
+    
+    return "Configured for competition parameters"
+}
+```
+
 ### 2. Partial Observability Agents
 
 #### Core Interface: `PartialObservationAgent`
@@ -58,7 +153,7 @@ interface PartialObservationAgent {
 ```
 
 #### Recommended Base Class: `PartialObservationPlayer`
-Similar benefits to `PlanetWarsPlayer` but for partial observation scenarios.
+Similar benefits to `PlanetWarsPlayer` but for partial observation scenarios. Also provides automatic access to `GameParams` through the same `prepareToPlayAs` mechanism.
 
 ## Accessing Game Information
 
@@ -116,7 +211,9 @@ data class Transporter(
 )
 ```
 
-### 4. Game Parameters Access
+### 4. Game Parameters Access via `prepareToPlayAs`
+
+**CRITICAL**: The `GameParams` object is ONLY available through the `prepareToPlayAs` function. You cannot access game parameters in `getAction` unless you store them during initialization.
 
 The `GameParams` object contains all game configuration:
 
@@ -144,6 +241,42 @@ data class GameParams(
 - **`maxTicks`**: Plan horizon: `params.maxTicks - gameState.gameTick`
 - **Scale awareness**: Handle `numPlanets` range 10-30 dynamically
 - **Speed adaptation**: Account for 2.5x variance in transporter speeds
+
+**Access Pattern (REQUIRED):**
+```kotlin
+class MyAgent : PlanetWarsPlayer() {
+    // params is available here via inheritance from PlanetWarsPlayer
+    
+    override fun getAction(gameState: GameState): Action {
+        // Calculate travel time using stored params
+        val travelTime = distance / params.transporterSpeed
+        
+        // Check remaining game time
+        val timeRemaining = params.maxTicks - gameState.gameTick
+        
+        // Adapt strategy based on parameters
+        // ...
+    }
+}
+```
+
+**Manual Storage Pattern:**
+```kotlin
+class CustomAgent : PlanetWarsAgent {
+    private lateinit var gameParams: GameParams
+    
+    override fun prepareToPlayAs(player: Player, params: GameParams, opponent: String?): String {
+        this.gameParams = params  // STORE for later use
+        return getAgentType()
+    }
+    
+    override fun getAction(gameState: GameState): Action {
+        // Use stored gameParams
+        val speed = gameParams.transporterSpeed
+        // ...
+    }
+}
+```
 
 ### 5. Player Information
 
