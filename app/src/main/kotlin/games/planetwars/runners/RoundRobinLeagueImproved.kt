@@ -1033,10 +1033,12 @@ fun main(args: Array<String>) = runBlocking {
     
     // Create the list of agent factories
     val agentFactories = listOf<() -> PlanetWarsAgent>(
+//        { StrategicAgentDynamic()},
+//        { StrategicAgent() },
+//        { BocsimackoAgent() },
+//        { SimpleEvoAgent() },
         { TeamTitansAgent()},
-        { StrategicAgent() },
-        { BocsimackoAgent() },
-        { SimpleEvoAgent() },
+        { StrategicAgentDynamic()},
 
     )
     

@@ -11,6 +11,7 @@ import games.planetwars.agents.strategic.StrategicAgentImproved
 import games.planetwars.core.GameParams
 import games.planetwars.core.Player
 import games.planetwars.agents.strategic.StrategicAgent
+import games.planetwars.agents.strategic.TeamTitansAgent
 
 
 fun main() {
@@ -75,7 +76,7 @@ class SamplePlayerLists {
 //                probMutation = 0.8,
 //            ),
             StrategicHeuristicAgent(),
-            StrategicAgentImproved(maxHorizon = 100),
+            TeamTitansAgent(),
             SimpleEvoAgent(),
             CarefulRandomAgent(),
             BetterRandomAgent(),

@@ -1,0 +1,31 @@
+Agent,Category,Range,Games,Wins,Losses,Draws,WinRate,AvgDuration
+StrategicAgentDynamic,Planet Count,Small (10-15),29,15,12,2,51,72,1,15
+StrategicAgentDynamic,Planet Count,Medium (16-22),40,15,19,6,37,50,3,18
+StrategicAgentDynamic,Planet Count,Large (23-30),31,17,13,1,54,84,5,11
+StrategicAgentDynamic,Transporter Speed,Slow (2.0-3.0),31,9,15,7,29,03,5,35
+StrategicAgentDynamic,Transporter Speed,Medium (3.1-4.0),29,15,12,2,51,72,2,54
+StrategicAgentDynamic,Transporter Speed,Fast (4.1-5.0),27,14,13,0,51,85,2,02
+StrategicAgentDynamic,Growth Rate,Low (0.02-0.08),16,6,5,5,37,50,3,58
+StrategicAgentDynamic,Growth Rate,Medium (0.09-0.15),39,18,18,3,46,15,3,61
+StrategicAgentDynamic,Growth Rate,High (0.16-0.20),25,12,13,0,48,00,1,90
+StrategicAgentDynamic,Neutral Ratio,Low Neutral (0.20-0.28),32,15,15,2,46,88,3,49
+StrategicAgentDynamic,Neutral Ratio,Medium Neutral (0.29-0.32),36,16,15,5,44,44,3,30
+StrategicAgentDynamic,Neutral Ratio,High Neutral (0.33-0.40),19,9,8,2,47,37,1,95
+StrategicAgentDynamic,Game Duration,Short (400-800),35,16,14,5,45,71,2,62
+StrategicAgentDynamic,Game Duration,Medium (801-1200),39,17,18,4,43,59,3,46
+StrategicAgentDynamic,Game Duration,Long (1201-1500),26,14,12,0,53,85,3,54
+TeamTitansAgent-TL90-D12.0-D24.0-GW10.0-FEL20-FSW0.5-CDT10.0-FBF0.01-IWD4.0-IPGF2.0-PCW5.0-TSS10000.0,Planet Count,Small (10-15),29,12,15,2,41,38,1,15
+TeamTitansAgent-TL90-D12.0-D24.0-GW10.0-FEL20-FSW0.5-CDT10.0-FBF0.01-IWD4.0-IPGF2.0-PCW5.0-TSS10000.0,Planet Count,Medium (16-22),40,19,15,6,47,50,3,18
+TeamTitansAgent-TL90-D12.0-D24.0-GW10.0-FEL20-FSW0.5-CDT10.0-FBF0.01-IWD4.0-IPGF2.0-PCW5.0-TSS10000.0,Planet Count,Large (23-30),31,13,17,1,41,94,5,11
+TeamTitansAgent-TL90-D12.0-D24.0-GW10.0-FEL20-FSW0.5-CDT10.0-FBF0.01-IWD4.0-IPGF2.0-PCW5.0-TSS10000.0,Transporter Speed,Slow (2.0-3.0),31,15,9,7,48,39,5,35
+TeamTitansAgent-TL90-D12.0-D24.0-GW10.0-FEL20-FSW0.5-CDT10.0-FBF0.01-IWD4.0-IPGF2.0-PCW5.0-TSS10000.0,Transporter Speed,Medium (3.1-4.0),29,12,15,2,41,38,2,54
+TeamTitansAgent-TL90-D12.0-D24.0-GW10.0-FEL20-FSW0.5-CDT10.0-FBF0.01-IWD4.0-IPGF2.0-PCW5.0-TSS10000.0,Transporter Speed,Fast (4.1-5.0),27,13,14,0,48,15,2,02
+TeamTitansAgent-TL90-D12.0-D24.0-GW10.0-FEL20-FSW0.5-CDT10.0-FBF0.01-IWD4.0-IPGF2.0-PCW5.0-TSS10000.0,Growth Rate,Low (0.02-0.08),16,5,6,5,31,25,3,58
+TeamTitansAgent-TL90-D12.0-D24.0-GW10.0-FEL20-FSW0.5-CDT10.0-FBF0.01-IWD4.0-IPGF2.0-PCW5.0-TSS10000.0,Growth Rate,Medium (0.09-0.15),39,18,18,3,46,15,3,61
+TeamTitansAgent-TL90-D12.0-D24.0-GW10.0-FEL20-FSW0.5-CDT10.0-FBF0.01-IWD4.0-IPGF2.0-PCW5.0-TSS10000.0,Growth Rate,High (0.16-0.20),25,13,12,0,52,00,1,90
+TeamTitansAgent-TL90-D12.0-D24.0-GW10.0-FEL20-FSW0.5-CDT10.0-FBF0.01-IWD4.0-IPGF2.0-PCW5.0-TSS10000.0,Neutral Ratio,Low Neutral (0.20-0.28),32,15,15,2,46,88,3,49
+TeamTitansAgent-TL90-D12.0-D24.0-GW10.0-FEL20-FSW0.5-CDT10.0-FBF0.01-IWD4.0-IPGF2.0-PCW5.0-TSS10000.0,Neutral Ratio,Medium Neutral (0.29-0.32),36,15,16,5,41,67,3,30
+TeamTitansAgent-TL90-D12.0-D24.0-GW10.0-FEL20-FSW0.5-CDT10.0-FBF0.01-IWD4.0-IPGF2.0-PCW5.0-TSS10000.0,Neutral Ratio,High Neutral (0.33-0.40),19,8,9,2,42,11,1,95
+TeamTitansAgent-TL90-D12.0-D24.0-GW10.0-FEL20-FSW0.5-CDT10.0-FBF0.01-IWD4.0-IPGF2.0-PCW5.0-TSS10000.0,Game Duration,Short (400-800),35,14,16,5,40,00,2,62
+TeamTitansAgent-TL90-D12.0-D24.0-GW10.0-FEL20-FSW0.5-CDT10.0-FBF0.01-IWD4.0-IPGF2.0-PCW5.0-TSS10000.0,Game Duration,Medium (801-1200),39,18,17,4,46,15,3,46
+TeamTitansAgent-TL90-D12.0-D24.0-GW10.0-FEL20-FSW0.5-CDT10.0-FBF0.01-IWD4.0-IPGF2.0-PCW5.0-TSS10000.0,Game Duration,Long (1201-1500),26,12,14,0,46,15,3,54
