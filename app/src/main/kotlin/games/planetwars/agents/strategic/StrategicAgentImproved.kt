@@ -13,7 +13,7 @@ import kotlin.math.*
  * - Single move generation approach
  */
 class StrategicAgentImproved(
-    val maxHorizon: Int = 50,
+    val maxHorizon: Int = 100   ,
     val timeLimitMillis: Long = 90L
 ) : PlanetWarsPlayer() {
 

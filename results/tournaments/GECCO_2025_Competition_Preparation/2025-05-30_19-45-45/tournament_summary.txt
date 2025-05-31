@@ -1,0 +1,21 @@
+GECCO 2025 Competition Preparation - Tournament Summary
+==================================================
+Generated: 2025-05-30T19:45:45.883785
+Total agents: 14
+Games per matchup: Variable (depends on mode)
+
+Final Rankings:
+1. StrategicAgentImproved-H100: 67,3% win rate (175/260 games)
+2. StrategicAgentImproved-H90: 66,9% win rate (174/260 games)
+3. StrategicAgentImproved-H80: 58,1% win rate (151/260 games)
+4. StrategicAgentImproved-H110: 57,3% win rate (149/260 games)
+5. StrategicAgentImproved-H120: 56,2% win rate (146/260 games)
+6. StrategicAgentImproved-H130: 55,8% win rate (145/260 games)
+7. StrategicAgentImproved-H70: 55,8% win rate (145/260 games)
+8. StrategicAgentImproved-H140: 47,7% win rate (124/260 games)
+9. StrategicAgentImproved-H60: 47,3% win rate (123/260 games)
+10. StrategicAgentImproved-H180: 40,4% win rate (105/260 games)
+11. StrategicAgentImproved-H160: 39,6% win rate (103/260 games)
+12. StrategicAgentImproved-H170: 36,5% win rate (95/260 games)
+13. StrategicAgentImproved-H150: 33,5% win rate (87/260 games)
+14. StrategicAgentImproved-H190: 31,9% win rate (83/260 games)

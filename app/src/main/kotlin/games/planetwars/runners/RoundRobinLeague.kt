@@ -75,8 +75,10 @@ class SamplePlayerLists {
 //                probMutation = 0.8,
 //            ),
             StrategicHeuristicAgent(),
-            StrategicAgent(),
-            StrategicAgentImproved(),
+            StrategicAgentImproved(maxHorizon = 100),
+            SimpleEvoAgent(),
+            CarefulRandomAgent(),
+            BetterRandomAgent(),
         )
     }
 }

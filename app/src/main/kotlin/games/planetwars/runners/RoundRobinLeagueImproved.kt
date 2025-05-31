@@ -11,6 +11,7 @@ import kotlin.system.measureTimeMillis
 import games.planetwars.agents.strategic.StrategicAgent
 import games.planetwars.agents.strategic.StrategicAgentImproved
 import games.planetwars.agents.strategic.BocsimackoAgent
+import games.planetwars.agents.strategic.StrategicAgentDynamic
 import kotlin.reflect.full.primaryConstructor
 import kotlin.reflect.KClass
 import kotlin.random.Random
@@ -1031,6 +1032,7 @@ fun main(args: Array<String>) = runBlocking {
     
     // Create the list of agent factories
     val agentFactories = listOf<() -> PlanetWarsAgent>(
+        { StrategicAgentDynamic()},
         { StrategicAgent() },
         { StrategicAgentImproved() },
         { BocsimackoAgent() },

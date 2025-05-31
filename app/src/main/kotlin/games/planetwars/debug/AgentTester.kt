@@ -485,7 +485,7 @@ fun main() {
     println("=".repeat(40))
     
     // CHANGE THIS LINE TO TEST YOUR AGENT
-    val myAgent = { StrategicAgentImproved() }
+    val myAgent = { StrategicAgentImproved(maxHorizon = 500) }
     
     println("Agent: ${myAgent().getAgentType()}")
     

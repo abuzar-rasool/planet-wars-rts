@@ -1,0 +1,61 @@
+Agent,Category,Range,Games,Wins,Losses,Draws,WinRate,AvgDuration
+StrategicAgentImproved-H300,Planet Count,Small (10-15),104,53,51,0,50,96,6,73
+StrategicAgentImproved-H300,Planet Count,Medium (16-22),146,55,91,0,37,67,20,75
+StrategicAgentImproved-H300,Planet Count,Large (23-30),150,40,110,0,26,67,50,33
+StrategicAgentImproved-H300,Transporter Speed,Slow (2.0-3.0),128,72,56,0,56,25,32,99
+StrategicAgentImproved-H300,Transporter Speed,Medium (3.1-4.0),115,41,74,0,35,65,29,42
+StrategicAgentImproved-H300,Transporter Speed,Fast (4.1-5.0),123,28,95,0,22,76,22,91
+StrategicAgentImproved-H300,Growth Rate,Low (0.02-0.08),80,30,50,0,37,50,29,02
+StrategicAgentImproved-H300,Growth Rate,Medium (0.09-0.15),153,55,98,0,35,95,29,03
+StrategicAgentImproved-H300,Growth Rate,High (0.16-0.20),90,39,51,0,43,33,25,01
+StrategicAgentImproved-H300,Neutral Ratio,Low Neutral (0.20-0.28),107,40,67,0,37,38,30,84
+StrategicAgentImproved-H300,Neutral Ratio,Medium Neutral (0.29-0.32),114,32,82,0,28,07,29,63
+StrategicAgentImproved-H300,Neutral Ratio,High Neutral (0.33-0.40),95,44,51,0,46,32,25,94
+StrategicAgentImproved-H300,Game Duration,Short (400-800),151,62,89,0,41,06,19,76
+StrategicAgentImproved-H300,Game Duration,Medium (801-1200),144,51,93,0,35,42,31,69
+StrategicAgentImproved-H300,Game Duration,Long (1201-1500),105,35,70,0,33,33,35,54
+StrategicAgentImproved-H200,Planet Count,Small (10-15),100,62,38,0,62,00,6,46
+StrategicAgentImproved-H200,Planet Count,Medium (16-22),132,66,66,0,50,00,18,95
+StrategicAgentImproved-H200,Planet Count,Large (23-30),168,69,99,0,41,07,45,92
+StrategicAgentImproved-H200,Transporter Speed,Slow (2.0-3.0),118,76,42,0,64,41,29,44
+StrategicAgentImproved-H200,Transporter Speed,Medium (3.1-4.0),116,56,60,0,48,28,28,56
+StrategicAgentImproved-H200,Transporter Speed,Fast (4.1-5.0),120,43,77,0,35,83,23,31
+StrategicAgentImproved-H200,Growth Rate,Low (0.02-0.08),81,40,41,0,49,38,26,94
+StrategicAgentImproved-H200,Growth Rate,Medium (0.09-0.15),141,77,64,0,54,61,26,96
+StrategicAgentImproved-H200,Growth Rate,High (0.16-0.20),92,34,58,0,36,96,27,21
+StrategicAgentImproved-H200,Neutral Ratio,Low Neutral (0.20-0.28),120,56,64,0,46,67,27,96
+StrategicAgentImproved-H200,Neutral Ratio,Medium Neutral (0.29-0.32),116,63,53,0,54,31,27,85
+StrategicAgentImproved-H200,Neutral Ratio,High Neutral (0.33-0.40),76,36,40,0,47,37,26,70
+StrategicAgentImproved-H200,Game Duration,Short (400-800),148,69,79,0,46,62,18,68
+StrategicAgentImproved-H200,Game Duration,Medium (801-1200),145,71,74,0,48,97,29,53
+StrategicAgentImproved-H200,Game Duration,Long (1201-1500),107,57,50,0,53,27,35,65
+StrategicAgentImproved-H50,Planet Count,Small (10-15),203,57,120,26,28,08,4,73
+StrategicAgentImproved-H50,Planet Count,Medium (16-22),235,97,115,23,41,28,14,49
+StrategicAgentImproved-H50,Planet Count,Large (23-30),262,152,97,13,58,02,33,46
+StrategicAgentImproved-H50,Transporter Speed,Slow (2.0-3.0),241,30,177,34,12,45,23,99
+StrategicAgentImproved-H50,Transporter Speed,Medium (3.1-4.0),183,84,85,14,45,90,17,92
+StrategicAgentImproved-H50,Transporter Speed,Fast (4.1-5.0),205,152,44,9,74,15,14,35
+StrategicAgentImproved-H50,Growth Rate,Low (0.02-0.08),136,54,69,13,39,71,16,09
+StrategicAgentImproved-H50,Growth Rate,Medium (0.09-0.15),256,110,122,24,42,97,18,39
+StrategicAgentImproved-H50,Growth Rate,High (0.16-0.20),160,78,67,15,48,75,20,13
+StrategicAgentImproved-H50,Neutral Ratio,Low Neutral (0.20-0.28),209,88,98,23,42,11,19,01
+StrategicAgentImproved-H50,Neutral Ratio,Medium Neutral (0.29-0.32),210,89,102,19,42,38,19,73
+StrategicAgentImproved-H50,Neutral Ratio,High Neutral (0.33-0.40),139,60,71,8,43,17,15,57
+StrategicAgentImproved-H50,Game Duration,Short (400-800),257,109,125,23,42,41,14,59
+StrategicAgentImproved-H50,Game Duration,Medium (801-1200),259,127,111,21,49,03,20,57
+StrategicAgentImproved-H50,Game Duration,Long (1201-1500),184,70,96,18,38,04,22,02
+StrategicAgentImproved-H100,Planet Count,Small (10-15),114,78,32,4,68,42,5,08
+StrategicAgentImproved-H100,Planet Count,Medium (16-22),131,101,30,0,77,10,17,70
+StrategicAgentImproved-H100,Planet Count,Large (23-30),155,108,47,0,69,68,34,02
+StrategicAgentImproved-H100,Transporter Speed,Slow (2.0-3.0),135,117,15,3,86,67,22,89
+StrategicAgentImproved-H100,Transporter Speed,Medium (3.1-4.0),114,81,32,1,71,05,19,63
+StrategicAgentImproved-H100,Transporter Speed,Fast (4.1-5.0),109,61,48,0,55,96,18,08
+StrategicAgentImproved-H100,Growth Rate,Low (0.02-0.08),84,61,21,2,72,62,18,74
+StrategicAgentImproved-H100,Growth Rate,Medium (0.09-0.15),153,106,46,1,69,28,21,64
+StrategicAgentImproved-H100,Growth Rate,High (0.16-0.20),86,60,26,0,69,77,20,19
+StrategicAgentImproved-H100,Neutral Ratio,Low Neutral (0.20-0.28),124,91,33,0,73,39,21,40
+StrategicAgentImproved-H100,Neutral Ratio,Medium Neutral (0.29-0.32),131,96,32,3,73,28,20,25
+StrategicAgentImproved-H100,Neutral Ratio,High Neutral (0.33-0.40),69,48,21,0,69,57,18,90
+StrategicAgentImproved-H100,Game Duration,Short (400-800),147,105,41,1,71,43,16,12
+StrategicAgentImproved-H100,Game Duration,Medium (801-1200),132,89,41,2,67,42,22,61
+StrategicAgentImproved-H100,Game Duration,Long (1201-1500),121,93,27,1,76,86,23,28
