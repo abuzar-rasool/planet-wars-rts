@@ -1,0 +1,61 @@
+Agent,Category,Range,Games,Wins,Losses,Draws,WinRate,AvgDuration
+BocsimackoAgent-D10-W15,8,5,3,2,1,1,1,1,1,Planet Count,Small (10-15),89,23,66,0,25,84,1,69
+BocsimackoAgent-D10-W15,8,5,3,2,1,1,1,1,1,Planet Count,Medium (16-22),99,23,76,0,23,23,4,38
+BocsimackoAgent-D10-W15,8,5,3,2,1,1,1,1,1,Planet Count,Large (23-30),112,29,83,0,25,89,6,06
+BocsimackoAgent-D10-W15,8,5,3,2,1,1,1,1,1,Transporter Speed,Slow (2.0-3.0),81,23,58,0,28,40,4,46
+BocsimackoAgent-D10-W15,8,5,3,2,1,1,1,1,1,Transporter Speed,Medium (3.1-4.0),99,27,72,0,27,27,4,14
+BocsimackoAgent-D10-W15,8,5,3,2,1,1,1,1,1,Transporter Speed,Fast (4.1-5.0),93,18,75,0,19,35,3,82
+BocsimackoAgent-D10-W15,8,5,3,2,1,1,1,1,1,Growth Rate,Low (0.02-0.08),48,14,34,0,29,17,4,33
+BocsimackoAgent-D10-W15,8,5,3,2,1,1,1,1,1,Growth Rate,Medium (0.09-0.15),106,27,79,0,25,47,4,51
+BocsimackoAgent-D10-W15,8,5,3,2,1,1,1,1,1,Growth Rate,High (0.16-0.20),81,16,65,0,19,75,3,30
+BocsimackoAgent-D10-W15,8,5,3,2,1,1,1,1,1,Neutral Ratio,Low Neutral (0.20-0.28),95,17,78,0,17,89,4,66
+BocsimackoAgent-D10-W15,8,5,3,2,1,1,1,1,1,Neutral Ratio,Medium Neutral (0.29-0.32),90,21,69,0,23,33,4,27
+BocsimackoAgent-D10-W15,8,5,3,2,1,1,1,1,1,Neutral Ratio,High Neutral (0.33-0.40),59,18,41,0,30,51,3,55
+BocsimackoAgent-D10-W15,8,5,3,2,1,1,1,1,1,Game Duration,Short (400-800),106,39,67,0,36,79,2,62
+BocsimackoAgent-D10-W15,8,5,3,2,1,1,1,1,1,Game Duration,Medium (801-1200),122,25,97,0,20,49,5,34
+BocsimackoAgent-D10-W15,8,5,3,2,1,1,1,1,1,Game Duration,Long (1201-1500),72,11,61,0,15,28,4,62
+TeamTitansAgent,Planet Count,Small (10-15),85,80,5,0,94,12,1,38
+TeamTitansAgent,Planet Count,Medium (16-22),107,103,4,0,96,26,3,83
+TeamTitansAgent,Planet Count,Large (23-30),108,107,1,0,99,07,5,03
+TeamTitansAgent,Transporter Speed,Slow (2.0-3.0),92,86,6,0,93,48,5,03
+TeamTitansAgent,Transporter Speed,Medium (3.1-4.0),97,94,3,0,96,91,3,33
+TeamTitansAgent,Transporter Speed,Fast (4.1-5.0),94,93,1,0,98,94,2,62
+TeamTitansAgent,Growth Rate,Low (0.02-0.08),52,51,1,0,98,08,3,22
+TeamTitansAgent,Growth Rate,Medium (0.09-0.15),112,110,2,0,98,21,3,77
+TeamTitansAgent,Growth Rate,High (0.16-0.20),79,76,3,0,96,20,3,67
+TeamTitansAgent,Neutral Ratio,Low Neutral (0.20-0.28),99,98,1,0,98,99,3,45
+TeamTitansAgent,Neutral Ratio,Medium Neutral (0.29-0.32),89,87,2,0,97,75,3,54
+TeamTitansAgent,Neutral Ratio,High Neutral (0.33-0.40),60,57,3,0,95,00,4,02
+TeamTitansAgent,Game Duration,Short (400-800),104,99,5,0,95,19,2,93
+TeamTitansAgent,Game Duration,Medium (801-1200),117,113,4,0,96,58,4,08
+TeamTitansAgent,Game Duration,Long (1201-1500),79,78,1,0,98,73,3,64
+EvoAgent-200-20-0.5-true,Planet Count,Small (10-15),89,27,62,0,30,34,2,35
+EvoAgent-200-20-0.5-true,Planet Count,Medium (16-22),100,23,77,0,23,00,3,52
+EvoAgent-200-20-0.5-true,Planet Count,Large (23-30),111,42,69,0,37,84,5,92
+EvoAgent-200-20-0.5-true,Transporter Speed,Slow (2.0-3.0),96,27,69,0,28,13,5,35
+EvoAgent-200-20-0.5-true,Transporter Speed,Medium (3.1-4.0),89,25,64,0,28,09,3,61
+EvoAgent-200-20-0.5-true,Transporter Speed,Fast (4.1-5.0),85,28,57,0,32,94,3,26
+EvoAgent-200-20-0.5-true,Growth Rate,Low (0.02-0.08),52,16,36,0,30,77,4,55
+EvoAgent-200-20-0.5-true,Growth Rate,Medium (0.09-0.15),103,27,76,0,26,21,3,51
+EvoAgent-200-20-0.5-true,Growth Rate,High (0.16-0.20),91,33,58,0,36,26,4,92
+EvoAgent-200-20-0.5-true,Neutral Ratio,Low Neutral (0.20-0.28),96,35,61,0,36,46,3,72
+EvoAgent-200-20-0.5-true,Neutral Ratio,Medium Neutral (0.29-0.32),87,24,63,0,27,59,4,11
+EvoAgent-200-20-0.5-true,Neutral Ratio,High Neutral (0.33-0.40),58,16,42,0,27,59,4,61
+EvoAgent-200-20-0.5-true,Game Duration,Short (400-800),98,20,78,0,20,41,2,75
+EvoAgent-200-20-0.5-true,Game Duration,Medium (801-1200),117,38,79,0,32,48,4,08
+EvoAgent-200-20-0.5-true,Game Duration,Long (1201-1500),85,34,51,0,40,00,5,56
+StrategicAgent-10-10-50,Planet Count,Small (10-15),83,43,40,0,51,81,3,57
+StrategicAgent-10-10-50,Planet Count,Medium (16-22),108,58,50,0,53,70,7,82
+StrategicAgent-10-10-50,Planet Count,Large (23-30),109,42,67,0,38,53,10,58
+StrategicAgent-10-10-50,Transporter Speed,Slow (2.0-3.0),103,50,53,0,48,54,8,74
+StrategicAgent-10-10-50,Transporter Speed,Medium (3.1-4.0),95,44,51,0,46,32,7,52
+StrategicAgent-10-10-50,Transporter Speed,Fast (4.1-5.0),80,37,43,0,46,25,6,08
+StrategicAgent-10-10-50,Growth Rate,Low (0.02-0.08),56,23,33,0,41,07,8,33
+StrategicAgent-10-10-50,Growth Rate,Medium (0.09-0.15),111,52,59,0,46,85,7,53
+StrategicAgent-10-10-50,Growth Rate,High (0.16-0.20),77,39,38,0,50,65,7,83
+StrategicAgent-10-10-50,Neutral Ratio,Low Neutral (0.20-0.28),96,43,53,0,44,79,7,51
+StrategicAgent-10-10-50,Neutral Ratio,Medium Neutral (0.29-0.32),88,45,43,0,51,14,7,78
+StrategicAgent-10-10-50,Neutral Ratio,High Neutral (0.33-0.40),69,32,37,0,46,38,7,62
+StrategicAgent-10-10-50,Game Duration,Short (400-800),102,47,55,0,46,08,5,60
+StrategicAgent-10-10-50,Game Duration,Medium (801-1200),122,63,59,0,51,64,8,00
+StrategicAgent-10-10-50,Game Duration,Long (1201-1500),76,33,43,0,43,42,9,82

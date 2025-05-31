@@ -1,0 +1,31 @@
+Agent,Category,Range,Games,Wins,Losses,Draws,WinRate,AvgDuration
+TeamTitansAgent,Planet Count,Small (10-15),26,12,11,3,46,15,1,33
+TeamTitansAgent,Planet Count,Medium (16-22),33,19,13,1,57,58,2,26
+TeamTitansAgent,Planet Count,Large (23-30),41,29,12,0,70,73,4,51
+TeamTitansAgent,Transporter Speed,Slow (2.0-3.0),32,18,10,4,56,25,4,18
+TeamTitansAgent,Transporter Speed,Medium (3.1-4.0),26,16,10,0,61,54,2,39
+TeamTitansAgent,Transporter Speed,Fast (4.1-5.0),30,17,13,0,56,67,1,84
+TeamTitansAgent,Growth Rate,Low (0.02-0.08),13,11,1,1,84,62,1,90
+TeamTitansAgent,Growth Rate,Medium (0.09-0.15),48,31,15,2,64,58,3,00
+TeamTitansAgent,Growth Rate,High (0.16-0.20),14,6,8,0,42,86,3,10
+TeamTitansAgent,Neutral Ratio,Low Neutral (0.20-0.28),24,14,8,2,58,33,4,01
+TeamTitansAgent,Neutral Ratio,Medium Neutral (0.29-0.32),32,21,11,0,65,63,2,69
+TeamTitansAgent,Neutral Ratio,High Neutral (0.33-0.40),24,14,8,2,58,33,2,41
+TeamTitansAgent,Game Duration,Short (400-800),34,21,10,3,61,76,2,32
+TeamTitansAgent,Game Duration,Medium (801-1200),41,25,15,1,60,98,2,70
+TeamTitansAgent,Game Duration,Long (1201-1500),25,14,11,0,56,00,4,17
+StrategicAgentDynamic,Planet Count,Small (10-15),26,11,12,3,42,31,1,33
+StrategicAgentDynamic,Planet Count,Medium (16-22),33,13,19,1,39,39,2,26
+StrategicAgentDynamic,Planet Count,Large (23-30),41,12,29,0,29,27,4,51
+StrategicAgentDynamic,Transporter Speed,Slow (2.0-3.0),32,10,18,4,31,25,4,18
+StrategicAgentDynamic,Transporter Speed,Medium (3.1-4.0),26,10,16,0,38,46,2,39
+StrategicAgentDynamic,Transporter Speed,Fast (4.1-5.0),30,13,17,0,43,33,1,84
+StrategicAgentDynamic,Growth Rate,Low (0.02-0.08),13,1,11,1,7,69,1,90
+StrategicAgentDynamic,Growth Rate,Medium (0.09-0.15),48,15,31,2,31,25,3,00
+StrategicAgentDynamic,Growth Rate,High (0.16-0.20),14,8,6,0,57,14,3,10
+StrategicAgentDynamic,Neutral Ratio,Low Neutral (0.20-0.28),24,8,14,2,33,33,4,01
+StrategicAgentDynamic,Neutral Ratio,Medium Neutral (0.29-0.32),32,11,21,0,34,38,2,69
+StrategicAgentDynamic,Neutral Ratio,High Neutral (0.33-0.40),24,8,14,2,33,33,2,41
+StrategicAgentDynamic,Game Duration,Short (400-800),34,10,21,3,29,41,2,32
+StrategicAgentDynamic,Game Duration,Medium (801-1200),41,15,25,1,36,59,2,70
+StrategicAgentDynamic,Game Duration,Long (1201-1500),25,11,14,0,44,00,4,17

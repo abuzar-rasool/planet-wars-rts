@@ -6,11 +6,12 @@ import games.planetwars.core.*
 import kotlin.math.*
 
 /**
- * Strategic agent with dynamically computed maxHorizon.
+ * Team Titans Agent: A strategic agent with dynamically computed maxHorizon.
  * - Adapts its planning horizon based on game parameters and performance data.
  * - Aims to improve adaptability across different game conditions.
+ * - Based on StrategicAgentDynamic with minor baseline horizon adjustment.
  */
-class StrategicAgentDynamic(
+class TeamTitansAgent(
     // Default time limit, can be overridden
     val timeLimitMillis: Long = 90L
 ) : PlanetWarsPlayer() {
@@ -29,13 +30,13 @@ class StrategicAgentDynamic(
         
         this.distancesInitialized = false // Reset for each new game/match
         this.isolationThreshold = this.params.width / 4.0 // Pre-calculate
-        return "StrategicAgentDynamic" // Return the original agent type
+        return getAgentType() // Return the agent type
     }
 
-    override fun getAgentType(): String = "StrategicAgentDynamic"
+    override fun getAgentType(): String = "TeamTitansAgent"
 
     private fun calculateDynamicHorizon(params: GameParams): Int {
-        var horizon = 80 // Start with a baseline from good performing H80-H120 agents
+        var horizon = 90 // Start with a baseline from good performing H80-H120 agents (adjusted from 80)
 
         // Adjust based on Planet Count
         // Data suggests:
