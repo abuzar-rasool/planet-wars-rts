@@ -1,0 +1,61 @@
+Agent,Category,Range,Games,Wins,Losses,Draws,WinRate,AvgDuration
+TeamTitansAgentV1,Planet Count,Small (10-15),148,107,41,0,72,30,0,57
+TeamTitansAgentV1,Planet Count,Medium (16-22),205,173,32,0,84,39,0,64
+TeamTitansAgentV1,Planet Count,Large (23-30),247,211,36,0,85,43,0,97
+TeamTitansAgentV1,Transporter Speed,Slow (2.0-3.0),196,163,33,0,83,16,0,81
+TeamTitansAgentV1,Transporter Speed,Medium (3.1-4.0),175,144,31,0,82,29,0,74
+TeamTitansAgentV1,Transporter Speed,Fast (4.1-5.0),166,132,34,0,79,52,0,72
+TeamTitansAgentV1,Growth Rate,Low (0.02-0.08),114,94,20,0,82,46,0,77
+TeamTitansAgentV1,Growth Rate,Medium (0.09-0.15),220,177,43,0,80,45,0,86
+TeamTitansAgentV1,Growth Rate,High (0.16-0.20),136,118,18,0,86,76,0,59
+TeamTitansAgentV1,Neutral Ratio,Low Neutral (0.20-0.28),168,143,25,0,85,12,0,65
+TeamTitansAgentV1,Neutral Ratio,Medium Neutral (0.29-0.32),186,151,35,0,81,18,0,71
+TeamTitansAgentV1,Neutral Ratio,High Neutral (0.33-0.40),133,109,24,0,81,95,0,88
+TeamTitansAgentV1,Game Duration,Short (400-800),218,177,41,0,81,19,0,57
+TeamTitansAgentV1,Game Duration,Medium (801-1200),200,163,37,0,81,50,0,69
+TeamTitansAgentV1,Game Duration,Long (1201-1500),182,151,31,0,82,97,1,06
+Careful Random Agent,Planet Count,Small (10-15),170,65,105,0,38,24,0,51
+Careful Random Agent,Planet Count,Medium (16-22),207,68,139,0,32,85,0,54
+Careful Random Agent,Planet Count,Large (23-30),223,62,161,0,27,80,0,76
+Careful Random Agent,Transporter Speed,Slow (2.0-3.0),204,58,146,0,28,43,0,69
+Careful Random Agent,Transporter Speed,Medium (3.1-4.0),168,54,114,0,32,14,0,61
+Careful Random Agent,Transporter Speed,Fast (4.1-5.0),172,62,110,0,36,05,0,57
+Careful Random Agent,Growth Rate,Low (0.02-0.08),87,29,58,0,33,33,0,80
+Careful Random Agent,Growth Rate,Medium (0.09-0.15),220,81,139,0,36,82,0,61
+Careful Random Agent,Growth Rate,High (0.16-0.20),155,40,115,0,25,81,0,58
+Careful Random Agent,Neutral Ratio,Low Neutral (0.20-0.28),176,51,125,0,28,98,0,73
+Careful Random Agent,Neutral Ratio,Medium Neutral (0.29-0.32),184,71,113,0,38,59,0,56
+Careful Random Agent,Neutral Ratio,High Neutral (0.33-0.40),132,39,93,0,29,55,0,59
+Careful Random Agent,Game Duration,Short (400-800),214,76,138,0,35,51,0,50
+Careful Random Agent,Game Duration,Medium (801-1200),221,70,151,0,31,67,0,62
+Careful Random Agent,Game Duration,Long (1201-1500),165,49,116,0,29,70,0,76
+Better Random Agent,Planet Count,Small (10-15),157,21,136,0,13,38,0,44
+Better Random Agent,Planet Count,Medium (16-22),221,16,205,0,7,24,0,52
+Better Random Agent,Planet Count,Large (23-30),222,15,207,0,6,76,0,59
+Better Random Agent,Transporter Speed,Slow (2.0-3.0),205,23,182,0,11,22,0,72
+Better Random Agent,Transporter Speed,Medium (3.1-4.0),160,11,149,0,6,88,0,46
+Better Random Agent,Transporter Speed,Fast (4.1-5.0),166,12,154,0,7,23,0,42
+Better Random Agent,Growth Rate,Low (0.02-0.08),96,1,95,0,1,04,0,53
+Better Random Agent,Growth Rate,Medium (0.09-0.15),227,17,210,0,7,49,0,52
+Better Random Agent,Growth Rate,High (0.16-0.20),146,23,123,0,15,75,0,52
+Better Random Agent,Neutral Ratio,Low Neutral (0.20-0.28),178,12,166,0,6,74,0,63
+Better Random Agent,Neutral Ratio,Medium Neutral (0.29-0.32),201,13,188,0,6,47,0,44
+Better Random Agent,Neutral Ratio,High Neutral (0.33-0.40),124,17,107,0,13,71,0,60
+Better Random Agent,Game Duration,Short (400-800),227,19,208,0,8,37,0,42
+Better Random Agent,Game Duration,Medium (801-1200),214,19,195,0,8,88,0,61
+Better Random Agent,Game Duration,Long (1201-1500),159,14,145,0,8,81,0,56
+EvoAgent-400-30-0.8-true,Planet Count,Small (10-15),169,129,40,0,76,33,1,41
+EvoAgent-400-30-0.8-true,Planet Count,Medium (16-22),203,161,42,0,79,31,1,76
+EvoAgent-400-30-0.8-true,Planet Count,Large (23-30),228,172,56,0,75,44,2,35
+EvoAgent-400-30-0.8-true,Transporter Speed,Slow (2.0-3.0),197,157,40,0,79,70,2,26
+EvoAgent-400-30-0.8-true,Transporter Speed,Medium (3.1-4.0),165,125,40,0,75,76,1,84
+EvoAgent-400-30-0.8-true,Transporter Speed,Fast (4.1-5.0),178,135,43,0,75,84,1,61
+EvoAgent-400-30-0.8-true,Growth Rate,Low (0.02-0.08),109,79,30,0,72,48,1,90
+EvoAgent-400-30-0.8-true,Growth Rate,Medium (0.09-0.15),227,172,55,0,75,77,1,93
+EvoAgent-400-30-0.8-true,Growth Rate,High (0.16-0.20),133,104,29,0,78,20,1,83
+EvoAgent-400-30-0.8-true,Neutral Ratio,Low Neutral (0.20-0.28),188,149,39,0,79,26,1,85
+EvoAgent-400-30-0.8-true,Neutral Ratio,Medium Neutral (0.29-0.32),175,138,37,0,78,86,1,85
+EvoAgent-400-30-0.8-true,Neutral Ratio,High Neutral (0.33-0.40),137,98,39,0,71,53,1,95
+EvoAgent-400-30-0.8-true,Game Duration,Short (400-800),217,166,51,0,76,50,1,48
+EvoAgent-400-30-0.8-true,Game Duration,Medium (801-1200),215,173,42,0,80,47,1,88
+EvoAgent-400-30-0.8-true,Game Duration,Long (1201-1500),168,123,45,0,73,21,2,42

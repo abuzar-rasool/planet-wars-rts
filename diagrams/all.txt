@@ -1,0 +1,124 @@
+
+
+
+
+RoundRobinLeagueImproved - Diagram
+
+---
+config:
+  look: neo
+  theme: redux
+---
+flowchart TB
+ subgraph ParamGen["🎯 Parameter Generator"]
+    direction TB
+        PlanetRange["🌍 Planets: 10-30<br>(3x variance)"]
+        NeutralRange["⚖️ Neutral Ratio: 0.25-0.35<br>(~30% neutral planets)"]
+        SpeedRange["🚀 Transporter Speed: 2.0-5.0<br>(2.5x variance)"]
+        GrowthRange["📈 Growth Rate: 0.05-0.21<br>(4x variance)"]
+        TickRange["⏱️ Game Duration: 400-1500<br>(variable time limits)"]
+        ShipRange["⚔️ Initial Ships: 10-20<br>(per planet variance)"]
+        GameParams["GameParams Object"]
+  end
+ subgraph subGraph1["RoundRobinLeagueImproved Data Flow"]
+        ParamGen
+        Input["Agent Factories"]
+        Scheduler["Coroutine Scheduler"]
+        Game1["Game Instance 1<br>(P:15, S:3.2, G:0.12)"]
+        Game2["Game Instance 2<br>(P:28, S:4.8, G:0.18)"]
+        Game3["Game Instance N<br>(P:12, S:2.4, G:0.07)"]
+        Collector["Results Collector"]
+        Analyzer["Performance Analyzer"]
+        ParamAnalysis["📊 Parameter Analysis<br>(Planet Count, Speed, Growth)"]
+        TimeAnalysis["⏱️ Time Performance<br>(100ms compliance)"]
+        HeadToHead["⚔️ Head-to-Head Analysis<br>(Matchup win rates)"]
+        Reporter["Report Generator"]
+        Markdown["📋 Markdown Report<br>(parameter_analysis.txt)"]
+        CSV["📊 CSV Data<br>(parameter_data.csv)"]
+        Console["🖥️ Console Output<br>(Real-time progress)"]
+  end
+    Input --> ParamGen
+    PlanetRange --> GameParams
+    NeutralRange --> GameParams
+    SpeedRange --> GameParams
+    GrowthRange --> GameParams
+    TickRange --> GameParams
+    ShipRange --> GameParams
+    GameParams --> Scheduler
+    Scheduler --> Game1 & Game2 & Game3
+    Game1 --> Collector
+    Game2 --> Collector
+    Game3 --> Collector
+    Collector --> Analyzer
+    Analyzer --> ParamAnalysis & TimeAnalysis & HeadToHead
+    ParamAnalysis --> Reporter
+    TimeAnalysis --> Reporter
+    HeadToHead --> Reporter
+    Reporter --> Markdown & CSV & Console
+    style PlanetRange fill:#fff3e0
+    style NeutralRange fill:#fff3e0
+    style SpeedRange fill:#fff3e0
+    style GrowthRange fill:#fff3e0
+    style TickRange fill:#fff3e0
+    style ShipRange stroke:#000000
+    style Scheduler fill:#ccffcc
+    style Analyzer fill:#ccffcc
+    style Reporter fill:#ccffcc
+
+
+Old Round RoundRobinLeague
+
+flowchart TB
+ subgraph ParamGen["🎯 Fixed Parameters</br>"]
+    direction TB
+        FixedPlanets["🌍 Planets: 20<br>(fixed)"]
+        FixedNeutral["⚖️ Neutral Ratio: 0.5<br>(fixed 50%)"]
+        FixedSpeed["🚀 Transporter Speed: 3.0<br>(fixed)"]
+        FixedGrowth["📈 Growth Rate: 0.1<br>(fixed max)"]
+        FixedTicks["⏱️ Game Duration: 200<br>(fixed)"]
+        FixedShips["⚔️ Initial Ships: 2-20<br>(fixed range)"]
+        GameParams["GameParams Object"]
+  end
+ subgraph subGraph1["RoundRobinLeague Data Flow (Original)"]
+        ParamGen
+        Input["Agent List"]
+        Sequential["Sequential Execution"]
+        Game1["Game Instance 1<br>(P:20, S:3.0, G:0.1)"]
+        Game2["Game Instance 2<br>(P:20, S:3.0, G:0.1)"]
+        Game3["Game Instance N<br>(P:20, S:3.0, G:0.1)"]
+        SimpleCollector["Results Collector"]
+        BasicAnalyzer["Basic Score Calculator"]
+        WinLoss["Win/Loss Tracking<br>(Points &amp; Games)"]
+        SimpleReporter["Simple Report Generator"]
+        Markdown["📋 Markdown Report<br>(league_results.md)"]
+        Console["🖥️ Console Output<br>(Final rankings)"]
+        Progress["📊 Progress Tracking<br>(Matchup completion)"]
+  end
+    Input --> ParamGen
+    FixedPlanets --> GameParams
+    FixedNeutral --> GameParams
+    FixedSpeed --> GameParams
+    FixedGrowth --> GameParams
+    FixedTicks --> GameParams
+    FixedShips --> GameParams
+    GameParams --> Sequential
+    Sequential --> Game1
+    Game1 --> Game2
+    Game2 --> Game3
+    Game3 --> SimpleCollector
+    SimpleCollector --> BasicAnalyzer
+    BasicAnalyzer --> WinLoss
+    WinLoss --> SimpleReporter
+    SimpleReporter --> Markdown & Console & Progress
+
+    style FixedPlanets fill:#fce4ec
+    style FixedNeutral fill:#fce4ec
+    style FixedSpeed fill:#fce4ec
+    style FixedGrowth fill:#fce4ec
+    style FixedTicks fill:#fce4ec
+    style FixedShips fill:#fce4ec
+    style Sequential fill:#fff3e0
+    style BasicAnalyzer fill:#fff3e0
+    style SimpleReporter fill:#fff3e0
+
+

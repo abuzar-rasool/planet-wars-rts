@@ -1,18 +1,21 @@
 package games.planetwars.runners
 
+import games.planetwars.agents.DoNothingAgent
 import games.planetwars.agents.PlanetWarsAgent
 import games.planetwars.agents.evo.SimpleEvoAgent
+import games.planetwars.agents.random.BetterRandomAgent
+import games.planetwars.agents.random.CarefulRandomAgent
+import games.planetwars.agents.random.PureRandomAgent
 import games.planetwars.core.GameParams
 import games.planetwars.core.Player
 import kotlinx.coroutines.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.system.measureTimeMillis
-import games.planetwars.agents.strategic.StrategicAgent
-import games.planetwars.agents.strategic.StrategicAgentImproved
-import games.planetwars.agents.strategic.BocsimackoAgent
 import games.planetwars.agents.strategic.StrategicAgentDynamic
-import games.planetwars.agents.strategic.TeamTitansAgent
+import games.planetwars.agents.strategic.TeamTitansAgentV1
+import games.planetwars.agents.strategic.TeamTitansAgentV2
+import games.planetwars.agents.strategic.TeamTitansAgentV3
 import kotlin.reflect.full.primaryConstructor
 import kotlin.reflect.KClass
 import kotlin.random.Random
@@ -1028,7 +1031,7 @@ fun main(args: Array<String>) = runBlocking {
     ensureResultsDirectoryStructure()
     
     // Configuration - fixed for competition mode only
-    val gamesPerPair = 50
+    val gamesPerPair = 100
     val parallelism = 10
     
     // Create the list of agent factories
@@ -1037,8 +1040,16 @@ fun main(args: Array<String>) = runBlocking {
 //        { StrategicAgent() },
 //        { BocsimackoAgent() },
 //        { SimpleEvoAgent() },
-        { TeamTitansAgent()},
-        { StrategicAgentDynamic()},
+        { TeamTitansAgentV2() },
+        { BetterRandomAgent()},
+        { CarefulRandomAgent()},
+        { SimpleEvoAgent(
+                useShiftBuffer = true,
+                nEvals = 30,
+                sequenceLength = 400,
+               opponentModel = DoNothingAgent(),
+                probMutation = 0.8,
+            )},
 
     )
     

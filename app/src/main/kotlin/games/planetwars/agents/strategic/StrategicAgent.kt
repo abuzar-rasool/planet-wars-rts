@@ -7,10 +7,6 @@ import kotlin.math.ceil
 import kotlin.math.max
 import kotlin.math.min
 
-/**
- * Strategic agent inspired by the "bocsimacko" bot algorithm
- * Implements alpha-beta search with dynamic horizon and strategic evaluation
- */
 class StrategicAgent(
     // How many plies to search in the opening phase
     val openingSearchDepth: Int = 10,

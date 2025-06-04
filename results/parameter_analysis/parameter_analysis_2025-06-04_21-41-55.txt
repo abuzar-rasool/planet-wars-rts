@@ -1,0 +1,438 @@
+🔍 DETAILED PARAMETER-PERFORMANCE ANALYSIS REPORT
+================================================================================
+Generated: 2025-06-04T21:41:55.439492
+Total games analyzed: 1200
+Parameter variance mode: COMPETITION_RANGES
+
+🤖 AGENT: TeamTitansAgentV1
+------------------------------------------------------------
+📊 Planet Count Performance:
+  Large (23-30):
+    Games: 247
+    Win Rate: 85,4% (211W-36L-0D)
+    Avg Duration: 1,0s
+    Rating: 🥇 EXCELLENT
+
+  Medium (16-22):
+    Games: 205
+    Win Rate: 84,4% (173W-32L-0D)
+    Avg Duration: 0,6s
+    Rating: 🥇 EXCELLENT
+
+  Small (10-15):
+    Games: 148
+    Win Rate: 72,3% (107W-41L-0D)
+    Avg Duration: 0,6s
+    Rating: 🥈 VERY_GOOD
+
+📊 Transporter Speed Performance:
+  Slow (2.0-3.0):
+    Games: 196
+    Win Rate: 83,2% (163W-33L-0D)
+    Avg Duration: 0,8s
+    Rating: 🥇 EXCELLENT
+
+  Medium (3.1-4.0):
+    Games: 175
+    Win Rate: 82,3% (144W-31L-0D)
+    Avg Duration: 0,7s
+    Rating: 🥇 EXCELLENT
+
+  Fast (4.1-5.0):
+    Games: 166
+    Win Rate: 79,5% (132W-34L-0D)
+    Avg Duration: 0,7s
+    Rating: 🥇 EXCELLENT
+
+📊 Growth Rate Performance:
+  High (0.16-0.20):
+    Games: 136
+    Win Rate: 86,8% (118W-18L-0D)
+    Avg Duration: 0,6s
+    Rating: 🥇 EXCELLENT
+
+  Low (0.02-0.08):
+    Games: 114
+    Win Rate: 82,5% (94W-20L-0D)
+    Avg Duration: 0,8s
+    Rating: 🥇 EXCELLENT
+
+  Medium (0.09-0.15):
+    Games: 220
+    Win Rate: 80,5% (177W-43L-0D)
+    Avg Duration: 0,9s
+    Rating: 🥇 EXCELLENT
+
+📊 Neutral Ratio Performance:
+  Low Neutral (0.20-0.28):
+    Games: 168
+    Win Rate: 85,1% (143W-25L-0D)
+    Avg Duration: 0,6s
+    Rating: 🥇 EXCELLENT
+
+  High Neutral (0.33-0.40):
+    Games: 133
+    Win Rate: 82,0% (109W-24L-0D)
+    Avg Duration: 0,9s
+    Rating: 🥇 EXCELLENT
+
+  Medium Neutral (0.29-0.32):
+    Games: 186
+    Win Rate: 81,2% (151W-35L-0D)
+    Avg Duration: 0,7s
+    Rating: 🥇 EXCELLENT
+
+📊 Game Duration Performance:
+  Long (1201-1500):
+    Games: 182
+    Win Rate: 83,0% (151W-31L-0D)
+    Avg Duration: 1,1s
+    Rating: 🥇 EXCELLENT
+
+  Medium (801-1200):
+    Games: 200
+    Win Rate: 81,5% (163W-37L-0D)
+    Avg Duration: 0,7s
+    Rating: 🥇 EXCELLENT
+
+  Short (400-800):
+    Games: 218
+    Win Rate: 81,2% (177W-41L-0D)
+    Avg Duration: 0,6s
+    Rating: 🥇 EXCELLENT
+
+🏆 Best Performance: Growth Rate - High (0.16-0.20)
+   Win Rate: 86,8% (136 games)
+
+⚠️ Needs Improvement: Planet Count - Small (10-15)
+   Win Rate: 72,3% (148 games)
+
+============================================================
+
+🤖 AGENT: Careful Random Agent
+------------------------------------------------------------
+📊 Planet Count Performance:
+  Small (10-15):
+    Games: 170
+    Win Rate: 38,2% (65W-105L-0D)
+    Avg Duration: 0,5s
+    Rating: ⚠️ BELOW_AVERAGE
+
+  Medium (16-22):
+    Games: 207
+    Win Rate: 32,9% (68W-139L-0D)
+    Avg Duration: 0,5s
+    Rating: ❌ POOR
+
+  Large (23-30):
+    Games: 223
+    Win Rate: 27,8% (62W-161L-0D)
+    Avg Duration: 0,8s
+    Rating: ❌ POOR
+
+📊 Transporter Speed Performance:
+  Fast (4.1-5.0):
+    Games: 172
+    Win Rate: 36,0% (62W-110L-0D)
+    Avg Duration: 0,6s
+    Rating: ⚠️ BELOW_AVERAGE
+
+  Medium (3.1-4.0):
+    Games: 168
+    Win Rate: 32,1% (54W-114L-0D)
+    Avg Duration: 0,6s
+    Rating: ❌ POOR
+
+  Slow (2.0-3.0):
+    Games: 204
+    Win Rate: 28,4% (58W-146L-0D)
+    Avg Duration: 0,7s
+    Rating: ❌ POOR
+
+📊 Growth Rate Performance:
+  Medium (0.09-0.15):
+    Games: 220
+    Win Rate: 36,8% (81W-139L-0D)
+    Avg Duration: 0,6s
+    Rating: ⚠️ BELOW_AVERAGE
+
+  Low (0.02-0.08):
+    Games: 87
+    Win Rate: 33,3% (29W-58L-0D)
+    Avg Duration: 0,8s
+    Rating: ❌ POOR
+
+  High (0.16-0.20):
+    Games: 155
+    Win Rate: 25,8% (40W-115L-0D)
+    Avg Duration: 0,6s
+    Rating: ❌ POOR
+
+📊 Neutral Ratio Performance:
+  Medium Neutral (0.29-0.32):
+    Games: 184
+    Win Rate: 38,6% (71W-113L-0D)
+    Avg Duration: 0,6s
+    Rating: ⚠️ BELOW_AVERAGE
+
+  High Neutral (0.33-0.40):
+    Games: 132
+    Win Rate: 29,5% (39W-93L-0D)
+    Avg Duration: 0,6s
+    Rating: ❌ POOR
+
+  Low Neutral (0.20-0.28):
+    Games: 176
+    Win Rate: 29,0% (51W-125L-0D)
+    Avg Duration: 0,7s
+    Rating: ❌ POOR
+
+📊 Game Duration Performance:
+  Short (400-800):
+    Games: 214
+    Win Rate: 35,5% (76W-138L-0D)
+    Avg Duration: 0,5s
+    Rating: ⚠️ BELOW_AVERAGE
+
+  Medium (801-1200):
+    Games: 221
+    Win Rate: 31,7% (70W-151L-0D)
+    Avg Duration: 0,6s
+    Rating: ❌ POOR
+
+  Long (1201-1500):
+    Games: 165
+    Win Rate: 29,7% (49W-116L-0D)
+    Avg Duration: 0,8s
+    Rating: ❌ POOR
+
+🏆 Best Performance: Neutral Ratio - Medium Neutral (0.29-0.32)
+   Win Rate: 38,6% (184 games)
+
+⚠️ Needs Improvement: Growth Rate - High (0.16-0.20)
+   Win Rate: 25,8% (155 games)
+
+============================================================
+
+🤖 AGENT: Better Random Agent
+------------------------------------------------------------
+📊 Planet Count Performance:
+  Small (10-15):
+    Games: 157
+    Win Rate: 13,4% (21W-136L-0D)
+    Avg Duration: 0,4s
+    Rating: ❌ POOR
+
+  Medium (16-22):
+    Games: 221
+    Win Rate: 7,2% (16W-205L-0D)
+    Avg Duration: 0,5s
+    Rating: ❌ POOR
+
+  Large (23-30):
+    Games: 222
+    Win Rate: 6,8% (15W-207L-0D)
+    Avg Duration: 0,6s
+    Rating: ❌ POOR
+
+📊 Transporter Speed Performance:
+  Slow (2.0-3.0):
+    Games: 205
+    Win Rate: 11,2% (23W-182L-0D)
+    Avg Duration: 0,7s
+    Rating: ❌ POOR
+
+  Fast (4.1-5.0):
+    Games: 166
+    Win Rate: 7,2% (12W-154L-0D)
+    Avg Duration: 0,4s
+    Rating: ❌ POOR
+
+  Medium (3.1-4.0):
+    Games: 160
+    Win Rate: 6,9% (11W-149L-0D)
+    Avg Duration: 0,5s
+    Rating: ❌ POOR
+
+📊 Growth Rate Performance:
+  High (0.16-0.20):
+    Games: 146
+    Win Rate: 15,8% (23W-123L-0D)
+    Avg Duration: 0,5s
+    Rating: ❌ POOR
+
+  Medium (0.09-0.15):
+    Games: 227
+    Win Rate: 7,5% (17W-210L-0D)
+    Avg Duration: 0,5s
+    Rating: ❌ POOR
+
+  Low (0.02-0.08):
+    Games: 96
+    Win Rate: 1,0% (1W-95L-0D)
+    Avg Duration: 0,5s
+    Rating: ❌ POOR
+
+📊 Neutral Ratio Performance:
+  High Neutral (0.33-0.40):
+    Games: 124
+    Win Rate: 13,7% (17W-107L-0D)
+    Avg Duration: 0,6s
+    Rating: ❌ POOR
+
+  Low Neutral (0.20-0.28):
+    Games: 178
+    Win Rate: 6,7% (12W-166L-0D)
+    Avg Duration: 0,6s
+    Rating: ❌ POOR
+
+  Medium Neutral (0.29-0.32):
+    Games: 201
+    Win Rate: 6,5% (13W-188L-0D)
+    Avg Duration: 0,4s
+    Rating: ❌ POOR
+
+📊 Game Duration Performance:
+  Medium (801-1200):
+    Games: 214
+    Win Rate: 8,9% (19W-195L-0D)
+    Avg Duration: 0,6s
+    Rating: ❌ POOR
+
+  Long (1201-1500):
+    Games: 159
+    Win Rate: 8,8% (14W-145L-0D)
+    Avg Duration: 0,6s
+    Rating: ❌ POOR
+
+  Short (400-800):
+    Games: 227
+    Win Rate: 8,4% (19W-208L-0D)
+    Avg Duration: 0,4s
+    Rating: ❌ POOR
+
+🏆 Best Performance: Growth Rate - High (0.16-0.20)
+   Win Rate: 15,8% (146 games)
+
+⚠️ Needs Improvement: Growth Rate - Low (0.02-0.08)
+   Win Rate: 1,0% (96 games)
+
+============================================================
+
+🤖 AGENT: EvoAgent-400-30-0.8-true
+------------------------------------------------------------
+📊 Planet Count Performance:
+  Medium (16-22):
+    Games: 203
+    Win Rate: 79,3% (161W-42L-0D)
+    Avg Duration: 1,8s
+    Rating: 🥇 EXCELLENT
+
+  Small (10-15):
+    Games: 169
+    Win Rate: 76,3% (129W-40L-0D)
+    Avg Duration: 1,4s
+    Rating: 🥇 EXCELLENT
+
+  Large (23-30):
+    Games: 228
+    Win Rate: 75,4% (172W-56L-0D)
+    Avg Duration: 2,4s
+    Rating: 🥇 EXCELLENT
+
+📊 Transporter Speed Performance:
+  Slow (2.0-3.0):
+    Games: 197
+    Win Rate: 79,7% (157W-40L-0D)
+    Avg Duration: 2,3s
+    Rating: 🥇 EXCELLENT
+
+  Fast (4.1-5.0):
+    Games: 178
+    Win Rate: 75,8% (135W-43L-0D)
+    Avg Duration: 1,6s
+    Rating: 🥇 EXCELLENT
+
+  Medium (3.1-4.0):
+    Games: 165
+    Win Rate: 75,8% (125W-40L-0D)
+    Avg Duration: 1,8s
+    Rating: 🥇 EXCELLENT
+
+📊 Growth Rate Performance:
+  High (0.16-0.20):
+    Games: 133
+    Win Rate: 78,2% (104W-29L-0D)
+    Avg Duration: 1,8s
+    Rating: 🥇 EXCELLENT
+
+  Medium (0.09-0.15):
+    Games: 227
+    Win Rate: 75,8% (172W-55L-0D)
+    Avg Duration: 1,9s
+    Rating: 🥇 EXCELLENT
+
+  Low (0.02-0.08):
+    Games: 109
+    Win Rate: 72,5% (79W-30L-0D)
+    Avg Duration: 1,9s
+    Rating: 🥈 VERY_GOOD
+
+📊 Neutral Ratio Performance:
+  Low Neutral (0.20-0.28):
+    Games: 188
+    Win Rate: 79,3% (149W-39L-0D)
+    Avg Duration: 1,9s
+    Rating: 🥇 EXCELLENT
+
+  Medium Neutral (0.29-0.32):
+    Games: 175
+    Win Rate: 78,9% (138W-37L-0D)
+    Avg Duration: 1,8s
+    Rating: 🥇 EXCELLENT
+
+  High Neutral (0.33-0.40):
+    Games: 137
+    Win Rate: 71,5% (98W-39L-0D)
+    Avg Duration: 2,0s
+    Rating: 🥈 VERY_GOOD
+
+📊 Game Duration Performance:
+  Medium (801-1200):
+    Games: 215
+    Win Rate: 80,5% (173W-42L-0D)
+    Avg Duration: 1,9s
+    Rating: 🥇 EXCELLENT
+
+  Short (400-800):
+    Games: 217
+    Win Rate: 76,5% (166W-51L-0D)
+    Avg Duration: 1,5s
+    Rating: 🥇 EXCELLENT
+
+  Long (1201-1500):
+    Games: 168
+    Win Rate: 73,2% (123W-45L-0D)
+    Avg Duration: 2,4s
+    Rating: 🥈 VERY_GOOD
+
+🏆 Best Performance: Game Duration - Medium (801-1200)
+   Win Rate: 80,5% (215 games)
+
+⚠️ Needs Improvement: Neutral Ratio - High Neutral (0.33-0.40)
+   Win Rate: 71,5% (137 games)
+
+============================================================
+
+🔬 PARAMETER INSIGHTS
+----------------------------------------
+• Planet Count: Agents generally perform best in 'Medium (16-22)' range (50,9% avg win rate)
+• Planet Count: Most challenging range appears to be 'Large (23-30)' (48,9% avg win rate)
+• Transporter Speed: Agents generally perform best in 'Slow (2.0-3.0)' range (50,6% avg win rate)
+• Transporter Speed: Most challenging range appears to be 'Medium (3.1-4.0)' (49,3% avg win rate)
+• Growth Rate: Agents generally perform best in 'High (0.16-0.20)' range (51,6% avg win rate)
+• Growth Rate: Most challenging range appears to be 'Low (0.02-0.08)' (47,3% avg win rate)
+• Neutral Ratio: Agents generally perform best in 'Medium Neutral (0.29-0.32)' range (51,3% avg win rate)
+• Neutral Ratio: Most challenging range appears to be 'High Neutral (0.33-0.40)' (49,2% avg win rate)
+• Game Duration: Agents generally perform best in 'Medium (801-1200)' range (50,6% avg win rate)
+• Game Duration: Most challenging range appears to be 'Long (1201-1500)' (48,7% avg win rate)

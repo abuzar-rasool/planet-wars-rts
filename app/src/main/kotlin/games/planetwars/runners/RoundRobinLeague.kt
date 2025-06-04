@@ -1,17 +1,14 @@
 package games.planetwars.runners
 
-import games.planetwars.agents.DoNothingAgent
 import games.planetwars.agents.PlanetWarsAgent
 import games.planetwars.agents.evo.SimpleEvoAgent
 import games.planetwars.agents.random.BetterRandomAgent
 import games.planetwars.agents.random.CarefulRandomAgent
 import games.planetwars.agents.random.PureRandomAgent
-import games.planetwars.agents.strategic.StrategicHeuristicAgent
-import games.planetwars.agents.strategic.StrategicAgentImproved
+import games.planetwars.agents.strategic.TeamTitansAgentV1
 import games.planetwars.core.GameParams
 import games.planetwars.core.Player
-import games.planetwars.agents.strategic.StrategicAgent
-import games.planetwars.agents.strategic.TeamTitansAgent
+import games.planetwars.agents.strategic.TeamTitansAgentV3
 
 
 fun main() {
@@ -75,8 +72,8 @@ class SamplePlayerLists {
 //                opponentModel = DoNothingAgent(),
 //                probMutation = 0.8,
 //            ),
-            StrategicHeuristicAgent(),
-            TeamTitansAgent(),
+            TeamTitansAgentV1(),
+            TeamTitansAgentV3(),
             SimpleEvoAgent(),
             CarefulRandomAgent(),
             BetterRandomAgent(),

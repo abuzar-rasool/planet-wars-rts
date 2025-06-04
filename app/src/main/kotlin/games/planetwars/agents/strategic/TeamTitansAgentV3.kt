@@ -11,7 +11,7 @@ import kotlin.math.*
  * - Aims to improve adaptability across different game conditions.
  * - Based on StrategicAgentDynamic with minor baseline horizon adjustment.
  */
-class TeamTitansAgent(
+class TeamTitansAgentV3(
     // Default time limit, can be overridden
     val timeLimitMillis: Long = 90L
 ) : PlanetWarsPlayer() {
@@ -33,7 +33,7 @@ class TeamTitansAgent(
         return getAgentType() // Return the agent type
     }
 
-    override fun getAgentType(): String = "TeamTitansAgent"
+    override fun getAgentType(): String = "TeamTitansAgentV3"
 
     private fun calculateDynamicHorizon(params: GameParams): Int {
         var horizon = 90 // Start with a baseline from good performing H80-H120 agents (adjusted from 80)

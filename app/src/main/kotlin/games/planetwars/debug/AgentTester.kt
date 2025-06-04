@@ -2,12 +2,8 @@ package games.planetwars.debug
 
 import games.planetwars.agents.Action
 import games.planetwars.agents.PlanetWarsAgent
-import games.planetwars.agents.evo.SimpleEvoAgent
-import games.planetwars.agents.random.BetterRandomAgent
-import games.planetwars.agents.strategic.BocsimackoAgent
-import games.planetwars.agents.strategic.StrategicAgentImproved
+import games.planetwars.agents.strategic.TeamTitansAgentV2
 import games.planetwars.core.*
-import kotlin.math.*
 import kotlin.random.Random
 
 /**
@@ -485,7 +481,7 @@ fun main() {
     println("=".repeat(40))
     
     // CHANGE THIS LINE TO TEST YOUR AGENT
-    val myAgent = { StrategicAgentImproved(maxHorizon = 500) }
+    val myAgent = { TeamTitansAgentV2(maxHorizon = 500) }
     
     println("Agent: ${myAgent().getAgentType()}")
     

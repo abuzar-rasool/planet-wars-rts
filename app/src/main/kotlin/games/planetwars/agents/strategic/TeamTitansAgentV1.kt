@@ -5,7 +5,7 @@ import games.planetwars.agents.PlanetWarsPlayer
 import games.planetwars.core.*
 import kotlin.math.max
 
-class StrategicHeuristicAgent : PlanetWarsPlayer() {
+class TeamTitansAgentV1() : PlanetWarsPlayer() {
 
     // Weights for our heuristic components - these could be tuned
     private val growthRateWeight = 3.0
@@ -143,13 +143,13 @@ class StrategicHeuristicAgent : PlanetWarsPlayer() {
     }
 
     override fun getAgentType(): String {
-        return "Strategic Heuristic Agent - Ammar Lakho"
+        return "TeamTitansAgentV1"
     }
 }
 
 // Add a main function to test the agent
 fun main() {
-    val agent = StrategicHeuristicAgent()
+    val agent = TeamTitansAgentV1()
     val gameParams = GameParams(numPlanets = 10)
     val gameState = GameStateFactory(gameParams).createGame()
     agent.prepareToPlayAs(Player.Player1, gameParams)

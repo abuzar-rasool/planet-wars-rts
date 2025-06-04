@@ -5,19 +5,13 @@ import games.planetwars.agents.PlanetWarsPlayer
 import games.planetwars.core.*
 import kotlin.math.*
 
-/**
- * Simplified strategic agent:
- * - Removed dead code and redundant complexity
- * - Keeps core strategic evaluation logic
- * - Uses simple horizon calculation
- * - Single move generation approach
- */
-class StrategicAgentImproved(
-    val maxHorizon: Int = 100   ,
+
+class TeamTitansAgentV2(
+    val maxHorizon: Int = 75,
     val timeLimitMillis: Long = 90L
 ) : PlanetWarsPlayer() {
 
-    override fun getAgentType(): String = "StrategicAgentImproved-H${maxHorizon}"
+    override fun getAgentType(): String = "TeamTitansAgentV2-H${maxHorizon}"
 
     override fun getAction(gameState: GameState): Action {
         val startTime = System.currentTimeMillis()
