@@ -2,7 +2,7 @@ package games.planetwars.runners
 
 import games.planetwars.agents.PartialObservationAgent
 import games.planetwars.agents.random.PartialObservationBetterRandomAgent
-import games.planetwars.agents.random.PartialObservationPureRandomAgent
+import games.planetwars.agents.strategic.TeamTitansPartialAgentV0
 import games.planetwars.core.*
 
 data class PartialObservationGameRunner(
@@ -74,14 +74,15 @@ data class PartialObservationGameRunner(
 fun main() {
     val gameParams = GameParams(numPlanets = 20)
 //    val gameState = GameStateFactory(gameParams).createGame()
-    val agent1 = PartialObservationPureRandomAgent()
+    val agent1 = TeamTitansPartialAgentV0()
+    //val agent2 = PartialObservationBetterRandomAgent()
     val agent2 = PartialObservationBetterRandomAgent()
     val gameRunner = PartialObservationGameRunner(agent1, agent2, gameParams)
     val finalModel = gameRunner.runGame()
     println("Game over!")
     println(finalModel.statusString())
     // time to run a bunch of games
-    val nGames = 1000
+    val nGames = 10
     val t = System.currentTimeMillis()
     val results = gameRunner.runGames(nGames)
     val dt = System.currentTimeMillis() - t
