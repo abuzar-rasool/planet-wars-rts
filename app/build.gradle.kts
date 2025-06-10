@@ -78,7 +78,7 @@ java {
 }
 
 application {
-    mainClass.set("client_server.MultiRTSServerKt") // Adjust this if your package structure is different
+    mainClass.set("competition_entry.RunEntryAsServerKt") // Adjust this if your package structure is different
 }
 
 kotlin {
