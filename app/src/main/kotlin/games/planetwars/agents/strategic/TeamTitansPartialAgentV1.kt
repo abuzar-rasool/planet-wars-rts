@@ -56,7 +56,7 @@ class TeamTitansPartialAgentV1(
         return this
     }
 
-    override fun getAgentType(): String = "TeamTitansPartialObservationAgent"
+    override fun getAgentType(): String = "TeamTitansPartialAgentV1"
 
     override fun getAction(observation: Observation): Action {
         val startTime = System.currentTimeMillis()
