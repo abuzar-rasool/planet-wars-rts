@@ -5,17 +5,13 @@ import games.planetwars.agents.PlanetWarsAgent
 import games.planetwars.agents.evo.SimpleEvoAgent
 import games.planetwars.agents.random.BetterRandomAgent
 import games.planetwars.agents.random.CarefulRandomAgent
-import games.planetwars.agents.random.PureRandomAgent
 import games.planetwars.core.GameParams
 import games.planetwars.core.Player
 import kotlinx.coroutines.*
 import java.util.concurrent.ConcurrentHashMap
 import java.util.concurrent.atomic.AtomicInteger
 import kotlin.system.measureTimeMillis
-import games.planetwars.agents.strategic.StrategicAgentDynamic
-import games.planetwars.agents.strategic.TeamTitansAgentV1
 import games.planetwars.agents.strategic.TeamTitansAgentV2
-import games.planetwars.agents.strategic.TeamTitansAgentV3
 import kotlin.reflect.full.primaryConstructor
 import kotlin.reflect.KClass
 import kotlin.random.Random

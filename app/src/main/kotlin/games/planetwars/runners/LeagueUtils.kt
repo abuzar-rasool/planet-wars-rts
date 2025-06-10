@@ -1,6 +1,7 @@
 package games.planetwars.runners
 
 import java.io.File
+import games.planetwars.core.GameParams
 
 data class LeagueEntry(
     val agentName: String,
@@ -60,4 +61,18 @@ fun main() {
     val writer = LeagueWriter()
     val markdownContent = writer.generateMarkdownTable(league)
     writer.saveMarkdownToFile(markdownContent)
+}
+
+// Helper function to print all game parameters
+fun printGameParams(params: GameParams) {
+    println("\n----- Game Parameters -----")
+    println("numPlanets: ${params.numPlanets}")
+    println("initialNeutralRatio: ${params.initialNeutralRatio}")
+    println("maxTicks: ${params.maxTicks}")
+    println("minInitialShipsPerPlanet: ${params.minInitialShipsPerPlanet}")
+    println("maxInitialShipsPerPlanet: ${params.maxInitialShipsPerPlanet}")
+    println("minGrowthRate: ${params.minGrowthRate}")
+    println("maxGrowthRate: ${params.maxGrowthRate}")
+    println("transporterSpeed: ${params.transporterSpeed}")
+    println("--------------------------\n")
 }

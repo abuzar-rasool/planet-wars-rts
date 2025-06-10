@@ -1,6 +1,5 @@
 package competition_entry
 
-import games.planetwars.agents.random.CarefulRandomAgent
 import games.planetwars.agents.strategic.TeamTitansAgentV3
 import json_rmi.GameAgentServer
 
