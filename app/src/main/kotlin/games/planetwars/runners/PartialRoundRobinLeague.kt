@@ -3,7 +3,7 @@ package games.planetwars.runners
 import games.planetwars.agents.PartialObservationAgent
 import games.planetwars.agents.random.PartialObservationPureRandomAgent
 import games.planetwars.agents.random.PartialObservationBetterRandomAgent
-import games.planetwars.agents.strategic.TeamTitansPartialAgentV0
+import games.planetwars.agents.strategic.TeamTitansPartialAgentV2
 import games.planetwars.core.GameParams
 import games.planetwars.core.Player
 import kotlinx.coroutines.*
@@ -95,7 +95,7 @@ fun main() = runBlocking {
     val agentFactories = listOf<() -> PartialObservationAgent>(
         { PartialObservationPureRandomAgent() },
         { PartialObservationBetterRandomAgent() },
-        { TeamTitansPartialAgentV0() }
+        { TeamTitansPartialAgentV2() }
     )
     val gamesPerPair = 50
     val gameParams = GameParams(numPlanets = 20, maxTicks = 400)

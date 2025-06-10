@@ -1041,8 +1041,8 @@ fun main(args: Array<String>) = runBlocking {
 //        { BocsimackoAgent() },
 //        { SimpleEvoAgent() },
         { TeamTitansAgentV2() },
-        { BetterRandomAgent()},
-        { CarefulRandomAgent()},
+        { TeamTitansAgentV1()},
+        { TeamTitansAgentV3()},
         { SimpleEvoAgent(
                 useShiftBuffer = true,
                 nEvals = 30,

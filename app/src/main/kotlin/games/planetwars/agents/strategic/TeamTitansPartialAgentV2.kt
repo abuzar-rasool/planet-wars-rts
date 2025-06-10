@@ -6,7 +6,7 @@ import games.planetwars.agents.PartialObservationPlayer
 import games.planetwars.core.*
 import kotlin.math.*
 
-class TeamTitansPartialAgentV0(
+class TeamTitansPartialAgentV2(
     val timeLimitMillis: Long = 90L
 ) : PartialObservationPlayer() {
 
@@ -23,7 +23,7 @@ class TeamTitansPartialAgentV0(
         return this
     }
 
-    override fun getAgentType(): String = "TeamTitansPartialAgentV3"
+    override fun getAgentType(): String = "TeamTitansPartialAgentV2"
 
     private fun calculateDynamicHorizon(params: GameParams): Int {
         var horizon = 90
