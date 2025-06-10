@@ -9,16 +9,14 @@ import games.planetwars.agents.random.CarefulRandomAgent
 import games.planetwars.agents.random.PureRandomAgent
 import games.planetwars.agents.strategic.TeamTitansAgentV1
 import games.planetwars.agents.strategic.TeamTitansAgentV3
-import games.planetwars.agents.strategic.TeamTitansAgentV1
 import games.planetwars.core.GameParams
 import games.planetwars.core.Player
-import games.planetwars.agents.strategic.TeamTitansAgentV3
 
 
 fun main() {
-    val agents = SamplePlayerLists().getRandomTrio()
-    agents.add(GreedyHeuristicAgent())
-//    val agents = SamplePlayerLists().getFullList()
+//    val agents = SamplePlayerLists().getRandomTrio()
+//    agents.add(GreedyHeuristicAgent())
+    val agents = SamplePlayerLists().getFullList()
 //    agents.add(DoNothingAgent())
     println("Starting Round Robin League with ${agents.size} agents")
     val gameParams = GameParams(numPlanets = 20, maxTicks = 200)
@@ -69,6 +67,7 @@ class SamplePlayerLists {
         return mutableListOf(
 //            PureRandomAgent(),
             TeamTitansAgentV1(),
+            GreedyHeuristicAgent(),
             TeamTitansAgentV3(),
             SimpleEvoAgent(),
             BetterRandomAgent(),
