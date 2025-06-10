@@ -1,0 +1,11 @@
+GECCO 2025 Competition Preparation - Tournament Summary
+==================================================
+Generated: 2025-06-10T17:37:06.582525
+Total agents: 4
+Games per matchup: Variable (depends on mode)
+
+Final Rankings:
+1. TeamTitansAgentV2-H75: 100.0% win rate (30/30 games)
+2. EvoAgent-400-30-0.8-true: 53.3% win rate (16/30 games)
+3. Careful Random Agent: 40.0% win rate (12/30 games)
+4. Better Random Agent: 6.7% win rate (2/30 games)

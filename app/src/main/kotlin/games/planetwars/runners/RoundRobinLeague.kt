@@ -7,6 +7,7 @@ import games.planetwars.agents.evo.SimpleEvoAgent
 import games.planetwars.agents.random.BetterRandomAgent
 import games.planetwars.agents.random.CarefulRandomAgent
 import games.planetwars.agents.random.PureRandomAgent
+import games.planetwars.agents.random.SmarterAgent
 import games.planetwars.agents.strategic.TeamTitansAgentV1
 import games.planetwars.agents.strategic.TeamTitansAgentV3
 import games.planetwars.core.GameParams
@@ -19,7 +20,7 @@ fun main() {
     val gameParams = GameParams(numPlanets = 20, maxTicks = 200)
     printGameParams(gameParams)
 
-    val league = RoundRobinLeague(agents, gamesPerPair = 5, gameParams = gameParams)
+    val league = RoundRobinLeague(agents, gamesPerPair = 100, gameParams = gameParams)
     val results = league.runRoundRobin()
     // use the League utils to print the results
     println(results)
@@ -51,7 +52,8 @@ class SamplePlayerLists {
             TeamTitansAgentV1(),
             GreedyHeuristicAgent(),
             TeamTitansAgentV3(),
-//            BetterRandomAgent(),
+            SmarterAgent(),
+            BetterRandomAgent(),
 //            CarefulRandomAgent(),
             SimpleEvoAgent(
                 useShiftBuffer = true,

@@ -1027,7 +1027,7 @@ fun main(args: Array<String>) = runBlocking {
     ensureResultsDirectoryStructure()
     
     // Configuration - fixed for competition mode only
-    val gamesPerPair = 100
+    val gamesPerPair = 5
     val parallelism = 10
     
     // Create the list of agent factories

@@ -3,6 +3,7 @@ package games.planetwars.runners
 import games.planetwars.agents.PartialObservationAgent
 import games.planetwars.agents.random.PartialObservationBetterRandomAgent
 import games.planetwars.agents.random.PartialObservationPureRandomAgent
+import games.planetwars.agents.strategic.TeamTitansPartialAgentV2
 import games.planetwars.agents.strategic.TeamTitansPartialAgentV1
 import games.planetwars.core.GameParams
 import games.planetwars.core.Player
@@ -40,6 +41,7 @@ class SamplePartialObservationPlayerLists {
         return mutableListOf(
             PartialObservationPureRandomAgent(),
             PartialObservationBetterRandomAgent(),
+            TeamTitansPartialAgentV2(),
             TeamTitansPartialAgentV1(),
         )
     }
