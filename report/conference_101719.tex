@@ -1,0 +1,993 @@
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{url}
+\usepackage[utf8]{inputenc}
+\usepackage[none]{hyphenat}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
+\begin{document}
+\sloppy
+\raggedbottom
+\tolerance=9999
+\emergencystretch=10pt
+\hfuzz=10pt
+\vfuzz=10pt
+\hbadness=10000
+\vbadness=10000
+\hyphenpenalty=50
+\exhyphenpenalty=50
+\doublehyphendemerits=10000
+\finalhyphendemerits=5000
+\adjdemerits=10000
+\brokenpenalty=4991
+\widowpenalty=150
+\clubpenalty=150
+\displaywidowpenalty=50
+
+\title{AI Agents for Planet Wars RTS: Strategic Planning under Full and Partial Observability}
+
+\author{\IEEEauthorblockN{Abuzar Rasool}
+\IEEEauthorblockA{\textit{High Integrity Systems} \\
+\textit{Frankfurt University of Applied Sciences}\\
+Frankfurt, Germany \\
+abuzar.rasool@example.com}
+\and
+\IEEEauthorblockN{Ammar Lakho}
+\IEEEauthorblockA{\textit{High Integrity Systems} \\
+\textit{Frankfurt University of Applied Sciences}\\
+Frankfurt, Germany \\
+ammar.lakho@example.com}
+\and
+\IEEEauthorblockN{Hussain Abbas}
+\IEEEauthorblockA{\textit{High Integrity Systems} \\
+\textit{Frankfurt University of Applied Sciences}\\
+Frankfurt, Germany \\
+hussain.abbas@example.com}
+}
+
+\maketitle
+
+\begin{abstract}
+Planet Wars is a two-player real-time strategy (RTS) game in which players compete to conquer planets and outmaneuver opponents under strict time constraints. This paper presents Team Titans' approach to the Planet Wars AI Challenge (part of GECCO 2025), detailing the design, implementation, and evaluation of a series of AI agents for both fully observable and partially observable game variants. We developed three agent versions (V1--V3) for the full-information league and two versions (V1--V2) for the partial-information league. The agents evolved from a heuristic-based \textbf{single-turn planner} to a \textbf{forward-simulation lookahead} architecture with adaptive horizon planning. Key innovations include a multi-factor heuristic evaluation for expansion and defense, a time-bounded forward model for multi-step planning, and a game state reconstruction mechanism to handle fog-of-war uncertainty. The final agents (TeamTitansAgentV3 for full observability and TeamTitansPartialAgentV2 for partial observability) achieved top win rates in local round-robin tournaments against benchmark bots, demonstrating over 99\% win rates in their respective leagues. We discuss the underlying algorithms, design decisions, teamwork processes, experimental results, and comparisons with related work in RTS AI. The findings highlight effective strategies for strategic planning under both perfect and imperfect information, and point towards future enhancements such as opponent modeling, learning, and advanced search techniques.
+\end{abstract}
+
+\begin{IEEEkeywords}
+real-time strategy games, artificial intelligence, partial observability, forward planning, heuristic search, game AI
+\end{IEEEkeywords}
+
+\section{Introduction}
+Real-time strategy games have long served as challenging benchmarks for artificial intelligence due to their enormous state spaces, simultaneous move dynamics, and often \textbf{partial observability}. The \textbf{Planet Wars} game -- originally popularized in the Google AI Challenge 2010 -- represents a distilled RTS scenario focusing on strategic planetary conquest. In Planet Wars, each player controls planets that produce ships over time, and can send ships to attack other planets. The goal is to eliminate the opponent by controlling all planets or by having more ships when the game ends. This simple yet rich environment offers a mix of economic growth, spatial planning, and adversarial decision-making, making it an attractive domain for AI research.
+
+In 2025, Planet Wars was adopted as the basis for an AI competition at GECCO (Genetic and Evolutionary Computation Conference) under the \textbf{Planet Wars AI Challenge}. The competition framework, developed by Lucas et al., provides a real-time simulation engine with configurable game parameters and two tracks: a \textbf{full observability league} (both players have complete information about the game state) and a \textbf{partial observability league} (fog-of-war hides enemy information). Each participating agent must operate under a strict time limit per game tick (100 ms in our case) and is evaluated in round-robin tournaments against other entries. Team Titans -- comprised of Abuzar Rasool, Ammar Lakho, and Hussain Abbas -- undertook this challenge as part of the High Integrity Systems Project course at Frankfurt University of Applied Sciences, aiming to design high-performing AI agents for both competition tracks.
+
+\textbf{Problem Setting:} Designing an AI for Planet Wars involves making real-time decisions about which planet(s) to send ships from, how many ships to send, and which planet(s) to target, at each time step. Successful strategies must \textbf{balance expansion and aggression} (to capture high-growth planets) with \textbf{defense and efficiency} (to avoid overextending or wasting ships). The game's simultaneous, durative moves and time pressure mean classical turn-based game algorithms are insufficient without adaptation. Moreover, the partial-observability variant introduces uncertainty in the opponent's forces, necessitating estimation or probabilistic reasoning about hidden information.
+
+\textbf{Contributions:} In this report, we present a progression of AI agents developed by Team Titans, from an initial heuristic-based agent (V1) through an advanced lookahead planning agent (V2) to a final hybrid approach (V3) for the full-info game, as well as analogous adaptations (Partial V1 and V2) for the fog-of-war game. We detail our approaches and innovations, including:
+
+\begin{itemize}
+\item A weighted multi-factor heuristic evaluation guiding expansion and attack decisions (V1).
+\item Integration of a \textbf{forward model} for simulating future game ticks, enabling multi-step lookahead planning under time constraints (V2 and V3).
+\item Adaptive horizon planning that adjusts the simulation depth based on game length and uncertainty (V2--V3).
+\item Strategies for partial observability, using game-state reconstruction and conservative estimations to cope with hidden information (Partial V1--V2).
+\item Engineering optimizations such as time management, precomputed distance matrices, and dynamic parameter tuning to ensure the agents operate within 100ms per tick and scale to different map sizes.
+\end{itemize}
+
+The performance of our agents is evaluated via extensive local tournaments. The final versions -- \textbf{TeamTitansAgentV3} for full observability and \textbf{TeamTitansPartialAgentV2} for partial observability -- were selected for submission to the GECCO 2025 Planet Wars Challenge. Both agents achieved very high win rates against baseline and benchmark bots in our tests (over 99\% in round-robin play), indicating a robust level of play. This report also situates our work in the context of related research in RTS game AI, highlighting how our design builds on and contributes to existing techniques.
+
+The remainder of this report is organized as follows. In \textbf{Related Work}, we review algorithms and prior research relevant to Planet Wars and RTS AI, including heuristic search, forward planning, and partial-information decision-making. \textbf{Objectives and Problem Description} outlines the specific goals, requirements, and challenges of our project, and identifies gaps in current approaches that our work addresses. \textbf{Teamwork} describes how our team coordinated development, including role distribution and collaboration practices. \textbf{Proposed Approaches} details the design of each agent version for full and partial observability, with pseudocode and figures illustrating key algorithms. \textbf{Implementation Details} covers the software engineering aspect -- code structure, frameworks, GUI tools, and snippets of important code sections (with UML diagrams) that realize our approaches. We then present \textbf{Experimental Results} from local evaluation leagues, with statistical analyses, comparisons, and discussion of parameter influences. Finally, we conclude with \textbf{Conclusions and Future Work}, summarizing findings and suggesting directions for improving Planet Wars agents further (e.g., incorporating learning or more advanced search techniques).
+
+\section{Related Work}
+
+\textbf{AI in Real-Time Strategy Games:} Real-time strategy games pose unique challenges to AI, combining large state and action spaces, simultaneous moves, real-time decision deadlines, and often \textbf{partial observability}. Early influential work by Buro (2003) \cite{buro2003} identified RTS games as a \textit{new AI research challenge}, noting that traditional game-tree search techniques (successful in chess/go) cannot be directly applied without abstractions or decompositions due to the complexity and simultaneity in RTS games. Subsequent research has explored a wide range of techniques, including hierarchical planning, case-based reasoning, scripting, and machine learning, to tackle subproblems like resource allocation, combat micro-management, and strategy selection in RTS environments. Ontañón et al. (2013) \cite{ontanon2013} provide a comprehensive survey of RTS game AI, especially focusing on StarCraft, highlighting the use of planning, adversarial search, and multi-agent coordination, as well as the difficulties posed by partial observability and the \textbf{huge search space} of RTS games. They emphasize that state-of-the-art RTS AI systems often integrate multiple techniques (e.g., finite-state machines or behavior trees for high-level strategy combined with search or optimization for combat) and that competitions have driven progress by providing testbeds and standardized benchmarks. Our work, though focusing on the simpler Planet Wars game, draws on insights from broader RTS AI research: for example, the importance of \textbf{evaluation functions} for strategic positioning, and the use of limited lookahead under time constraints, akin to the approaches in StarCraft AI competitions.
+
+\textbf{Planet Wars and Similar Games:} Planet Wars (also known as Galcon in some implementations) has been used in past AI challenges and research as a simplified model of territorial expansion strategy. The Google AI Challenge 2010 popularized Planet Wars, resulting in thousands of participant bots and some published analyses of successful strategies. For instance, Ziółko and Kruk (2012) \cite{ziolko2012} describe an algorithm that placed 105th of 4600+ entries in that challenge. Their approach relied on evaluating planet values and timing attacks ("sniping" strategy) and demonstrates the effectiveness of simple heuristics combined with rule-based reasoning in Planet Wars. Academic interest in Planet Wars as a testbed includes using evolutionary algorithms and co-evolution to train agents. \textbf{Fernández-Ares et al. (2014)} \cite{fernandez2014} evolved Planet Wars bots using genetic programming, optimizing decision-tree strategies that were competitive against baseline bots, thereby exploring an automated way to discover strategies rather than hand-coding them. They found that carefully crafted fitness functions (e.g., victory-based vs. resource-based metrics) significantly impact the quality of evolved bots, and that their genetic programming approach could produce non-trivial strategies that adapt to different maps. Similarly, \textbf{Collazo et al. (2016)} \cite{collazo2016} applied competitive co-evolution to simultaneously evolve game content (maps) and AI strategies for Planet Wars, demonstrating how dynamic environments can be used to stress-test agent generality. These evolutionary approaches and our work share a common goal of optimizing Planet Wars play, though we chose a manual, heuristic- and simulation-based design rather than an automated evolutionary design.
+
+Beyond evolutionary methods, researchers have also studied \textit{procedural content generation} for Planet Wars maps (e.g., Lara-Cabrera et al. 2013a \cite{lara2013a}, who proposed methods to generate balanced maps algorithmically). While map generation is outside the scope of our agent development, the existence of such work underscores the necessity for agents to handle a variety of map topologies and distributions of planet positions and growth rates. Our agents accordingly incorporate parameterized logic (like distance normalization and growth rate thresholds) to remain robust across different map scenarios.
+
+\textbf{Heuristic Search and Planning:} Many successful Planet Wars bots, including those from the AI challenge, relied on heuristic evaluation functions to score possible actions and greedy selection of the best move. The challenge is to craft an evaluation that captures the long-term strategic value of actions (such as taking a high-growth planet) versus their immediate costs. Kovarsky and Buro's work (2006) \cite{kovarsky2006} on heuristic search in abstract combat games is relevant in that it introduced ways to evaluate tactical positions in multi-unit engagements, which can be conceptually applied to evaluating multi-planet configurations in Planet Wars. We built on these ideas by designing a multi-component evaluation in TeamTitansAgentV1 that scores potential moves based on factors like growth potential, distance, required ships, and enemy threat (explained in Section \textbf{Proposed Approaches}). Our approach is analogous to a one-ply heuristic search: enumerate possible actions and pick the one with highest evaluation score.
+
+To go beyond greedy one-step lookahead, forward planning is required. Classical minimax or game-tree search is generally infeasible in RTS games due to branching factors and simultaneous moves. Instead, researchers have used simulations (forward models) to roll out actions over time (sometimes known as \textit{plannings} or \textit{lookahead simulations}). For example, Ontañón's survey notes that forward simulation is a core technique in newer AI agents. Our TeamTitansAgentV2 and V3 similarly employ a forward model to simulate a sequence of game ticks after a candidate action, effectively performing a depth-limited search in the game's state space (with the opponent assumed to take no action or a fixed policy during simulation). This approach is related to the concept of \textit{Monte Carlo rollouts} used in Monte Carlo Tree Search (MCTS), except that we did not randomize opponent actions but assumed a do-nothing opponent due to lack of a specific opponent model. Monte Carlo Tree Search itself has revolutionized planning in games by combining simulation with selective search; Browne et al. (2012) \cite{browne2012} survey various MCTS enhancements and applications. In principle, MCTS or other tree search algorithms could be applied to Planet Wars, but they would require careful adaptation for simultaneous moves and real-time constraints. In our future work section, we indeed suggest exploring MCTS as an enhancement, and prior research like Cowling et al. (2012) \cite{cowling2012} on Information Set MCTS provides guidance on handling hidden information in such searches.
+
+\textbf{Partial Observability and Hidden Information:} Dealing with fog-of-war (as in the partial league of Planet Wars) brings the problem into the realm of \textbf{partially observable Markov decision processes (POMDPs)}. POMDPs are notoriously hard to solve optimally for large domains due to the need to consider \textit{belief states} (probability distributions over possible world states). In practice, game AI often resorts to heuristics or \textbf{determinization} -- sampling possible complete states and applying deterministic planning to them. Our partial observability agents follow this paradigm. We utilize a \textbf{GameStateReconstructor} to sample and estimate the opponent's unknown forces, essentially creating a guessed complete game state on which our evaluation and planning can operate. This approach is similar in spirit to the \textit{Monte Carlo sampling} techniques used in games like Kriegspiel (invisible chess) or partially observable card games, where one samples from possible hidden information and then uses standard evaluation on those determinized states. Silver and Veness's POMCP algorithm (2010) \cite{silver2010} demonstrated how Monte Carlo planning can successfully handle large POMDPs by sampling states and applying MCTS, which inspires possible future improvements for our agent \cite{silver2010}. In our implementation, rather than a full MCTS, we performed one-step sampling at each decision to reconstruct missing info and then applied our heuristic/simulation evaluation.
+
+Another common approach to partial observability in RTS is to use \textbf{conservative assumptions} -- e.g., assume the opponent has more forces than the minimum observed, to avoid risky decisions. In the context of similar RTS games, some researchers have used Bayesian models to infer opponent unit counts. While we did not implement a Bayesian model, our PartialAgentV2 uses a conservative heuristic: it estimates unknown enemy ship counts based on averages of known information and then \textit{reduces the confidence} in our numerical evaluations (scaling down certain scores) to reflect uncertainty. This is akin to applying an uncertainty penalty to avoid over-committing when information is missing. The idea of modulating planning horizon and aggression based on information availability has parallels in how humans play -- less information usually calls for more cautious play. Our agent explicitly incorporates this by shortening its lookahead horizon when many enemy planets are unobserved.
+
+In summary, our work stands on the shoulders of prior RTS AI research: the heuristic-driven decision-making of early Planet Wars bots, the forward model planning advocated in works like Lucas (2018) \cite{lucas2018} and the BocsimackoAgent example in the Planet Wars framework, and various academic ideas for handling uncertainty and complexity \cite{buro2003,ontanon2013,silver2010,cowling2012}. By combining these elements into a unified agent and tailoring them to the specifics of the Planet Wars competition (with 100ms time limit and maps of 10--30 planets), we contribute a case study of designing high-performance agents under such constraints. In the next section, we clarify the objectives of our project and how we addressed current research gaps.
+
+\section{Objectives, Problem Description, and Current Research Gaps}
+
+\textbf{Project Objectives:} The primary goal was to develop competitive AI agents for both divisions of the Planet Wars AI Challenge -- \textbf{Full Observation} and \textbf{Partial Observation} -- and to submit our best-performing agents (TeamTitansAgentV3 and TeamTitansPartialAgentV2) to the GECCO 2025 competition. Achieving this required meeting several sub-objectives:
+
+\begin{enumerate}
+\item \textbf{Game Mastery:} Understand the mechanics and parameters of Planet Wars deeply, including ship movement rules, growth rates, map configurations, and the implications of partial observability on game state. This involved mastering the specific Planet Wars competition requirements including the confirmed parameter ranges (10-30 planets, 0.02-0.2 growth rates, 2.0-5.0 transporter speeds) and understanding how these variations impact strategic decisions. We needed to comprehend the dynamic nature of the competition environment where each game presents different scenarios requiring adaptive agent design.
+
+\item \textbf{Algorithm Design:} Create decision-making algorithms that can operate within \textit{tight time constraints} ($\leq$100 ms per tick) and make strong strategic decisions. For the full info game, this meant balancing between pure heuristic methods (fast but myopic) and search-based methods (deeper planning but potentially slower). The challenge was developing algorithms that could handle the complexity of simultaneous moves, continuous state spaces, and the need for multi-step planning while maintaining real-time performance. For the partial info game, the algorithm needed to handle uncertainty without incurring too much additional computational overhead, requiring innovative approaches to information estimation and conservative decision-making.
+
+\item \textbf{Incremental Agent Improvement:} Develop multiple iterations of agents (V1, V2, V3 etc.), each building on the lessons of the previous, to progressively improve performance. This iterative approach allows testing new ideas in stages (e.g., introducing lookahead in V2, refining it in V3) and ensures a fallback if a more complex approach underperforms. The methodology enabled systematic evaluation of each enhancement, allowing us to identify which improvements provided genuine performance gains versus those that increased complexity without corresponding benefits.
+
+\item \textbf{Robustness and Adaptability:} Ensure the agents can handle a variety of scenarios (different random maps, various opponent strategies). For competition, the agent should not be overfitted to specific opponents. Particularly in partial observability, it should perform well against both aggressive and defensive unseen opponents by making reasonable assumptions. This required developing parameter-agnostic strategies that could automatically adapt to different map sizes, planet distributions, and varying competition parameters without manual tuning.
+
+\item \textbf{High-Integrity Software Design:} As this is part of a High Integrity Systems course, an objective was to follow good software engineering practices -- clear code structure, thorough testing (with the provided league simulators), and version control management -- to produce reliable and maintainable AI agents. This encompassed implementing comprehensive testing frameworks, maintaining code quality standards, and ensuring reproducible results through proper version control and documentation practices.
+\end{enumerate}
+
+\textbf{Problem Description:} Planet Wars provides a well-defined but complex environment that presents multiple technical challenges:
+
+\begin{itemize}
+\item \textbf{State Space:} A game state consists of the planets (each with coordinates, owner, number of ships, and growth rate) and any in-transit fleets (for full observability, these are known; for partial, enemy fleets may be hidden). The state is continuous in time but the game simulation typically advances in discrete ticks (we used a tick-based forward model). The number of planets ranges from 10 to 30 in competition settings, creating a 3x variance in problem complexity, and each planet's growth rate can vary (commonly 0.02 to 0.2 ships per tick in the framework), representing a 10x variance in economic potential. Each tick, new ships spawn on each non-neutral planet, creating a dynamic economic environment where timing and territorial control become critical strategic factors.
+
+\item \textbf{Action Space:} On each decision cycle, the agent can issue zero, one, or multiple \textbf{dispatch orders}. An order chooses a source planet (owned by the player), a target planet (any other planet), and a number of ships (up to the ships available on the source). Those ships will travel to the target, arriving after a transit time proportional to the distance (distance / ship\_speed). The simultaneous nature means an agent could send fleets from multiple planets in the same tick, though in our designs we generally limited to one primary action per tick for simplicity (with a secondary reinforcement move if needed). The action space complexity grows quadratically with the number of planets, and the continuous nature of ship counts creates an essentially infinite action space that must be discretized for practical planning.
+
+\item \textbf{Game Dynamics and Outcome:} Combat is resolved when fleets arrive at planets: ships subtract from the defender's ships; if an attacking fleet exceeds the planet's garrison, the planet changes ownership. The game ends when one player is eliminated or after a fixed maximum number of ticks (e.g., 500 or 1000 ticks; in the competition \texttt{params.maxTicks} defines this). If time runs out, the winner is the player with more ships (including those en route). Thus, \textit{long-term economic growth} (owning high-growth planets for many ticks) is a winning factor, but \textit{tactical timing} (attacking at the right moment) and \textit{territorial control} are also critical. The dynamics create complex trade-offs between immediate tactical gains and long-term strategic positioning, requiring sophisticated evaluation functions to balance competing objectives.
+\end{itemize}
+
+\textbf{Key Challenges/Gaps:}
+
+\begin{itemize}
+\item \textbf{Greedy Heuristics vs. Planning:} A purely greedy agent (like many baseline bots) looks only one move ahead -- for example, it might evaluate all possible single send-fleet orders and pick the best immediate gain. This can fail in scenarios where a sacrifice or intermediate step is needed (e.g., temporarily losing a planet to win later, or sending ships preemptively for future positioning). The gap here is the need for lookahead planning. Classic game AI addresses this with search algorithms (minimax, MCTS, etc.), but those must be pruned or approximated given the branching factor in Planet Wars (a move is not just which planet to attack, but also how many ships to send, yielding a continuous parameter). Our approach in V2/V3 attempts to fill this gap by using forward simulation to foresee the state after multiple ticks, giving a sense of the future consequences of an action beyond the immediate tick. We developed time-bounded forward simulation that could explore 50-100 tick horizons within the 100ms time constraint, enabling detection of multi-step tactical sequences and cascading effects.
+
+\item \textbf{Time Constraints and Real-Time Search:} Typical AI search algorithms can easily exceed 100 ms, especially if exploring many actions and deep futures. The Planet Wars framework expects agents to return an action very quickly. We identified a gap in how to include meaningful search under strict time limits. This required developing a \textbf{time-bounded search} strategy (we set an internal 90 ms cutoff for lookahead in our V2 agent) and simplifying the action space considered (e.g., by discretizing ship counts into a few options rather than treating every possible number of ships as a separate action). Additionally, using domain knowledge to prune impossible or unwise actions (like never sending from a planet with 1 ship, or not leaving a planet completely empty) helps reduce the search space. We implemented progressive deepening approaches where the algorithm could return increasingly refined solutions as time permitted, ensuring graceful degradation under time pressure.
+
+\item \textbf{Partial Observability -- State Uncertainty:} A significant gap in naive approaches is that they ignore uncertainty or assume unknown information to be default. A bot that ignores hidden enemy fleets may walk into traps or underestimate defenses. Conversely, a too pessimistic bot may become paralyzed and not expand. There is extensive literature on planning under uncertainty (POMDPs), but exact solutions are infeasible here. We needed a practical method to incorporate uncertainty into decision-making. The gap we address is bridging from full-state planning to partial-state planning by inserting an information estimation step. We leveraged the competition's provided \texttt{DefaultHiddenInfoSampler} and \texttt{GameStateReconstructor} to guess enemy states and integrated that with our logic. However, this is still an area where there's room for improvement -- e.g., using multiple sampled states or Bayesian update over time could further enhance performance, but we limited scope to one reconstructed state per tick. Our implementation used conservative estimation strategies and uncertainty factors to modulate confidence in planning decisions based on the amount of hidden information.
+
+\item \textbf{Lack of Opponent Modeling:} Our agents do not explicitly model different opponent behaviors; they assume a generic opponent. In advanced RTS AI research, opponent modeling (learning the opponent's tendencies and adjusting strategy) is an important area. Due to the limited timeframe of the project, we did not implement learning or opponent-specific adaptations. This is a recognized gap -- an agent might consistently do well against straightforward or weaker opponents but could be exploited by a clever adversary that, for instance, predicts our agent's style. The competition environment, being random matchmaking, somewhat mitigates the need for opponent-specific strategies, but adaptive or learning agents could potentially dominate if others are static. We note this gap and consider it in future work, particularly exploring techniques like sequence prediction, behavioral clustering, or online adaptation that could improve performance against diverse opponent strategies.
+
+\item \textbf{Integration of Multi-Objective Strategies:} Planet Wars requires balancing multiple objectives (growth, defense, attack). A gap in simpler agents is the lack of coordination between these objectives. Our V1 agent tried to address this with a weighted evaluation function combining terms for growth, distance, threat, etc. However, a fixed-weight linear combination might not adapt well in all situations (e.g., early game vs late game, or if behind vs ahead in ships). A more adaptive strategy (like changing weights based on game state, or using stage-based strategy like opening, midgame, endgame tactics) is largely absent in our current agents. We identified this as a gap but tackled it partially by making certain components state-dependent (for example, V2/V3's dynamic horizon effectively shortens as the game nears end, implicitly shifting priorities). A truly adaptive multi-objective optimization remains future work, potentially involving machine learning approaches to automatically tune strategy weights based on game context and opponent behavior patterns.
+\end{itemize}
+
+In summary, our project sought to overcome the limitations of baseline greedy strategies by introducing lookahead planning and uncertainty handling, all while respecting real-time performance constraints. We aimed to contribute a solution that marries classical heuristic design with modern simulation-based planning, specifically addressing the unique challenges posed by the Planet Wars competition environment. The following sections detail how we realized these objectives, first describing the team collaboration that enabled the work, and then diving into the technical design of each agent version.
+
+\section{Teamwork}
+
+Team Titans adopted a collaborative development approach with clear role distribution. \textbf{Abuzar Rasool} led development of the full-observation agents (V1--V3), focusing on heuristic evaluation and forward simulation integration. \textbf{Ammar Lakho} developed the initial partial observation agent (V1), researching POMDP concepts and implementing conservative uncertainty handling. \textbf{Hussain Abbas} created the advanced partial observation agent (V2), integrating GameStateReconstructor and dynamic horizon adjustment. Critical tasks like parameter optimization and evaluation function tuning were conducted jointly through systematic experimentation.
+
+Our development process emphasized iterative improvement through regular testing, code reviews using GitHub workflows, and collaborative debugging using the Planet Wars GUI framework. We maintained branch-based version control with pull request reviews to ensure code quality and prevent integration issues. The team conducted weekly coordination meetings and used automated league runners for continuous performance evaluation, enabling evidence-driven refinements to agent strategies and parameters.
+
+\section{Proposed Approaches}
+
+We developed five agent versions in total -- three for the full observation scenario (TeamTitansAgent V1, V2, V3) and two for the partial observation scenario (TeamTitansPartialAgent V1, V2). Each subsequent version introduced new techniques or refinements over the previous ones. In this section, we detail the design and algorithms of each version, highlighting how the agent architecture evolved and how we adapted strategies for full vs. partial observability. We include pseudocode and code snippets (in Kotlin-like syntax) to illustrate key decision-making logic. Figures and tables are provided where appropriate to summarize behaviors or compare versions.
+\subsection{Full Observation League Agents}
+
+\subsubsection{TeamTitansAgentV1: Technical Analysis and Strategic Design}
+
+\textbf{Overview:} TeamTitansAgentV1 is our baseline strategic agent for the fully observable game. It follows a \textit{greedy best-first strategy} guided by a multi-factor heuristic evaluation. The agent is stateless (it doesn't carry memory of past turns aside from the game state itself) and decides on one action (fleet dispatch) each tick by scanning through all feasible source-target planet pairs and picking the one with the highest heuristic score. If no beneficial attack is found, it executes a reinforcement move or does nothing.
+
+\textbf{Core Implementation Structure:} In code, V1 extends the provided \texttt{PlanetWarsPlayer} class and overrides the decision function. It does not use any external state except game parameters (like ship speed) available via \texttt{params}. We outline the main loop in pseudocode:
+
+\textit{Listing 1: Candidate generation and evaluation in TeamTitansAgentV1.}
+
+\begin{scriptsize}
+\raggedright
+\begin{verbatim}
+class TeamTitansAgentV1 : PlanetWarsPlayer() {
+  override fun getAction(gameState: GameState): Action {
+    // 1. Candidate generation
+    val myAvailablePlanets = gameState.planets.filter {
+      it.owner == player && it.transporter == null 
+      && it.nShips > 1.0
+    }
+    val potentialTargets = gameState.planets.filter {
+      it.owner == player.opponent() || 
+      it.owner == Player.Neutral
+    }
+    if (myAvailablePlanets.isEmpty() || 
+       potentialTargets.isEmpty()) {
+      return Action.doNothing()
+    }
+
+    // 2. Evaluation of each (source, target) pair
+    var bestScore = Double.NEGATIVE_INFINITY
+    var bestMove: Pair<Planet, Planet>? = null
+    for (source in myAvailablePlanets) {
+      for (target in potentialTargets) {
+        val shipsNeeded = calculateRequiredShips(
+          source, target)
+        // Feasibility check: retain >=5, <=90% used
+        if (shipsNeeded <= source.nShips * 0.9 && 
+           source.nShips - shipsNeeded >= 5.0) {
+          val score = evaluateAttack(source, target, 
+                     shipsNeeded, gameState)
+          if (score > bestScore) {
+            bestScore = score
+            bestMove = Pair(source, target)
+          }
+        }
+      }
+    }
+
+    // 3. Execute best move if positive
+    return if (bestMove != null && bestScore > 0) {
+      val (src, tgt) = bestMove
+      Action.send(src, tgt, 
+        numberOfShipsToSend = 
+        calculateSendAmount(src, tgt))
+    } else {
+      reinforceStrongestPlanet(gameState)
+    }
+  }
+}
+\end{verbatim}
+\end{scriptsize}
+
+In this pseudocode:
+
+\begin{itemize}
+\item \textbf{Candidate Generation:} The agent filters for \textit{available source planets} -- those it owns, that have no outgoing fleet already in transit (\texttt{transporter == null} indicates no active launch), and that have more than 1 ship (we require $>1$ so that sending 1 won't leave it empty). It also identifies \textit{potential targets}, which are either enemy-controlled or neutral planets (friendly planets are not targets for attack).
+
+\item We include an \textbf{early termination}: if no sources or no targets exist, the agent returns \texttt{doNothing()} (e.g., this can happen if the player has no ships or if there are no planets to attack, though in Planet Wars usually there's always at least a neutral if the game isn't over).
+
+\item \textbf{Exhaustive Evaluation:} We then double-loop through each source-target combination. We compute \texttt{shipsNeeded = calculateRequiredShips\linebreak(source, target)} which determines how many ships would be required from \texttt{source} to successfully take \texttt{target}. We impose feasibility checks: we do not consider an attack if it would use more than 90\% of source's ships or leave the source with fewer than 5 ships. These safety thresholds (90\% and 5 ships) are to prevent reckless moves that completely strip defenses.
+
+\item For each feasible pair, we call \texttt{evaluateAttack\linebreak(source, target, shipsNeeded, gameState)} which returns a heuristic score for that potential action.
+
+\item After evaluating all, if the best score is positive, we issue that move (using \texttt{Action.send}). If no beneficial move was found, we call \texttt{reinforceStrongestPlanet} as a fallback.
+\end{itemize}
+
+\textbf{Heuristic Evaluation (Multi-Component):} The core of V1 is its evaluation function. We designed it with \textbf{four weighted components}, inspired by fundamental strategic considerations:
+
+\begin{enumerate}
+\item \textbf{Growth Rate Priority} -- weight 3.0. Taking planets with higher growth rates is paramount, as they produce more ships over time. In the evaluation, we start a score for a candidate target as \texttt{score = target.growthRate * 3.0}. This means each point of growth (which is fractional per tick) is worth 3 points in score.
+
+\item \textbf{Distance Optimization} -- weight 2.0 (with a negative effect). The farther a target, the longer it takes for ships to arrive and the slower the expansion. We subtract \texttt{distance/100 * 2.0} from the score. Distances are scaled by 1/100 to normalize typical map distances into a comparable range. A nearer target thus loses less score than a far target.
+
+\item \textbf{Ship Count Efficiency} -- weight 1.0 (negative). We penalize using many ships. Specifically, \texttt{score -= (shipsNeeded / 50.0) * 1.0}. This encourages attacks that require fewer ships (efficiency), because using up ships has an opportunity cost. This component is the lowest weight because while efficiency matters, it should not override key strategic gains.
+
+\item \textbf{Threat Assessment} -- weight 1.5. We incorporate a term for strategic positioning: if the target planet is near enemy planets, capturing it could serve as a forward defense or attack post. We compute the distance from the target to the nearest enemy-controlled planet; if it's within 150 units, we add a bonus proportional to how close. Specifically, \texttt{if (closestEnemyDistance < 150) score += (200 - closestEnemyDistance)/50 * 1.5}.
+\end{enumerate}
+
+These components are summed to give the total heuristic score for an attack. We also added some \textbf{target-specific bonuses}:
+
+\begin{itemize}
+\item If the target is enemy-owned, we give an extra denial bonus: \texttt{+1.5 * target.growthRate} to reflect that taking an enemy planet not only gives us growth but denies the opponent that growth. Additionally, if \texttt{target.growthRate > 0.075} (a high-growth planet), we add a flat +2 bonus.
+
+\item If the target is neutral and has \texttt{growthRate > 0.05}, we add a big bonus: \texttt{+10 * target.growthRate}. This was tuned to push the agent to grab valuable neutrals quickly.
+\end{itemize}
+
+\textbf{Required Ships Calculation:} The helper \texttt{calculateRequiredShips(source, target)} implements how many ships are needed to ensure victory if an attack is launched now. In V1, we did:
+
+\begin{scriptsize}
+\raggedright
+\begin{verbatim}
+val distance = source.position.distance(target.position)
+val travelTime = distance / params.transporterSpeed
+return when (target.owner) {
+  Player.Neutral -> target.nShips + 1.0
+  else -> target.nShips + 1.0 + 
+    (target.growthRate * travelTime)
+}
+\end{verbatim}
+\end{scriptsize}
+
+This means:
+\begin{itemize}
+\item If target is neutral, just need one more ship than it has (since neutrals don't produce ships).
+\item If target is enemy, need what it has plus what it will produce in the time it takes our fleet to arrive (growthRate $\times$ travelTime), plus one. We add +1 as a safety margin to guarantee capture.
+\item We used \texttt{params.transporterSpeed} to compute travelTime in ticks. This dynamic calculation accounts for distance and speed, which is important because the competition might vary transporter speed.
+\end{itemize}
+
+\textbf{Strategic Behavior of V1:} With these mechanisms, V1's play-style can be summarized as:
+
+\begin{itemize}
+\item \textbf{Expansionist:} Heavily favors taking high-growth planets (especially neutrals early on). The high weight on growth ensures that even if a high-growth target is somewhat far, it might still be chosen.
+\item \textbf{Efficiency-aware:} It won't throw away ships recklessly; it prefers targets it can take with fewer ships.
+\item \textbf{Defensive fallback:} If no attack looks worthwhile (score $\leq$ 0), it doesn't sit idle; instead, it reinforces. The \texttt{reinforceStrongestPlanet} finds the planet with the highest value and reinforces it by sending ships from a weaker friendly planet.
+\end{itemize}
+
+\textbf{Limitations of V1:} We knew V1, being greedy one-turn, might miss multi-step tactics. For instance, it cannot plan a two-stage attack (like first clearing a neutral in front of an enemy planet to use as a stepping stone). It also doesn't anticipate enemy counter-attacks beyond the immediate turn. Another limitation was static weights -- the weights are fixed and were chosen by our intuition and trial and error, but they don't adapt to the game situation or opponent.
+
+\textbf{Summary of V1:} In a nutshell, TeamTitansAgentV1 is a well-engineered heuristic agent emphasizing \textbf{economic growth, rapid expansion, and cautious engagement}, providing a foundation for improvement. It performed well in early testing, but to compete at higher levels, we moved to incorporate deeper planning in V2.
+
+\subsubsection{TeamTitansAgentV2: Advanced Lookahead Strategy with Temporal Planning}
+
+\textbf{Overview and Evolution:} TeamTitansAgentV2 marks a significant evolution from V1, shifting from a single-turn heuristic approach to a \textbf{forward-simulation based lookahead} approach. The inspiration came from the provided \textbf{BocsimackoAgent} in the Planet Wars codebase and from classical game tree search ideas used in earlier Planet Wars bots and research. The idea was to simulate the game a few steps into the future for each possible action to evaluate its long-term benefit, rather than relying solely on an immediate heuristic.
+
+\textbf{Core Implementation Framework:} In code, V2 is structured to allow parameterization of its planning depth and time limit:
+
+\begin{scriptsize}
+\raggedright
+\begin{verbatim}
+class TeamTitansAgentV2(
+  val maxHorizon: Int = 50,
+  val timeLimitMillis: Long = 90L
+) : PlanetWarsPlayer() { ... }
+\end{verbatim}
+\end{scriptsize}
+
+We set default \texttt{maxHorizon = 50} ticks of lookahead and \texttt{timeLimitMillis = 90} ms. The agent uses the framework's \texttt{ForwardModel} to simulate game ticks. Key improvements in architecture over V1:
+
+\begin{itemize}
+\item \textbf{Time-Bounded Execution:} V2 keeps track of how much time it has used and ensures to break out of simulations by 90 ms to respect the game's 100 ms limit with a buffer.
+
+\item \textbf{Parameterized Horizon:} Instead of one fixed depth, V2 can adjust how far it plans. The \texttt{maxHorizon} is the cap.
+
+\item \textbf{Dynamic Horizon Adaptation:} We included a function to adjust the horizon based on remaining game time:
+
+\begin{scriptsize}
+\raggedright
+\begin{verbatim}
+private fun computeHorizon(gameState: GameState): Int {
+  val remainingTicks = params.maxTicks - 
+    gameState.gameTick
+  return min(maxHorizon, remainingTicks)
+}
+\end{verbatim}
+\end{scriptsize}
+
+This ensures we never plan beyond the end of the game, and perhaps consider shorter plans in late game if few ticks remain.
+\end{itemize}
+
+\textbf{Decision Algorithm:} V2's top-level loop still generates candidate moves (source-target pairs) similarly to V1. However, instead of directly computing a heuristic, it evaluates each move via simulation:
+
+\begin{enumerate}
+\item For each candidate (source, target) that passes similar feasibility checks as V1, V2 considers \textit{multiple possible ship amounts to send}. This is another innovation: V1 essentially had one choice of how many ships. V2 explores three levels of investment: send half the available ships, send all needed (similar to V1's logic), or send a quarter of available (at least 1) as a minimal poke.
+
+\item For each such action option, we invoke the \textbf{forward model simulation}:
+
+\begin{scriptsize}
+\raggedright
+\begin{verbatim}
+val model = ForwardModel(gameState.deepCopy(), params)
+model.step(mapOf(player to action, 
+  player.opponent() to Action.doNothing()))
+for (step in 1 until horizon) {
+  if (model.isTerminal()) break
+  model.step(mapOf(player to Action.doNothing(), 
+    player.opponent() to Action.doNothing()))
+}
+val score = evaluatePosition(model.state)
+\end{verbatim}
+\end{scriptsize}
+
+The first \texttt{model.step} applies our candidate action while assuming the opponent does nothing on that tick. Then for \texttt{horizon-1} more steps, we advance the simulation with both players doing nothing. We're simulating what happens if we make that one move and then both sides pause -- this allows us to see the \textit{consequences} of that move over the next \texttt{horizon} ticks.
+
+\item After simulation, we call \texttt{evaluatePosition\linebreak(model.state)} to get a score for the resulting state. The position evaluation in V2 differs from V1's single-move evaluation. Instead of summing heuristics per move, we evaluate the full state advantage:
+
+\begin{itemize}
+\item We compute \textbf{ship count differential}: my total ships minus opponent's total ships.
+\item We compute \textbf{growth rate differential}: my total growth minus opponent's total growth, then multiply by 10 for weight.
+\item We also included a small positional term for tactical positioning.
+\end{itemize}
+
+Essentially, \texttt{evaluatePosition} returns something like: \texttt{(myShips - oppShips) + 10*(myGrowth -\linebreak oppGrowth) + minor\_position\_terms}.
+
+\item V2 picks the action that resulted in the highest \texttt{score} from the position evaluation.
+
+\item \textbf{Time Management:} We loop through candidates and break out if we approach 90 ms. We order the search somewhat by intuitive priority to increase the chance that if time runs out, we have evaluated the most promising moves.
+\end{enumerate}
+
+\textbf{Strategic Innovations in V2:} By simulating, V2 can detect multi-turn effects. For example:
+
+\begin{itemize}
+\item If attacking planet X will lead to also capturing planet Y 50 ticks later due to compounding ship advantage, the simulation would show a big ship differential in our favor after those ticks, hence a high score.
+
+\item If a move leaves us vulnerable (e.g., we send so many ships that our planets are empty), our position evaluation will see that our ship count lead isn't large or growth is not improved much, then likely another move might score better.
+
+\item The introduction of \textbf{multiple ship investment options} for each attack means V2 can consider partial commitments. It might find that sending a small fleet somewhere yields almost the same eventual outcome as sending everything, thereby preferring to retain some ships.
+\end{itemize}
+
+One of the biggest changes is that \textbf{V2 explicitly respects the 100ms rule}. V1 was always fast, but V2 is heavier, and we designed around that with early breaking of loops on time and more efficient distance calculations.
+
+\textbf{Comparative Analysis (V1 vs V2):} We can summarize differences in a table:
+
+\begin{table}[htbp]
+\caption{Comparison of TeamTitansAgentV1 vs V2}
+\begin{center}
+\begin{tabular}{|p{0.14\linewidth}|p{0.33\linewidth}|p{0.38\linewidth}|}
+\hline
+\textbf{Aspect} & \textbf{TeamTitansAgentV1} & \textbf{TeamTitansAgentV2} \\
+\hline
+Planning Horizon & Single-turn (greedy) & Up to 75 ticks lookahead (simulated) \\
+\hline
+Evaluation Focus & Immediate heuristic per move & Overall position after simulation \\
+\hline
+Ship Investment & Fixed requirement (100\% of needed) & Multiple options (25\%, 50\%, 100\%) \\
+\hline
+Time Management & Implicit (fast heuristic) & Explicit 90ms limit with early cutoff \\
+\hline
+Opponent Modeling & Static (none) & Assumes passive opponent (do-nothing) \\
+\hline
+Parameter Adaptation & Static weights and thresholds & Dynamic horizon based on game time \\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\textbf{Strengths and Limitations:} V2's forward simulation gave it a clear strategic edge. It often plans better invasions and is less shortsighted about, say, sacrificing ships now for a bigger advantage later. The position evaluation that heavily weights growth also means V2 inherently ``thinks'' about the endgame.
+
+However, V2's simulation assumes the opponent does not respond, which can be overly optimistic. In practice, against strong opponents, this could mislead V2. Another limitation is that V2's deeper search comes at the cost of \textbf{computational complexity}. We measured roughly O(N\_sources $\times$ N\_targets $\times$ N\_options $\times$ H) steps, which in worst case could be 30$\times$30$\times$3$\times$75 = 202,500 forward ticks simulated per decision.
+
+\textbf{Key Takeaway:} V2 demonstrated the power of adding a strategic lookahead to our agent, transforming it from a greedy algorithm to a modest depth search algorithm. It addressed one research gap by showing how forward planning can be done in an RTS context under time constraints.
+
+\subsubsection{TeamTitansAgentV3: Adaptive Strategy Refinements and Performance Optimizations}
+
+TeamTitansAgentV3 is the final iteration of our full observability agent, and it was the version submitted to the competition for the full league. V3 builds upon the planning framework of V2 but includes important refinements:
+
+\begin{itemize}
+\item \textbf{Dynamic Horizon Tuning:} We implemented a more nuanced dynamic horizon calculation. Instead of a fixed 50 or simple min(end,50), V3 adjusts \texttt{maxHorizon} based on the map and game phase. V3's \texttt{calculateDynamicHorizon(params)} uses rules based on map size (number of planets): e.g., for maps $>$ 20 planets, set maxHorizon to 50; for medium maps $\sim$15 planets, 75; for small maps $<$ 10 planets, maybe 100.
+
+\item \textbf{Precomputed Distance Matrix:} To optimize simulation, V3 precomputes all pairwise planet distances once (when \texttt{prepareToPlayAs} is called at match start) and stores it. This aids any function needing distances.
+
+\item \textbf{Isolation Metric:} We introduced an ``isolationThreshold'' concept: during initialization, V3 computes something like the average distance between planets to judge if a planet is isolated. The idea is to handle maps where one planet is far from others -- in such cases, sending ships away might be riskier.
+
+\item \textbf{Integrated V1 Heuristics into Evaluation:} V3 tries to get the best of both V1 and V2: it retains V2's simulation and position evaluation, but we reincorporated some local heuristics to fine-tune preferences. For instance, after simulation, we might add a small bonus for having captured a high-growth planet or if an action gave us an advanced forward position.
+
+\item \textbf{Further Parameter Tweaks:} We adjusted some constants: V3 by default used \texttt{maxHorizon=90} internally but effectively often reduced it via dynamic calculation. We also refined the reinforcement fallback: V3's reinforcement ensures not to send ships if doing so would drop a source planet's ship count below a dynamic threshold.
+
+\item \textbf{Stability and Bug Fixes:} Minor improvements like ensuring \texttt{transporter == null} check is done in V3 as well, to avoid interfering with ongoing movements. Also, V3 better handles the scenario when we have no available moves.
+\end{itemize}
+
+Strategically, V3 plays very similarly to V2 but a bit more polished:
+
+\begin{itemize}
+\item It is \textit{less likely to over-commit}. The dynamic horizon and improved evaluation help it avoid some of V2's pitfalls. For example, if V2 sometimes sent too large a fleet because it overvalued a move in simulation, V3's evaluation might catch that sending slightly fewer yields almost as good an outcome and saves ships.
+
+\item V3 is also more \textit{aware of game progression}. In endgame scenarios (few planets left, or when one opponent is clearly winning), V3 automatically shortens horizon, effectively becoming more tactical to finish off an enemy quickly.
+
+\item Importantly, \textbf{V3 outperformed V2 in our internal tournaments}. It achieved a near-perfect win rate against baseline bots and consistently beat V2 in head-to-head matches, indicating the refinements succeeded.
+\end{itemize}
+
+To illustrate V3 improvements, consider a scenario: There are 3 enemy planets left, fairly far from our cluster. V2 with horizon 75 might simulate an all-out attack and see it succeed after 70 ticks, giving a big score. But perhaps sending all ships leaves one of our planets almost empty for a long time. V3, with an isolation threshold and slight heuristic, would penalize emptying that isolated planet. It might instead simulate a smaller attack that still eventually wins but keeps some defense -- which yields a safer overall position.
+
+In summary, V3 didn't revolutionize the approach but rather \textbf{refined and tuned} the strategy introduced in V2 to be more adaptive and robust. It represents the culmination of our full observability agent development, combining \textbf{deep planning} with \textbf{strategic heuristics} and careful parameterization. TeamTitansAgentV3 was ultimately our strongest full-info agent and serves as a baseline for further potential improvements (like adding true opponent modeling or learning in the future).
+
+\textbf{Performance Optimizations:}
+\begin{itemize}
+\item \textbf{Precomputed Distance Matrix:} All pairwise planet distances computed once during initialization
+\item \textbf{Isolation Metric:} Identifies far-flung planets requiring careful handling
+\item \textbf{Integrated Heuristics:} Combines V2's simulation with refined V1-style local heuristics
+\end{itemize}
+
+\textbf{Strategic Improvements:} V3 is less likely to over-commit and more aware of game progression. In endgame scenarios, it automatically shortens horizon for tactical finishing moves.
+
+\subsection{Partial Observation League Agents}
+
+Adapting our agents to partial observability was a significant challenge, requiring entirely new approaches to decision-making under uncertainty. The partial environment provides each agent with an \texttt{Observation} each tick, which omits enemy ship counts and fleet information outside sensor range. This creates several technical challenges:
+
+\begin{itemize}
+\item \textbf{State Reconstruction:} The agent must estimate the complete game state from partial observations
+\item \textbf{Opponent Modeling:} Decision-making must account for unknown enemy capabilities
+\item \textbf{Risk Assessment:} Actions must be evaluated under uncertainty about their success
+\item \textbf{Information Gathering:} The agent must balance exploration with exploitation
+\end{itemize}
+
+\subsubsection{TeamTitansPartialAgentV1: Heuristic Strategy under Uncertainty}
+
+\textbf{Design Approach:} PartialAgentV1 was an attempt to port V1's logic into the partial setting with minimal complexity. The idea was to use a simplified heuristic approach with added caution for unknown information. However, the adaptation proved more challenging than anticipated.
+
+\textbf{Implementation Structure:} PartialV1 inherits from \texttt{PartialObservationPlayer} and receives an \texttt{Observation} object each tick instead of a complete \texttt{GameState}. The \texttt{Observation} contains:
+
+\begin{itemize}
+\item Complete information about planets you own (ship counts, growth rates, positions)
+\item Partial information about enemy and neutral planets (position, growth rate, owner, but ship counts are \texttt{null})
+\item Information about your own transporters in transit
+\item Limited information about enemy transporters (presence but not ship counts)
+\end{itemize}
+
+\textit{Listing 2: Basic structure of PartialAgentV1 decision making.}
+
+\begin{scriptsize}
+\raggedright
+\begin{verbatim}
+class TeamTitansPartialAgentV1 : PartialObservationPlayer() {
+  override fun getAction(observation: Observation): Action {
+    // 1. Extract known planets (where we have ship counts)
+    val myPlanets = observation.planetObservations.filter {
+      it.owner == player && it.nShips != null && 
+      it.nShips!! > 1.0 && 
+      !hasActiveTransporter(it.id)
+    }
+    
+    // 2. Identify potential targets (unknown ship counts)
+    val targets = observation.planetObservations.filter {
+      it.owner != player  // enemy or neutral
+    }
+    
+    // 3. Conservative evaluation with uncertainty buffers
+    var bestScore = Double.NEGATIVE_INFINITY
+    var bestAction: Action? = null
+    
+    for (source in myPlanets) {
+      for (target in targets) {
+        // Conservative ship requirement estimation
+        val estimatedDefense = estimateTargetStrength(target)
+        val shipsNeeded = estimatedDefense * 1.5  
+        // 50% buffer
+        
+        if (source.nShips!! >= shipsNeeded + 10.0) {
+          val score = evaluateAttackUnderUncertainty(
+            source, target, shipsNeeded)
+          if (score > bestScore) {
+            bestScore = score
+            bestAction = Action(player, source.id, 
+              target.id, shipsNeeded)
+          }
+        }
+      }
+    }
+    
+    return bestAction ?: conservativeReinforce(observation)
+  }
+}
+\end{verbatim}
+\end{scriptsize}
+
+\textbf{Key Aspects of PartialV1:}
+
+\begin{itemize}
+\item \textbf{Conservative Ship Estimation:} For planets with unknown ship counts, PartialV1 assumes worst-case scenarios. For enemy planets, it estimates ship counts based on growth rate and game time. For neutral planets, it conservatively assumes they have grown since game start.
+
+\item \textbf{Uncertainty Buffers:} When calculating required ships, PartialV1 adds significant safety margins (typically 50\% more ships than estimated needed). This was intended to account for estimation errors.
+
+\item \textbf{Reduced Aggression:} The agent is much more reluctant to send reinforcements or make speculative attacks due to fear of unknown enemy fleets intercepting.
+
+\item \textbf{Static Heuristics:} PartialV1 uses modified versions of V1's heuristics but with reduced weights for uncertain information and increased weights for known quantities like growth rates.
+\end{itemize}
+
+\textbf{Performance Issues and Analysis:} PartialV1 ended up being \textbf{overly cautious}, achieving only about 20\% win rate against basic opponents like \texttt{RandomPartialAgent}. Key problems identified:
+
+\begin{itemize}
+\item \textbf{Analysis Paralysis:} The agent would find excuses not to attack due to uncertainty, leading to passive play.
+\item \textbf{Overestimation Bias:} Conservative estimates often assumed enemies were stronger than they actually were, preventing beneficial attacks.
+\item \textbf{No Learning:} The agent didn't update its beliefs about enemy strength based on observed actions.
+\item \textbf{Poor Risk-Reward Balance:} The agent prioritized avoiding losses over capturing gains, leading to slow expansion and eventual defeat.
+\end{itemize}
+
+\textbf{Key Insights from PartialV1:} The failure of PartialV1 taught us that merely adding safety margins to full-information strategies is insufficient for partial observability. We realized we needed:
+\begin{itemize}
+\item Explicit state reconstruction rather than conservative estimation
+\item Proper uncertainty modeling rather than worst-case assumptions
+\item Dynamic information updating based on observations
+\item Better risk-reward tradeoffs that account for the cost of inaction
+\end{itemize}
+
+\subsubsection{TeamTitansPartialAgentV2: Informed Planning with Hidden Information Estimation}
+
+TeamTitansPartialAgentV2 represents a complete redesign that integrates strategic planning with explicit uncertainty handling. Rather than avoiding uncertainty, PartialV2 embraces it by explicitly modeling what it doesn't know and making informed decisions based on that modeling.
+
+\textbf{Architecture Overview:} PartialV2 employs a two-stage approach:
+\begin{enumerate}
+\item \textbf{State Reconstruction:} Convert partial observation into estimated complete game state
+\item \textbf{Adapted Planning:} Run modified version of V3's planning algorithm on reconstructed state
+\end{enumerate}
+
+\textbf{Hidden Information Reconstruction:} The cornerstone of PartialV2 is sophisticated state reconstruction using Planet Wars framework utilities:
+
+\begin{itemize}
+\item \textbf{DefaultHiddenInfoSampler:} This framework class provides plausible distributions for unknown enemy ship counts based on planet growth rates, game progression, and historical patterns.
+
+\item \textbf{GameStateReconstructor:} This framework utility takes an \texttt{Observation} and a sample from \texttt{DefaultHiddenInfoSampler} to build a complete \texttt{GameState} consistent with known information.
+
+\item \textbf{Multiple Sampling:} PartialV2 can generate multiple reconstructed states and either average their evaluations or pick representative samples.
+\end{itemize}
+
+\textit{Listing 3: State reconstruction process in PartialV2.}
+
+\begin{scriptsize}
+\raggedright
+\begin{verbatim}
+class TeamTitansPartialAgentV2 : PartialObservationPlayer() {
+  private val hiddenInfoSampler = DefaultHiddenInfoSampler()
+  private val stateReconstructor = GameStateReconstructor()
+  
+  override fun getAction(observation: Observation): Action {
+    // 1. Reconstruct complete game state
+    val hiddenInfoSample = hiddenInfoSampler.sample(
+      observation, player)
+    val reconstructedState = stateReconstructor.reconstruct(
+      observation, hiddenInfoSample)
+    
+    // 2. Measure uncertainty in reconstruction
+    val uncertaintyMetrics = assessInformationUncertainty(
+      observation)
+    
+    // 3. Adapt planning parameters for uncertainty
+    val adaptedHorizon = calculateUncertaintyAdjustedHorizon(
+      uncertaintyMetrics)
+    
+    // 4. Run modified V3-style planning
+    return planWithUncertainty(reconstructedState, 
+      adaptedHorizon, uncertaintyMetrics)
+  }
+  
+  private fun assessInformationUncertainty(
+    observation: Observation): UncertaintyMetrics {
+    val unknownEnemyPlanets = observation.planetObservations
+      .count { it.owner == player.opponent() && 
+        it.nShips == null }
+    val unknownNeutrals = observation.planetObservations
+      .count { it.owner == Player.Neutral && 
+        it.nShips == null }
+    
+    return UncertaintyMetrics(unknownEnemyPlanets, 
+      unknownNeutrals)
+  }
+}
+\end{verbatim}
+\end{scriptsize}
+
+\textbf{Adaptive Planning Horizon under Uncertainty:} One of PartialV2's key innovations is dynamically adjusting planning depth based on information uncertainty. The logic recognizes that when we know less, we should plan less far ahead:
+
+\begin{scriptsize}
+\raggedright
+\begin{verbatim}
+private fun calculateUncertaintyAdjustedHorizon(
+  uncertaintyMetrics: UncertaintyMetrics): Int {
+  var horizon = 90  // baseline from V3
+  horizon = (horizon * 0.8).toInt()  // 20% reduction
+  
+  // Further adjust based on unknown enemies:
+  val unknownEnemyPlanets = 
+    uncertaintyMetrics.unknownEnemyPlanets
+  when {
+    unknownEnemyPlanets >= 5 -> 
+      horizon = (horizon * 0.6).toInt()
+    unknownEnemyPlanets >= 3 -> 
+      horizon = (horizon * 0.7).toInt()
+    unknownEnemyPlanets >= 1 -> 
+      horizon = (horizon * 0.8).toInt()
+  }
+  
+  return max(horizon, 25)  // minimum planning depth
+}
+\end{verbatim}
+\end{scriptsize}
+
+This adaptive horizon serves multiple purposes:
+\begin{itemize}
+\item \textbf{Computational Efficiency:} Reduces planning time when uncertainty makes long-term planning less reliable
+\item \textbf{Robustness:} Shorter plans are less sensitive to incorrect state reconstruction
+\item \textbf{Responsiveness:} Agent can react more quickly to new information
+\end{itemize}
+
+This graduated approach attempts to not completely throw away planning depth, but sensibly limit over-planning when information is missing. The values (0.6, 0.7, 0.8) were heuristic choices based on empirical testing. For example, initially we used 0.5 for 5 unknowns, but found the agent then almost never attacked if $>$5 unknowns (basically halving all evaluations made it think nothing was worth it). 0.6 was more lenient while still providing safety.
+
+\textbf{Modified Evaluation under Uncertainty:} PartialV2 adapts V3's position evaluation to account for uncertainty in several ways:
+
+\begin{itemize}
+\item \textbf{Uncertainty Factor:} Reduces evaluation scores proportional to unknown information: scores are multiplied by a factor between 0.6 and 1.0 based on how much information is missing.
+
+\item \textbf{Conservative Ship Estimates:} When reconstructed state has uncertainty, uses conservative estimates or averages from multiple samples.
+
+\item \textbf{Conservative Ship Estimates:} When reconstructed state has uncertainty, uses conservative estimates or averages from multiple samples. If any enemy planet's \texttt{nShips} is null (unknown), we estimate it as the average of known enemy planet ships (or if none known, we use our own average as a guess). Additionally, we might reduce the weight of shipDiff by 20\% (multiply by 0.8) because we are less certain.
+
+\item \textbf{Growth Emphasis:} Upweights known information (like planet growth rates and positions) relative to uncertain information (like ship counts). We decided to upweight growth in partial evaluation more, reasoning that growth advantage is a robust indicator of long-term success and is not hidden. For example, our partial evaluation used \texttt{score += (myGrowth - enemyGrowth) * 15.0}, higher than the 10x in full observation agents.
+
+\item \textbf{Risk Adjustment:} Penalizes actions that commit many ships when enemy capabilities are unknown.
+\end{itemize}
+
+The final score calculation becomes:
+\begin{equation}
+\text{finalScore} = (\text{shipDiff} + 15 \times \text{growthDiff} + \text{positionTerms}) \times u
+\end{equation}
+
+where $u$ is the uncertainty factor computed as:
+\begin{equation}
+u = \max(0.6, 1.0 - 0.1 \times \text{unknownPlanets})
+\end{equation}
+
+\textbf{Action Selection:} PartialV2 then chooses the action with the highest adjusted score, similar to V2's loop over actions. If no action has a positive score (after uncertainty factor), it will likely do a conservative action or do nothing. However, in practice PartialV2 was much more active than V1 because the state reconstruction gave it more confidence to act. For example, if reconstruction says ``enemy has 0 ships on that planet,'' PartialV2 will try to attack it, whereas V1 might have hesitated due to worst-case thinking.
+
+\textbf{Strategic Behavior under Uncertainty:} PartialV2 exhibits several emergent behaviors:
+
+\begin{itemize}
+\item \textbf{Information Gathering:} Sometimes sends small ``scouting'' fleets to reveal enemy ship counts, treating information as valuable.
+
+\item \textbf{Adaptive Aggression:} More aggressive against targets where it has good information, more conservative against unknowns.
+
+\item \textbf{Robust Planning:} Plans that work well across multiple possible reconstructed states are preferred over plans optimized for a single reconstruction.
+
+\item \textbf{Strategic Patience:} Will sometimes wait for better information rather than making premature commitments.
+\end{itemize}
+
+\textbf{Implementation Challenges and Solutions:}
+
+\begin{itemize}
+\item \textbf{Multiple Reconstructions:} We experimented with generating multiple reconstructed states per turn and either averaging their evaluations or using majority voting. However, this proved computationally expensive, so PartialV2 typically uses a single well-calibrated reconstruction.
+
+\item \textbf{Sampler Calibration:} The \texttt{DefaultHiddenInfo\linebreak Sampler} needed tuning to generate realistic ship distributions. We found that the default parameters were too conservative, so we adjusted them based on observed game patterns.
+
+\item \textbf{Time Management:} Reconstruction adds overhead, so PartialV2 uses even more aggressive time management (80ms limit instead of 90ms) to ensure it completes within competition constraints.
+\end{itemize}
+
+\textbf{Results and Performance Analysis:} The sophisticated uncertainty handling in PartialV2 yielded dramatic performance improvements:
+
+\begin{itemize}
+\item \textbf{Win Rate:} PartialV2 achieved ~99\% win rate against baseline partial-observation bots (\texttt{RandomPartialAgent},\linebreak \texttt{DefensivePartialAgent})
+\item \textbf{Strategic Depth:} Exhibited complex behaviors like coordinated attacks and defensive positioning
+\item \textbf{Adaptation:} Successfully handled varying map sizes and different levels of information uncertainty
+\item \textbf{Robustness:} Maintained strong performance even when state reconstruction was significantly inaccurate
+\end{itemize}
+
+\textbf{Differences from Full V3:} It's worth noting how PartialV2 diverges from Full V3:
+
+\begin{itemize}
+\item \textbf{Reconstruction Dependency:} PartialV2's performance heavily depends on the accuracy of reconstruction. It essentially treats the guessed state as real. If the sampler is systematically off (e.g., not anticipating enemy fleet movement), PartialV2 could be misled. This is a known trade-off; we rely on the assumption that even if not perfect, the sampled state is on average reasonable, and our conservative bias covers the rest.
+
+\item \textbf{Limited Multi-Model Planning:} PartialV2 doesn't try multi-model planning (like considering different possible enemy dispositions). An advanced approach might sample multiple states and do expectimax-style reasoning. We did not attempt that due to complexity constraints.
+
+\item \textbf{Complexity Management:} PartialV2 was more complex in code maintainability because it glues together many components: observation $\rightarrow$ reconstructor $\rightarrow$ forward model $\rightarrow$ evaluation. We had to ensure consistency (e.g., after reconstructing, we must not directly modify that state or it may desync with actual game).
+\end{itemize}
+
+\textbf{Concrete Example:} Suppose the enemy has one planet we haven't scouted for a while. We know its growth rate and roughly how long it's been enemy-owned, so the reconstructor might estimate it has, say, 50 ships. Our PartialV2 will incorporate that 50 in its simulation. If attacking that planet is evaluated, it will simulate needing to send $>$50 ships. PartialV1 might have said ``unknown, skip attack.'' PartialV2 might decide to attack if we have, say, 100 ships available and it sees that even in worst case (50 there, maybe more coming) we'll win. Conversely, if the reconstructor underestimates (maybe enemy actually has 70), PartialV2's uncertainty factor ensures it usually only attacks if it has a significant force advantage, providing a buffer for error.
+
+\textbf{Comparison with Full Observation Agents:} Interestingly, when we tested PartialV2 against our full observation agents (V1, V2, V3), it performed remarkably well, sometimes winning 40-50\% of games. This suggests that the uncertainty-aware planning and robust decision-making of PartialV2 have value even when complete information is available.
+
+\textbf{Summary of PartialV2:} By combining \textbf{state estimation} with \textbf{forward planning} and careful \textbf{risk adjustment}, TeamTitansPartialAgentV2 achieved a high level of play under fog-of-war. It effectively closes much of the performance gap that partial observability introduces, as evidenced by its near-100\% win rate against baseline opponents. It demonstrates that techniques from POMDP handling (like belief state sampling) can be integrated into a deterministic planning agent to yield strong results, addressing a key research gap in RTS AI for partial info: how to plan with incomplete knowledge. The success of PartialV2 validates our design choices and provides a framework that could be further enhanced (e.g., by using more sophisticated opponent modeling or learning to improve the hidden state estimation over time).
+
+\textbf{Key Contributions of PartialV2:} PartialV2 successfully demonstrates:
+\begin{itemize}
+\item Effective integration of state reconstruction with strategic planning
+\item Dynamic adaptation of planning depth based on information uncertainty
+\item Robust evaluation methods that account for partial information
+\item Competitive performance in uncertain environments through principled uncertainty modeling
+\item Framework adaptability for future enhancements in opponent modeling and learning
+\end{itemize}
+
+This work addresses the research gap of decision-making under uncertainty in real-time strategy games and provides a framework that could be extended to other partial information game domains.
+
+\section{Implementation Details}
+
+Our agents were implemented in Kotlin using the official Planet Wars RTS framework. The architecture follows object-oriented design patterns with clear separation between game logic and agent decision-making.
+
+\subsection{Agent Architecture}
+
+Our full observation agents (V1--V3) extend \texttt{PlanetWarsPlayer} and implement \texttt{getAction(GameState): Action}. Partial observation agents extend \texttt{PartialObservationPlayer} and implement \texttt{getAction(Observation): Action}. TeamTitansPartialAgentV2 integrates \texttt{GameStateReconstructor} for hidden state estimation and reuses planning logic from V3 through compositional design.
+
+Key architectural decisions include precomputed distance matrices for performance optimization, dynamic horizon adjustment based on game parameters, and defensive programming practices including timeout handling and graceful error recovery. The agents maintain sub-100ms response times through careful time management and early termination of search when approaching time limits.
+
+\subsection{Performance Optimizations}
+
+Critical optimizations include avoiding memory allocations in tight loops, reusing \texttt{ForwardModel} instances where possible, and implementing efficient collection operations. Distance calculations are precomputed during initialization, and uncertainty factors are cached to minimize repeated computations. All agents include comprehensive error handling to prevent crashes during competition play.
+
+\section{Experimental Results}
+
+We rigorously tested our agents through a series of experiments, including \textbf{local round-robin leagues} against baseline bots and head-to-head matches between our agent versions. This section presents the results of those experiments with statistical data, charts, and tables that illustrate the performance progression from V1 to V3 (full observability) and Partial V1 to Partial V2. We also analyze specific scenarios to understand the impact of certain parameters (like simulation horizon or threat weighting) on the outcomes. All experiments were run on the Planet Wars framework's ``Round Robin League (Improved)'' mode, which ensures each pair of agents plays multiple games (with different random maps and starting conditions) for robust statistics.
+
+\subsection{Full Observation League Performance}
+
+We compare the three full-information agents (TeamTitansAgent V1, V2, V3) against benchmark agents provided in the codebase:
+\begin{itemize}
+\item \textbf{EvoAgent-400-30-0.8-true}: An evolutionary algorithm-based agent included in the framework
+\item \textbf{Careful Random Agent}: A baseline agent that makes random moves while avoiding suicidal actions
+\item \textbf{Better Random Agent}: Another baseline with slightly more aggressive random behavior
+\end{itemize}
+
+We conducted round-robin tournaments where each agent played 600 games against each other agent on random map configurations (10--30 planets, random growth rates). The results demonstrate clear progression across our agent versions.
+
+\begin{table}[htbp]
+\caption{Round-Robin Results for TeamTitansAgentV1}
+\begin{center}
+\begin{tabular}{|c|l|c|c|}
+\hline
+\textbf{Rank} & \textbf{Agent Name} & \textbf{Win Rate (\%)} & \textbf{Games} \\
+\hline
+1 & \textbf{TeamTitansAgentV1} & 81.80 & 600 \\
+2 & EvoAgent-400-30-0.8-true & 77.00 & 600 \\
+3 & Careful Random Agent & 32.50 & 600 \\
+4 & Better Random Agent & 8.70 & 600 \\
+\hline
+\end{tabular}
+\label{tab:v1_results}
+\end{center}
+\end{table}
+
+TeamTitansAgentV1 topped the ranking with $\sim$81.8\% win rate, outperforming the EvoAgent and decisively beating the random agents. This indicates our heuristic agent V1 was quite strong against these baselines.
+
+\begin{table}[htbp]
+\caption{Round-Robin Results for TeamTitansAgentV2 (horizon=50)}
+\begin{center}
+\begin{tabular}{|c|l|c|c|}
+\hline
+\textbf{Rank} & \textbf{Agent Name} & \textbf{Win Rate (\%)} & \textbf{Games} \\
+\hline
+1 & \textbf{TeamTitansAgentV2-H50} & 86.50 & 600 \\
+2 & EvoAgent-400-30-0.8-true & 72.20 & 600 \\
+3 & Careful Random Agent & 34.70 & 600 \\
+4 & Better Random Agent & 6.70 & 600 \\
+\hline
+\end{tabular}
+\label{tab:v2_results}
+\end{center}
+\end{table}
+
+TeamTitansAgentV2 achieved $\sim$86.5\% win rate, a healthy improvement over V1's 81.8\%. V2's improvement demonstrates the benefit of lookahead planning -- it won more often and by larger margins. EvoAgent's win rate dropped when V2 was in the mix, implying V2 beat EvoAgent in the majority of their games.
+
+\begin{table}[htbp]
+\caption{Round-Robin Results for TeamTitansAgentV3}
+\begin{center}
+\begin{tabular}{|c|l|c|c|}
+\hline
+\textbf{Rank} & \textbf{Agent Name} & \textbf{Win Rate (\%)} & \textbf{Games} \\
+\hline
+1 & \textbf{TeamTitansAgentV3} & 99.50 & 600 \\
+2 & EvoAgent-400-30-0.8-true & 63.50 & 600 \\
+3 & Careful Random Agent & 30.00 & 600 \\
+4 & Better Random Agent & 7.00 & 600 \\
+\hline
+\end{tabular}
+\label{tab:v3_results}
+\end{center}
+\end{table}
+
+TeamTitansAgentV3 achieved a remarkable 99.5\% win rate, essentially winning almost every game (597 out of 600). The EvoAgent's win rate further dropped to 63.5\%, meaning V3 was dominant. This dramatic jump from $\sim$86.5\% (V2) to 99.5\% (V3) highlights how the refinements in V3 translated to real competitive advantage.
+
+\textbf{Head-to-Head Comparisons:} To further validate the hierarchy, we ran direct matches:
+\begin{itemize}
+\item V3 vs V2: 95\% wins for V3 (95-5 in 100-game series)
+\item V3 vs V1: 100\% wins for V3 (100-0)
+\item V2 vs V1: 90\% wins for V2 (90-10)
+\end{itemize}
+
+These results confirm the clear hierarchy: V3 $>$ V2 $>$ V1.
+
+\textbf{Parameter Analysis -- Horizon Depth:} We tested varying the \texttt{maxHorizon} parameter for V2:
+\begin{itemize}
+\item Horizon 0 (degenerates to V1-like): Performance near V1 levels
+\item Horizon 30: $\sim$80\% win rate vs EvoAgent
+\item Horizon 50: $\sim$86.5\% (as shown above)
+\item Horizon 75: $\sim$85\% (slightly less than 50)
+\item Horizon 100: $\sim$84\% (potentially causing timeouts)
+\end{itemize}
+
+This non-monotonic result indicated that more depth isn't always better in a time-limited context; medium horizon struck the best balance between exploration breadth and computational efficiency. V3's dynamic approach essentially tries to pick an optimal horizon per situation rather than a one-size-fits-all.
+
+\textbf{Game Length and Margin Analysis:} We also measured average game lengths and margins:
+\begin{itemize}
+\item V1's games against EvoAgent often went to full length (max ticks) and ended with moderate ship advantages
+\item V2's games tended to end sooner; V2 often snowballed to control all planets by 3/4 of the time limit
+\item V3's games were very short -- it often achieved dominance early (thanks to well-timed aggressive strikes) and finished games quickly, rarely even drawing
+\end{itemize}
+
+\textbf{Parameter Influence -- Threat Weighting:} We also toggled the threat component in V1 to see its importance. With threat weight = 0 (so V1 only cared about growth, distance, ships), its win rate dropped a couple of percent and qualitatively, it lost more often by overexpanding into enemy territory without consolidating defenses. Conversely, if we overweight threat (say 3.0 instead of 1.5), V1 became too timid (over-defending frontier planets) and its expansion slowed, also hurting win rate. So the chosen value of 1.5 was a good compromise.
+
+\textbf{Competition Preparedness:} These experiments gave us confidence that TeamTitansAgentV3 would be highly competitive in the GECCO 2025 full observability track. While we couldn't test against other competitors' agents directly, achieving a nearly 100\% win rate against a variety of baseline strategies (random, defensive, evolutionary) suggested robustness. V3's explicit time management meant it never timed out in our tests (we instrumented it to count computation time; it stayed under $\sim$95ms worst case).
+
+\subsection{Partial Observation League Performance}
+
+For the partial-observation track, we used fewer baseline agents as the framework had limited partial-specific bots. The main comparison was between our two partial agents and basic random agents adapted for partial information.
+
+\begin{table}[htbp]
+\caption{Round-Robin Results for Partial Observation Agents}
+\begin{center}
+\begin{tabular}{|c|l|c|c|}
+\hline
+\textbf{Rank} & \textbf{Agent Name} & \textbf{Win Rate (\%)} & \textbf{Games} \\
+\hline
+1 & \textbf{TeamTitansPartialAgentV2} & 99.80 & 600 \\
+2 & Careful Random Agent (Partial) & 32.60 & 600 \\
+3 & Better Random Agent (Partial) & 17.60 & 600 \\
+4 & TeamTitansPartialAgentV1 & 20.00 & 600 \\
+\hline
+\end{tabular}
+\label{tab:partial_results}
+\end{center}
+\end{table}
+
+The results show an impressive performance for \textbf{TeamTitansPartialAgentV2} with 99.8\% win rate. Surprisingly, PartialAgentV1 ended up at the bottom with only 20\% wins. PartialV1's over-cautious nature made it miss opportunities so much that even random agents could beat it to neutrals and gain advantages.
+
+PartialAgentV2 clearly outclassed both random baselines and its predecessor, almost never losing. The improvement from 20\% (V1) to 99.8\% (V2) validates the effectiveness of hidden-information handling and forward planning.
+
+\textbf{Ablation Studies:} We conducted feature ablations on Partial V2:
+\begin{itemize}
+\item \textbf{Without uncertainty factor:} Win rate dropped to $\sim$95\% due to occasional catastrophic overconfident moves
+\item \textbf{Without state reconstruction:} Win rate plummeted as the agent recklessly attacked thinking enemy planets were empty
+\item \textbf{Flat vs. graduated uncertainty reduction:} Graduated approach (0.6/0.7/0.8) performed better than flat 0.5 factor
+\end{itemize}
+
+\textbf{Game Replay Observations:} Watching games of Partial V2, we noted several key behaviors:
+\begin{itemize}
+\item It effectively \textit{scouts by attacking}. Because it doesn't have explicit scouting actions, the way it gains info is by attacking or moving into enemy territory. Partial V2 often sends small probe fleets to enemy planets. If the planet is weaker than expected, the fleet might even capture it; if it's stronger, at least we then see how many ships it had
+\item After a few such probes, Partial V2 ``learns'' the actual enemy strength (because once an enemy planet has been seen, it's known). Then it coordinates a full assault with confidence. This dynamic is fascinating because it wasn't explicitly coded as such, but it's a result of the design
+\item Partial V1, in contrast, rarely probed; it mostly waited until it had overwhelming force visible. By then, a random agent might have grabbed neutrals. Partial V1 also tended to cluster its ships and shuffle them around without purpose
+\end{itemize}
+
+\textbf{Summary of Partial League:} TeamTitansPartialAgentV2 proved to be a top-tier agent for partial observability given the competition conditions. We expect it to perform very well in the actual competition. If every entry in partial league was as basic as the random agent, it would obviously sweep. Against more serious entries (which likely also use some hidden info logic or more cautious planning), our experiments suggest Partial V2 would still be very competitive, as it effectively approximates a full-info strategy plus safety margins.
+
+\subsection{Competition Expectations and Future Tests}
+
+Although not part of our local experimental data, we note our expectations for the GECCO 2025 competition:
+\begin{itemize}
+\item In the full league, since our V3 beat the EvoAgent (which presumably is a strong baseline) 99.5\% of the time, we expect to rank near the top. If any competitor uses MCTS or deep learning, those could be tough, but they would also have to manage the 100ms limit. Our agent is deterministic and stable
+\item In the partial league, our Partial V2's strength likely makes it a contender for 1st place. Partial observability is tricky, and many might avoid it or do simplistic approaches. We invested much effort here, so we are hopeful
+\end{itemize}
+
+One thing we could not test was multi-agent round robins including other unknown AI. The competition environment and our local one might differ slightly in maps or rules (though we used what was given). Also, real opponents might reveal some flaws (like how our simulation assumes no opponent action -- a smart opponent might always do something to complicate our predictions). If time permitted, we would simulate an opponent that, say, always attacks one of our planets in response to our attack, and see how our agent copes.
+
+To conclude, the experimental results strongly validate the progression of our project:
+\begin{itemize}
+\item We achieved \textbf{significant performance gains} with each new agent version (both full and partial)
+\item The introduction of advanced techniques (forward planning, hidden state reconstruction) translated to quantifiable improvements in win rates and strategic outcomes
+\item The final versions of our agents (TeamTitansAgentV3 and TeamTitansPartialAgentV2) meet the project objectives of being competition-ready and high-performing
+\end{itemize}
+
+We will now wrap up with conclusions and potential future directions to further enhance these agents beyond this project.
+
+\section{Conclusions and Future Work}
+
+\textbf{Conclusions:} In this project, we successfully designed and implemented a series of AI agents for the Planet Wars RTS game, demonstrating a clear trajectory of improvement through the integration of heuristic strategies, forward planning, and partial-information handling. Our final agents -- TeamTitansAgentV3 for full observability and TeamTitansPartialAgentV2 for partial observability -- achieved dominant performance in local tests, indicating strong competitive potential.
+
+Key takeaways from our work include:
+
+\begin{itemize}
+\item A well-tuned \textbf{heuristic evaluation} (as in V1) can provide a strong baseline strategy by embedding expert knowledge of the game (favoring growth, proximity, efficiency, and safety).
+\item Adding a \textbf{simulation-based lookahead} (V2 and V3) significantly boosts strategic depth, allowing the agent to plan multi-step maneuvers and evaluate long-term consequences. Even under strict time limits, we showed that carefully limiting the search horizon and branching yields a practical planning agent.
+\item Handling \textbf{partial observability} is crucial in RTS AI; our approach of reconstructing hidden information and incorporating uncertainty into the decision process (Partial V2) enabled performance under fog-of-war nearly on par with perfect information play.
+\item The \textbf{incremental development methodology} (V1 $\rightarrow$ V2 $\rightarrow$ V3 and Partial V1 $\rightarrow$ V2) proved effective.\\
+By analyzing limitations of each version through experiments, we addressed specific issues in subsequent versions.
+\item From a software engineering perspective, using modern language features (Kotlin) and maintaining good practices contributed to our success, aligning with the ``high integrity'' aspect of the course.
+\end{itemize}
+
+We have met the objectives set out at the project's start. Our agents embody a combination of solid AI techniques: domain-specific heuristics, adversarial planning, and probabilistic reasoning. The result is a pair of agents that we expect to be competitive in the GECCO 2025 Planet Wars AI Challenge.
+
+\textbf{Future Work:} While our agents are strong, there are several avenues for further improvement:
+
+\begin{enumerate}
+\item \textbf{Opponent Modeling:} Our current agents do not adapt to specific opponent behaviors. An advanced next step would be to incorporate an opponent model into the forward simulations. Instead of assuming the opponent does nothing during simulation, we could \textbf{predict opponent actions} using simple rules or by learning from past games. Techniques like \textit{minimax search} or \textit{alpha-beta pruning} could be attempted, treating the forward model as a game tree. However, integrating adversarial modeling must be weighed against time constraints.
+
+\item \textbf{Learning and Adaptation:} Incorporating machine learning could advance the agent further. One idea is to use \textbf{reinforcement learning} or \textbf{genetic algorithms} to tune heuristic weights or learn an evaluation function. Training a neural network to estimate win probability given a game state could replace our handcrafted evaluation. Another angle is \textbf{online adaptation}: the agent could adjust strategy if it observes the opponent always exhibits certain patterns.
+
+\item \textbf{Monte Carlo Tree Search (MCTS):} MCTS has proven highly successful in many game domains and could potentially be adapted to Planet Wars. The challenge would be handling the simultaneous-move nature and real-time constraints. Techniques like \textit{Information Set MCTS} for partial observability could be explored.
+
+\item \textbf{Advanced Partial Observability Handling:} Our current approach uses single-point sampling for hidden state reconstruction. More sophisticated techniques could include maintaining belief distributions over possible states, using particle filters, or implementing Bayesian updates as new information becomes available.
+
+\item \textbf{Multi-Agent Coordination:} While Planet Wars is inherently two-player, exploring team variants or analyzing coordination strategies between multiple sub-agents (e.g., specialized for offense vs. defense) could yield insights for more complex RTS scenarios.
+
+\item \textbf{Computational Optimizations:} Further performance improvements could include parallel simulation on multi-core systems, more efficient forward model implementations, or hardware acceleration for evaluation functions.
+\end{enumerate}
+
+\textbf{Research Contributions:} Beyond the specific agents developed, this work contributes to the broader understanding of RTS AI by demonstrating how classical AI techniques (heuristics and search) can be effectively combined with modern approaches (simulation-based evaluation, uncertainty handling) in a real-time context. The successful integration of forward planning under strict time constraints and the effective handling of partial observability provide insights applicable to other RTS domains.
+
+\textbf{Competition Outlook:} Looking toward the GECCO 2025 Planet Wars AI Challenge, we expect our agents to perform competitively. TeamTitansAgentV3's near-perfect performance against baseline agents suggests strong potential in the full observability league, while TeamTitansPartialAgentV2's sophisticated uncertainty handling positions it well for the partial observability track. The extensive testing and iterative refinement process gives us confidence in the robustness and adaptability of our approaches.
+
+In conclusion, this project has successfully demonstrated the evolution from simple heuristic-based agents to sophisticated planning agents capable of handling both perfect and imperfect information scenarios, providing a solid foundation for future research and development in RTS AI.
+
+\begin{thebibliography}{99}
+\bibitem{lucas2025} S. M. Lucas, ``Planet Wars RTS -- Planet Wars game for AI agent evaluation,'' \textit{GitHub repository}, 2025. [Online]. Available: https://github.com/SimonLucas/planet-wars-rts
+
+\bibitem{melis2010} G. Melis, ``Planet Wars -- A multi-agent AI competition environment,'' \textit{GitHub repository}, 2010. [Online]. Available: https://github.com/melisgl/planet-wars
+
+\bibitem{kovarsky2006} A. Kovarsky and M. Buro, ``Heuristic search applied to abstract combat games,'' in \textit{Advances in Computer Games}, vol. 4250. Springer, 2006, pp. 66--78.
+
+\bibitem{buro2003} M. Buro, ``Real-time strategy games: A new AI research challenge,'' in \textit{Proceedings of the 18th International Joint Conference on Artificial Intelligence (IJCAI-03)}, 2003, pp. 1534--1535.
+
+\bibitem{ontanon2013} S. Ontañón, G. Synnaeve, A. Uriarte, F. Richoux, D. Churchill, and M. Preuss, ``A survey of real-time strategy game AI research and competition in StarCraft,'' \textit{IEEE Transactions on Computational Intelligence and AI in Games}, vol. 5, no. 4, pp. 293--311, 2013.
+
+\bibitem{collazo2016} M. N. Collazo, C. Cotta, and A. J. Fernández-Leiva, ``Competitive algorithms for coevolving both game content and AI: A case study: Planet Wars,'' \textit{IEEE Transactions on Computational Intelligence and AI in Games}, vol. 8, no. 4, pp. 325--337, 2016.
+
+\bibitem{silver2010} D. Silver and J. Veness, ``Monte-Carlo planning in large POMDPs,'' in \textit{Advances in Neural Information Processing Systems 23 (NIPS)}, 2010, pp. 2164--2172.
+
+\bibitem{browne2012} C. B. Browne, E. Powley, D. Whitehouse, et al., ``A survey of Monte Carlo tree search methods,'' \textit{IEEE Transactions on Computational Intelligence and AI in Games}, vol. 4, no. 1, pp. 1--43, 2012.
+
+
+
+\bibitem{vinyals2019} O. Vinyals, I. Babuschkin, W. M. Czarnecki, et al., ``Grandmaster level in StarCraft II using multi-agent reinforcement learning,'' \textit{Nature}, vol. 575, no. 7782, pp. 350--354, 2019.
+
+\bibitem{kaelbling1998} L. P. Kaelbling, M. L. Littman, and A. R. Cassandra, ``Planning and acting in partially observable stochastic domains,'' \textit{Artificial Intelligence}, vol. 101, no. 1--2, pp. 99--134, 1998.
+
+\bibitem{ziolko2012} B. Ziółko and M. Kruk, ``Automatic reasoning in the Planet Wars game,'' \textit{Annales UMCS Informatica AI}, vol. 12, no. 1, pp. 39--45, 2012.
+
+\bibitem{cowling2012} P. I. Cowling, E. J. Powley, and D. Whitehouse, ``Information set Monte Carlo tree search,'' \textit{IEEE Transactions on Computational Intelligence and AI in Games}, vol. 4, no. 2, pp. 120--143, 2012.
+
+\bibitem{lara2013a} R. Lara-Cabrera, C. Cotta, and A. J. Fernández-Leiva, ``A procedural balanced map generator with self-adaptive complexity for the real-time strategy game Planet Wars,'' in \textit{Applications of Evolutionary Computation (EvoApplications 2013)}, LNCS vol. 7835. Springer, 2013, pp. 274--283.
+
+\bibitem{lara2013b} R. Lara-Cabrera, C. Cotta, and A. J. Fernández-Leiva, ``A review of computational intelligence in RTS games,'' in \textit{IEEE Workshop on Foundations of Computational Intelligence (FOCI)}, 2013, pp. 114--121.
+
+\bibitem{lucas2018} S. M. Lucas, D. Robles, and K. J. Palmer, ``Game AI research with fast Planet Wars variants,'' \textit{arXiv preprint}, arXiv:1806.08544, 2018.
+
+\bibitem{stanescu2014} M. Stanescu, N. A. Barriga, and M. Buro, ``Hierarchical adversarial search applied to real-time strategy games,'' in \textit{Proceedings of the 10th AI and Interactive Digital Entertainment Conference (AIIDE)}, 2014.
+
+
+
+\bibitem{aha2005} D. W. Aha, M. Molineaux, and M. Ponsen, ``Learning to win: Case-based plan selection in a real-time strategy game,'' in \textit{Proceedings of the 6th International Conference on Case-Based Reasoning (ICCBR)}, 2005, pp. 5--20.
+
+\bibitem{fernandez2014} A. Fernández-Ares, P. García-Sánchez, A. M. Mora, P. A. Castillo, and J. J. Merelo, ``Designing competitive bots for a real-time strategy game using genetic programming,'' in \textit{Proceedings of the IEEE Conference on Computational Intelligence and Games (CIG)}, 2014, pp. 1--8.
+\end{thebibliography}
+
+\end{document}
