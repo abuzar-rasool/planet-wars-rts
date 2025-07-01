@@ -82,3 +82,94 @@ __pycache__/
 *.pyd
 *.pyc
 app/src/main/python/runner_utils/competition_entries.py
+
+# LaTeX auxiliary files
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.brf
+*.fdb_latexmk
+*.fls
+*.idx
+*.ilg
+*.ind
+*.lof
+*.log
+*.lot
+*.out
+*.run.xml
+*.synctex.gz
+*.toc
+*.xdv
+
+# BibTeX
+*.bst
+
+# Build tool auxiliary files
+*.figlist
+*.makefile
+*.nav
+*.snm
+*.vrb
+
+# Glossaries
+*.acn
+*.acr
+*.glg
+*.glo
+*.gls
+*.glsdefs
+*.lzo
+*.lzs
+
+# Hyperref
+*.hd
+
+# Knitr
+*-concordance.tex
+*.tikz
+*-tikzDictionary
+
+# Listings
+*.lol
+
+# Makeindex
+*.maf
+*.mlf
+*.mlt
+*.mtc[0-9]*
+*.slf[0-9]*
+*.slt[0-9]*
+*.stc[0-9]*
+
+# Minted
+_minted*
+*.pyg
+
+# Nomencl
+*.nlg
+*.nlo
+*.nls
+
+# Pax
+*.pax
+
+# PdfPages
+*.fpp
+
+# Pythontex
+*.pytxcode
+pythontex-files-*/
+
+# ThmTools
+*.thm
+
+# TikZ & PGF
+*.auxlock
+
+# Todonotes
+*.tdo
+
+# Xindy
+*.xdy

@@ -1,0 +1,155 @@
+\documentclass{beamer}
+\usetheme{Madrid}
+\usepackage{listings}
+\usepackage{xcolor}
+
+\title{Planet Wars RTS}
+\author[Team Titans]{Team Titans\\Abuzar Rasool, Ammar Lakho, Hussain Abbas \\ \textit{High Integrity Systems}\\Frankfurt University of Applied Sciences}
+\date{July 1, 2025}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}{Agent Overview \& Core Strategy}
+  \begin{itemize}
+    \item \textbf{Team Titans}: 5 agent versions for Planet Wars RTS
+    \item \textbf{Full Observability}: V1 (heuristic) → V2 (lookahead) → V3 (refined)
+    \item \textbf{Partial Observability}: PartialV1 → PartialV2 (state reconstruction)
+    \item \textbf{Core Innovation}: Multi-factor heuristic + forward simulation planning
+    \item \textbf{Time Constraints}: 100ms real-time decision making
+    \item \textbf{Final Submissions}: TeamTitansAgentV3 \& TeamTitansPartialAgentV2
+  \end{itemize}
+  
+  \vspace{0.3cm}
+  \textbf{Technical Approach}:
+  \begin{itemize}
+    \item Growth-focused evaluation (3.0) + distance optimization (2.0) + efficiency (1.0) + threat assessment (1.5)
+    \item Forward simulation with dynamic horizon (25-100 ticks)
+    \item State reconstruction for partial observability using GameStateReconstructor
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{System Design \& Architecture}
+  \begin{columns}
+  \begin{column}{0.5\textwidth}
+    \textbf{Full Observability Pipeline}:
+    \begin{enumerate}
+      \item Generate source-target pairs
+      \item Forward simulate 25-100 ticks
+      \item Evaluate: (myShips - oppShips) + 10×(myGrowth - oppGrowth)
+      \item Select best action within 90ms
+    \end{enumerate}
+  \end{column}
+  \begin{column}{0.5\textwidth}
+    \textbf{Partial Observability}:
+    \begin{enumerate}
+      \item Reconstruct hidden state
+      \item Assess uncertainty metrics
+      \item Adapt horizon dynamically
+      \item Apply uncertainty factor: $u = \max(0.6, 1.0 - 0.1 \times \text{unknownPlanets})$
+    \end{enumerate}
+  \end{column}
+  \end{columns}
+  
+  \vspace{0.5cm}
+  \textbf{Key Optimizations}:
+  \begin{itemize}
+    \item Precomputed distance matrices, dynamic horizon tuning, time-bounded search
+    \item Conservative ship estimation with graduated uncertainty reduction
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Results \& Performance Analysis}
+  \begin{columns}
+  \begin{column}{0.48\textwidth}
+    \textbf{Full Observability}
+    \begin{table}[h]
+    \small
+    \begin{tabular}{|l|c|}
+    \hline
+    \textbf{Agent} & \textbf{Win Rate} \\
+    \hline
+    V1 (Heuristic) & 81.8\% \\
+    V2 (Simulation) & 86.5\% \\
+    \textbf{V3 (Final)} & \textbf{99.5\%} \\
+    \hline
+    \end{tabular}
+    \end{table}
+  \end{column}
+  \begin{column}{0.48\textwidth}
+    \textbf{Partial Observability}
+    \begin{table}[h]
+    \small
+    \begin{tabular}{|l|c|}
+    \hline
+    \textbf{Agent} & \textbf{Win Rate} \\
+    \hline
+    PartialV1 & 20.0\% \\
+    \textbf{PartialV2} & \textbf{99.8\%} \\
+    \hline
+    \end{tabular}
+    \end{table}
+  \end{column}
+  \end{columns}
+  
+  \vspace{0.3cm}
+  \textbf{Baseline Agents \& Testing Scale}:
+  \begin{itemize}
+    \item \textbf{Baselines}: BetterRandomAgent, CarefulRandomAgent, PureRandomAgent, SimpleEvoAgent (EvoAgent-400-30-0.8-true)
+    \item \textbf{Tournament Scale}: \textbf{600 games per agent} for comprehensive evaluation
+  \end{itemize}
+  
+  \textbf{Performance Highlights}:
+  \begin{itemize}
+    \item \textbf{Near-perfect performance}: 99.5\% \& 99.8\% win rates against all baselines
+    \item \textbf{Consistent dominance}: Outperformed EvoAgent and all random baselines
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Analysis and Insights}
+  \begin{itemize}
+    \item \textbf{Planning Horizon Sweet Spot}: 50-75 ticks optimal balance
+    \begin{itemize}
+      \item Too short: missed strategic opportunities
+      \item Too long: computational overhead \& timeouts
+    \end{itemize}
+    \item \textbf{Uncertainty Handling}: Critical for partial observability
+    \begin{itemize}
+      \item State reconstruction $\gg$ conservative estimation
+      \item Information gathering through "attack scouting"
+    \end{itemize}
+    \item \textbf{Time Management}: 90ms internal limit crucial for competition
+    \item \textbf{Emergent Behaviors}: 
+    \begin{itemize}
+      \item Multi-step tactical sequences
+      \item Adaptive aggression based on information quality
+      \item Economic focus with tactical finishing
+    \end{itemize}
+    \item \textbf{Parameter Robustness}: Consistent performance across 10-30 planets, variable speeds
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Research Contributions \& Future Directions}
+  \textbf{Research Contributions}:
+  \begin{itemize}
+    \item \textbf{RTS Planning Framework}: Integration of heuristics with forward simulation under real-time constraints
+    \item \textbf{Practical POMDP Handling}: State reconstruction approach that avoids full belief-state maintenance
+    \item \textbf{Iterative Development Methodology}: Demonstrated systematic agent improvement (V1→V2→V3)
+    \item \textbf{Uncertainty Modeling}: Graduated uncertainty factors for decision-making under incomplete information
+  \end{itemize}
+  
+  \textbf{Future Research Directions}:
+  \begin{itemize}
+    \item \textbf{Opponent Modeling}: Move beyond passive opponent assumption
+    \begin{itemize}
+      \item Minimax/expectimax planning with learned opponent models
+      \item Online adaptation to opponent strategies
+    \end{itemize}
+    \item \textbf{Advanced Search}: MCTS and Information Set MCTS adaptation
+    \item \textbf{Learning Integration}: Neural network evaluation functions, reinforcement learning
+    \item \textbf{Enhanced Uncertainty}: Belief state maintenance, particle filters, multi-hypothesis planning
+  \end{itemize}
+\end{frame}
+
+\end{document} 
