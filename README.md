@@ -55,6 +55,20 @@ interface PartialObservationAgent {
 }
 ```
 
+## TeamTitans Kotlin Entry Points
+
+Key TeamTitans Kotlin sources in this repository:
+
+- Full-observability agents:
+  - [`app/src/main/kotlin/games/planetwars/agents/strategic/TeamTitansAgentV1.kt`](app/src/main/kotlin/games/planetwars/agents/strategic/TeamTitansAgentV1.kt)
+  - [`app/src/main/kotlin/games/planetwars/agents/strategic/TeamTitansAgentV2.kt`](app/src/main/kotlin/games/planetwars/agents/strategic/TeamTitansAgentV2.kt)
+  - [`app/src/main/kotlin/games/planetwars/agents/strategic/TeamTitansAgentV3.kt`](app/src/main/kotlin/games/planetwars/agents/strategic/TeamTitansAgentV3.kt)
+- Partial-observability agents:
+  - [`app/src/main/kotlin/games/planetwars/agents/strategic/TeamTitansPartialAgentV1.kt`](app/src/main/kotlin/games/planetwars/agents/strategic/TeamTitansPartialAgentV1.kt)
+  - [`app/src/main/kotlin/games/planetwars/agents/strategic/TeamTitansPartialAgentV2.kt`](app/src/main/kotlin/games/planetwars/agents/strategic/TeamTitansPartialAgentV2.kt)
+- Competition server entry:
+  - [`app/src/main/kotlin/competition_entry/RunEntryAsServer.kt`](app/src/main/kotlin/competition_entry/RunEntryAsServer.kt)
+
 ## Running Locally
 
 Use runner classes in `games.planetwars.runners` for headless execution and evaluation.
@@ -85,6 +99,21 @@ Repository files that support this flow include:
 ## Evaluation
 
 For local league-style evaluation, see the round-robin runners in `games.planetwars.runners`, including `RoundRobinLeague` and improved parallel variants.
+
+### Slide-Reported TeamTitans Results
+
+From the TeamTitans competition slides in this repository ([`slides/TeamTitansSlides.pdf`](slides/TeamTitansSlides.pdf), source: [`slides/TeamTitansSlides.tex`](slides/TeamTitansSlides.tex)):
+
+- Full observability progression:
+  - V1: 81.8% win rate
+  - V2: 86.5% win rate
+  - V3 (final): 99.5% win rate
+- Partial observability progression:
+  - PartialV1: 20.0% win rate
+  - PartialV2 (final): 99.8% win rate
+- Reported test setup in slides: 600 games per agent against baseline agents (`BetterRandomAgent`, `CarefulRandomAgent`, `PureRandomAgent`, `SimpleEvoAgent`).
+
+These figures are slide-reported TeamTitans evaluation results and are included here for repository context.
 
 ## Attribution and Scope
 
